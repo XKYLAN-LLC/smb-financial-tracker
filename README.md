@@ -1,18 +1,18 @@
 # SMB Financial Tracker
 
-SMB Financial Tracker is a local-first, agent-friendly financial tracking project for small business owners and self-employed people.
+SMB Financial Tracker is a small, local-first financial tracking project for freelancers, consultants, and small business owners.
 
-The current version is a simple static dashboard with synthetic sample data. The broader goal is to become a downloadable/forkable workspace where users can keep private financial records out of Git while agents help organize source files, maintain a ledger, build review queues, calculate financial scenarios, and prepare accountant-ready exports.
+The current version is a static dashboard with synthetic sample data. The goal is to make it easy to track income, expenses, deductions, review items, and accountant-ready exports without putting private financial records into Git.
 
-This is not tax, legal, benefits, or insurance advice. The tracker organizes records, performs transparent calculations, cites program thresholds, and flags review items for a CPA or other qualified reviewer.
+This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and planning tool. Final tax treatment should be reviewed by a qualified professional.
 
 ## Project Goals
 
-- Give small business owners a simple dashboard for income, expenses, deductions, review queues, P&L, and threshold-program scenarios.
+- Give small business owners a simple dashboard for income, expenses, deductions, review queues, P&L, and planning scenarios.
 - Keep data local-first, transparent, and easy to audit.
 - Provide synthetic public examples while keeping real user data private.
-- Create reusable agent instructions and skills for safe CSV/PDF/browser-assisted financial workflows.
-- Preserve provenance so imported or agent-edited records can be reviewed later.
+- Make CSV/PDF import workflows easier to build over time.
+- Preserve provenance so imported or edited records can be reviewed later.
 - Export clean summaries that make accountant handoff easier.
 
 ## Files
@@ -23,10 +23,12 @@ This is not tax, legal, benefits, or insurance advice. The tracker organizes rec
 | `sample-tracker.seed.json` | Synthetic seed ledger and settings for demos, tests, and future OSS examples. |
 | `covered-ca-medi-cal-ca-2026.program.json` | Program threshold configuration with source citations and effective year. |
 | `docs/v1-scope.md` | Scope and roadmap notes, including reusable open-source product direction. |
-| `AGENT_GUIDE.md` | Operating guide for AI agents manipulating tracker data. |
+| `AGENT_GUIDE.md` | Workflow guide for assisted data updates and imports. |
 | `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
 | `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
 | `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
+| `LICENSE` | MIT license. |
+| `NOTICE` | Short project attribution note. |
 | `CONTRIBUTING.md` | Contribution guide and privacy requirements. |
 | `SECURITY.md` | Security and sensitive-data reporting policy. |
 | `GOVERNANCE.md` | Project governance and decision-making model. |
@@ -44,7 +46,7 @@ This is not tax, legal, benefits, or insurance advice. The tracker organizes rec
 4. Export CPA CSV or accountant Markdown.
 5. Save source documents and support in the tax folder.
 
-The UI stores edits in browser `localStorage` under `local-financial-tracker-v1`. If you need to reload from the JSON seed, use the Reset button or clear that localStorage key.
+The UI stores edits in browser `localStorage` under `local-financial-tracker-v1`. To reload from the sample JSON seed, use Reset or clear that localStorage key.
 
 ## Privacy Warning
 
@@ -67,13 +69,22 @@ Repository administrators should enable GitHub branch protection or a ruleset fo
 - Do not allow force pushes.
 - Do not allow deletions.
 
-## Open-Source Direction
+## License And Credits
 
-The reusable project should become an agent-first, local-first financial operating system:
+This project is released under the MIT License. You can use, copy, modify, merge, publish, distribute, sublicense, and sell copies, as long as the copyright and license notice are included with copies or substantial portions of the software.
+
+If you build on this project, please keep the license notice and link back to the repository when practical:
+
+https://github.com/XKYLAN-LLC/smb-financial-tracker
+
+## Roadmap
+
+The project is intentionally simple right now. Future work may add:
 
 - Local ledger/database with transparent provenance.
-- CSV import adapters first; permissioned MCP/import adapters later.
-- Pluggable program threshold configs with citations and effective dates.
+- CSV import helpers.
+- PDF/source-document review workflows.
+- Pluggable program configs with citations and effective dates.
 - Review queues for uncertain classifications.
 - Accountant-ready exports for P&L, Schedule C buckets, and supporting notes.
-- Conservative calculations with explicit review flags, not authoritative tax or benefits determinations.
+- Conservative calculations with explicit review flags.

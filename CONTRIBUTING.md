@@ -8,7 +8,7 @@ Thanks for considering a contribution to SMB Financial Tracker.
 - Add synthetic sample data.
 - Add validation for JSON seed files and program configs.
 - Improve import scaffolding for CSV files.
-- Add agent `SKILL.md` files that explain safe workflows.
+- Add workflow docs that explain safe imports, review queues, and exports.
 - Improve accountant-ready exports.
 - Add tests for calculations.
 
@@ -33,9 +33,9 @@ Do not commit:
 
 Use synthetic data in public examples. Keep real user data in ignored local folders.
 
-## Agent Contributions
+## Automated Or Assisted Contributions
 
-AI agents are welcome to help with this project, but agent-generated changes should be reviewed carefully. Agents should preserve provenance, flag uncertainty, and avoid authoritative tax, legal, benefits, or insurance advice.
+Tool-assisted changes are welcome, but they should be reviewed carefully. Contributions should preserve provenance, flag uncertainty, and avoid authoritative tax, legal, benefits, or insurance advice.
 
 ## Pull Request Reviews
 

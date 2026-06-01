@@ -1,6 +1,6 @@
 # Data Model
 
-This tracker uses a small JSON model that can later become a local database schema. The design goal is agent-friendly manipulation with transparent provenance.
+This tracker uses a small JSON model that can later become a local database schema. The design goal is simple editing with transparent provenance.
 
 ## State Object
 

@@ -96,14 +96,14 @@ Only consider a private GitHub app after V1/V2 prove the workflow:
 
 ## Reusable Product Direction
 
-This may grow into an agent-first, local-first financial tracker rather than a one-off health-insurance spreadsheet. Future implementation should treat the current Medi-Cal work as one configured threshold program on top of a broader ledger.
+This may grow into a local-first financial tracker rather than a one-off health-insurance spreadsheet. Future implementation should treat the current Medi-Cal work as one configured threshold program on top of a broader ledger.
 
 Reusable product principles:
 
 - Keep a transparent ledger/database with provenance for every source record, import, user edit, agent edit, and categorization rule.
 - Start with CSV import adapters, then add permissioned agent/MCP adapters for approved systems.
 - Keep program requirements as pluggable config with citations and effective dates, not loose hard-coded assumptions.
-- Expose agent-friendly operations such as list missing docs, classify uncategorized transactions, reconcile invoices/payments, generate accountant export, calculate current P&L, calculate MAGI scenarios, watch eligibility thresholds, and produce a review queue.
+- Expose clear operations such as list missing docs, classify uncategorized transactions, reconcile invoices/payments, generate accountant export, calculate current P&L, calculate MAGI scenarios, watch eligibility thresholds, and produce a review queue.
 - Stay conservative: organize, calculate, cite, and flag for review. Do not present tax, legal, benefits, or insurance determinations as authoritative advice.
 - Keep any future public/open-source repo free of personal details, account numbers, application IDs, client records, health-insurance case details, and private financial exports.
 

@@ -2,7 +2,7 @@
 
 ## Working Name
 
-Local-first financial tracker for agent-assisted tax and benefits planning.
+Local-first financial tracker for small business recordkeeping and planning.
 
 ## Product Thesis
 
@@ -12,12 +12,12 @@ This product should provide the durable skeleton:
 
 - a local ledger with transparent calculations
 - importer and normalization contracts
-- agent-safe commands
+- scriptable commands
 - provenance on every material number
 - conservative review states for tax, benefits, and insurance uncertainty
 - export formats that a CPA or human reviewer can actually use
 
-The agent should do the repetitive gathering, classification, reconciliation, and explanation work. The product should keep the agent constrained, auditable, and reversible.
+Automation can help with repetitive gathering, classification, reconciliation, and explanation work. The product should keep those workflows constrained, auditable, and reversible.
 
 ## Primary Users
 
@@ -51,7 +51,7 @@ The first real version should solve the current local workflow well:
 
 ## Data Architecture
 
-The prototype uses flat JSON files because they are transparent and easy for agents to edit. A mature version can migrate the same model into SQLite or another local database.
+The prototype uses flat JSON files because they are transparent and easy to edit. A mature version can migrate the same model into SQLite or another local database.
 
 Core objects:
 
@@ -65,9 +65,9 @@ Core objects:
 
 Every calculated number should be traceable back to ledger rows, and every ledger row should be traceable back to a source or marked as a manual estimate.
 
-## Agent API Surface
+## Scriptable API Surface
 
-Agents should interact through explicit commands instead of free-form file edits whenever possible:
+Automation should interact through explicit commands instead of free-form file edits whenever possible:
 
 - `import_source(path, source_type)`
 - `list_sources(year)`
@@ -179,6 +179,6 @@ Before publication:
 2. Move seed data into structured JSON and stop hard-coding private values in UI code.
 3. Add importer scripts for CSV files.
 4. Add deterministic calculation tests.
-5. Add a CLI for agent-safe operations.
+5. Add a CLI for safe import, validation, and export operations.
 6. Split private data from public sample data.
 7. Convert to a small local app when the data model stabilizes.
