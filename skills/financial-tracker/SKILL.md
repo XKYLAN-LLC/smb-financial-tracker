@@ -14,6 +14,8 @@ Before editing data, calculations, docs, or agent workflows, read:
 - `README.md`
 - `DATA_MODEL.md`
 - `AGENT_GUIDE.md`
+- `docs/agent-surface.md`
+- `docs/accountant-package.md`
 - `docs/private-data.md`
 - `docs/roadmap.md`
 
@@ -26,6 +28,7 @@ Before editing data, calculations, docs, or agent workflows, read:
 - Flag uncertain tax, benefits, insurance, or legal treatment for human review.
 - Do not invent income, deductions, expenses, support, or eligibility facts.
 - Do not claim to replace a CPA, attorney, benefits worker, or insurance professional.
+- Do not overbuild deterministic ingestion, bank integration, OAuth, CSV-routing, or PDF-parsing logic unless the user explicitly asks for that layer.
 
 ## Data Handling
 
@@ -42,6 +45,7 @@ Agents should:
 - calculate transparent totals from existing rows;
 - preserve raw source context and provenance;
 - identify duplicates, transfers, missing support, and review flags;
+- maintain source-document and accountant-package manifests;
 - prepare accountant-ready summaries for user review.
 
 Agents should not:

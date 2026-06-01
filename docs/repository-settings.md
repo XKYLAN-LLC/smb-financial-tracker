@@ -22,13 +22,27 @@ Configure GitHub branch protection or a repository ruleset with:
 
 ## CODEOWNERS
 
-`CODEOWNERS` is currently a placeholder. Add a real GitHub user or organization team when review ownership is ready.
+`CODEOWNERS` currently assigns repository ownership to `@kayalopez`.
 
 ```text
-* @XKYLAN-LLC/team-slug
+* @kayalopez
 ```
 
-Do not leave non-existent teams in `CODEOWNERS`; invalid owners can make review requirements confusing.
+If ownership moves to an organization team later, replace this with a real team slug. Do not leave non-existent teams in `CODEOWNERS`; invalid owners can make review requirements confusing.
+
+## Required Status Checks
+
+The organization ruleset currently expects these check contexts:
+
+- `changed-route-tests`
+- `lint`
+- `type-check`
+- `test`
+- `build`
+- `browser-smoke`
+- `dependency-review`
+
+Keep `.github/workflows/ci.yml` aligned with those names or update the ruleset and this doc together.
 
 ## Repository Metadata
 
@@ -47,6 +61,7 @@ small-business
 bookkeeping
 csv-import
 agent-workflows
+ai-assisted
 tax-prep
 privacy
 open-source

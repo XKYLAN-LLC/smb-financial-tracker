@@ -23,6 +23,14 @@ private/
 *backup*
 *.local.json
 
+# Public documentation media generated only from synthetic sample data.
+!docs/assets/
+!docs/assets/screenshots/
+!docs/assets/screenshots/*.png
+!docs/assets/video/
+!docs/assets/video/README.md
+!docs/assets/video/*.mp4
+
 # Private real-world seeds should never be committed.
 *.private.json
 *.private.*

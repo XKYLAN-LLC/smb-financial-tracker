@@ -1,0 +1,100 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changed-route-tests:
+    name: changed-route-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check route-specific test scope
+        run: |
+          test -f index.html
+          echo "Static single-page dashboard has no route-specific test matrix yet."
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON files and public sample data
+        run: |
+          python3 -m json.tool sample-tracker.seed.json >/dev/null
+          python3 -m json.tool covered-ca-medi-cal-ca-2026.program.json >/dev/null
+          python3 -m json.tool examples/agent-workspace.example.json >/dev/null
+          python3 -m json.tool examples/accountant-package.example.json >/dev/null
+          python3 scripts/validate-sample-json.py
+          python3 scripts/validate-agent-surface.py
+
+  type-check:
+    name: type-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python helper scripts
+        run: |
+          python3 -m py_compile scripts/validate-sample-json.py scripts/validate-agent-surface.py
+          node --check scripts/capture-screenshots.mjs
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run validation tests
+        run: |
+          python3 scripts/validate-sample-json.py
+          python3 scripts/validate-agent-surface.py
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check static app build surface
+        run: |
+          test -f index.html
+          test -f sample-tracker.seed.json
+          test -f covered-ca-medi-cal-ca-2026.program.json
+          test -f examples/agent-workspace.example.json
+          test -f examples/accountant-package.example.json
+          test -f docs/assets/screenshots/dashboard-overview.png
+          test -f docs/assets/screenshots/ledger-review.png
+          test -f docs/assets/screenshots/accountant-export.png
+          test -f docs/assets/video/smb-financial-tracker-walkthrough.mp4
+
+  browser-smoke:
+    name: browser-smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Smoke test local static dashboard
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          sleep 2
+          curl -fsS http://127.0.0.1:8765/index.html >/tmp/index.html
+          grep -q "Local Financial Tracker" /tmp/index.html
+
+  dependency-review:
+    name: dependency-review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependency review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v4
+      - name: No dependency review required outside pull requests
+        if: github.event_name != 'pull_request'
+        run: echo "Dependency review runs on pull requests."

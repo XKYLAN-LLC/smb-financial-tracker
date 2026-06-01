@@ -7,8 +7,8 @@ Thanks for considering a contribution to SMB Financial Tracker.
 - Improve documentation for local setup and private data handling.
 - Add synthetic sample data.
 - Add validation for JSON seed files and program configs.
-- Improve import scaffolding for CSV files.
-- Add workflow docs that explain safe imports, review queues, and exports.
+- Improve AI-assisted source-review scaffolding for CSVs, PDFs, receipts, statements, and invoices.
+- Add workflow docs that explain safe source manifests, review queues, and accountant packages.
 - Improve accountant-ready exports.
 - Add tests for calculations.
 
@@ -36,6 +36,8 @@ Use synthetic data in public examples. Keep real user data in ignored local fold
 ## Automated Or Assisted Contributions
 
 Tool-assisted changes are welcome, but they should be reviewed carefully. Contributions should preserve provenance, flag uncertainty, and avoid authoritative tax, legal, benefits, or insurance advice.
+
+This project expects AI assistants to help users interpret user-provided context and attached private files. Avoid building heavy deterministic ingestion, bucket-routing, bank integration, OAuth, or PDF parsing systems until the local review surface is clearly stable.
 
 ## Pull Request Reviews
 

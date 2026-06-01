@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "0.1.0",
+  "workspace": {
+    "id": "sample-workspace-2026",
+    "name": "Sample freelance business 2026",
+    "privacy": "Synthetic example. Real source documents belong under private/ and must not be committed.",
+    "defaultLedger": "sample-tracker.seed.json"
+  },
+  "sourceDocuments": [
+    {
+      "id": "source-sample-bank-csv-2026-05",
+      "kind": "csv",
+      "system": "Sample bank",
+      "localPathHint": "private/imports/sample-bank-export-2026-05.csv",
+      "period": "2026-05",
+      "status": "reviewed",
+      "proves": "Synthetic business checking activity for May.",
+      "relatedRows": [
+        "sample-row-software"
+      ],
+      "notes": "Use as a manifest example only. Do not commit real CSV exports."
+    },
+    {
+      "id": "source-sample-receipt-pdf",
+      "kind": "pdf",
+      "system": "Sample vendor",
+      "localPathHint": "private/source-documents/sample-vendor-receipt.pdf",
+      "period": "2026",
+      "status": "needs-review",
+      "proves": "Synthetic receipt support for a software subscription.",
+      "relatedRows": [
+        "sample-row-software"
+      ],
+      "notes": "The real PDF stays local. The manifest records what it supports."
+    }
+  ],
+  "reviewQueue": [
+    {
+      "id": "review-home-office-allocation",
+      "status": "CPA review",
+      "question": "Confirm whether the home-office allocation method is appropriate.",
+      "relatedRows": [
+        "sample-row-home-office-rent",
+        "sample-row-internet"
+      ],
+      "relatedSources": [],
+      "nextAction": "User should add lease, internet bill, and square footage support locally."
+    },
+    {
+      "id": "review-software-support",
+      "status": "Needs support",
+      "question": "Attach receipts or statements for software subscription totals.",
+      "relatedRows": [
+        "sample-row-software"
+      ],
+      "relatedSources": [
+        "source-sample-receipt-pdf"
+      ],
+      "nextAction": "Agent should verify the source manifest points to local support before final package handoff."
+    }
+  ],
+  "agentNotes": [
+    "Use user-provided context and attached files to maintain rows and review flags.",
+    "Do not commit local source files or private package outputs.",
+    "Do not remove professional-review flags without user confirmation and support."
+  ]
+}

@@ -11,13 +11,13 @@ Individuals and small business owners already have the raw materials their accou
 This product should provide the durable skeleton:
 
 - a local ledger with transparent calculations
-- importer and normalization contracts
+- AI-assisted source-review and normalization contracts
 - scriptable commands
 - provenance on every material number
 - conservative review states for tax, benefits, and insurance uncertainty
 - export formats that a CPA or human reviewer can actually use
 
-Automation can help with repetitive gathering, classification, reconciliation, and explanation work. The product should keep those workflows constrained, auditable, and reversible.
+AI assistants can help with repetitive gathering, classification, reconciliation, and explanation work from user-provided context and attached private files. The product should keep those workflows constrained, auditable, and reversible without prematurely building integrations or source-specific parsers.
 
 ## Primary Users
 
@@ -38,8 +38,8 @@ Automation can help with repetitive gathering, classification, reconciliation, a
 
 The first real version should solve the current local workflow well:
 
-1. Import a CSV export from a personal finance app or bank.
-2. Import or manually enter invoice/payment totals.
+1. Let a user and AI assistant review local CSV/PDF/source documents without committing them.
+2. Import or manually enter invoice/payment totals into reviewable ledger rows.
 3. Maintain a JSON-backed ledger of income, expenses, deductions, transfers, and info-only records.
 4. Preserve source metadata for imported rows.
 5. Classify likely business expenses into Schedule C buckets.
@@ -83,9 +83,9 @@ Automation should interact through explicit commands instead of free-form file e
 
 Each command should return structured output with warnings and citations where relevant.
 
-## Import Sources
+## Source Review
 
-CSV import should come first because it is deterministic and easy to inspect. Later importers can support PDFs and browser/MCP-based retrieval when the user grants access.
+AI-assisted source review should come first because it lets the user add context before the data model is overbuilt. Later importers can support deterministic parsing or browser/MCP-based retrieval when manual AI-assisted review becomes the bottleneck.
 
 Initial sources:
 
@@ -98,7 +98,7 @@ Initial sources:
 - insurance premium records
 - receipts and invoices
 
-PDF extraction should produce reviewable source records, not silently create final ledger entries.
+PDF or CSV review should produce reviewable source records, manifests, notes, and ledger entries. It should not silently create final tax conclusions.
 
 ## Classification Policy
 
@@ -149,6 +149,8 @@ Core views:
 - Program Thresholds
 - Scenarios
 - Accountant Export
+- Source Documents
+- Accountant Package
 
 ## Security And Privacy
 
@@ -169,7 +171,7 @@ Before publication:
 - Replace seed data with synthetic examples.
 - Add `.gitignore` for raw imports, exports, PDFs, screenshots, and local backups.
 - Add automated tests for calculations and import normalization.
-- Document the agent command contract.
+- Document the AI-agent surface and package manifest contract.
 - Include sample program configs with citations.
 - Include a threat model for local data and agent access.
 
@@ -177,8 +179,8 @@ Before publication:
 
 1. Keep the static prototype as a validated reference UI.
 2. Move seed data into structured JSON and stop hard-coding private values in UI code.
-3. Add importer scripts for CSV files.
+3. Add AI-assisted source-document and accountant-package manifests.
 4. Add deterministic calculation tests.
-5. Add a CLI for safe import, validation, and export operations.
+5. Add a CLI for safe validation and package review operations.
 6. Split private data from public sample data.
 7. Convert to a small local app when the data model stabilizes.

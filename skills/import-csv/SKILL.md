@@ -1,11 +1,11 @@
 ---
 name: import-csv
-description: Use when importing bank, Monarch, Zoho, Stripe, brokerage, invoice, payment processor, or spreadsheet CSV exports into reviewable ledger rows for this local-first financial tracker.
+description: Use when an AI assistant reviews bank, Monarch, Zoho, Stripe, brokerage, invoice, payment processor, or spreadsheet CSV exports with the user and turns them into reviewable ledger rows.
 ---
 
 # Import CSV
 
-CSV import should create reviewable ledger rows with provenance. It should not silently create final tax, legal, benefits, or insurance conclusions.
+CSV review should create reviewable ledger rows with provenance. This repo does not need a full deterministic CSV categorization engine yet; the AI assistant can use user-provided context and attached files during the session.
 
 ## Source Files
 
@@ -13,13 +13,15 @@ CSV import should create reviewable ledger rows with provenance. It should not s
 - Do not commit real CSV exports, generated import backups, screenshots, or spreadsheets.
 - Use synthetic CSV examples only when a public fixture is needed.
 
-## Parser Rules
+## Review Rules
 
-- Use a real CSV parser, not line splitting.
+- If writing helper code, use a real CSV parser, not line splitting.
+- Do not build source-specific routing or bucket-classification logic unless the user explicitly asks for it.
 - Preserve original source fields that are useful for review: date, merchant/payee, original description, source category, amount, account/source name when safe, notes, tags, and transaction id/hash when available.
 - Normalize ledger `amount` values to positive numbers.
 - Use `type` to decide how a row affects totals: `Revenue`, `Expense`, `Investment / other income`, `Above-line deduction`, or `Info only`.
 - Keep transfers, duplicate rows, raw mixed-use inputs, and uncertain support as `Info only` or `Exclude` until reviewed.
+- Record the source in a local manifest when the raw CSV should stay outside Git.
 
 ## Ledger Mapping
 
