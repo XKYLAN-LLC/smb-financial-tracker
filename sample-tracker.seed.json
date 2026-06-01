@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "0.1.0",
+  "profile": {
+    "workspace": "Sample freelance business 2026",
+    "privacy": "Synthetic demo data safe for documentation and OSS examples."
+  },
+  "settings": {
+    "threshold": 22025,
+    "coveredCaProjected": 18420,
+    "coveredCaNext12": 18420,
+    "reviewDate": "2026-06-01",
+    "programId": "covered-ca-medi-cal-ca-2026-hh1"
+  },
+  "rows": [
+    {
+      "id": "sample-row-client-receipts-ytd",
+      "use": true,
+      "date": "2026-05-31",
+      "type": "Revenue",
+      "description": "Client receipts collected to date",
+      "amount": 18000,
+      "bucket": "Gross receipts",
+      "subcategory": "Paid receipts",
+      "businessPct": 100,
+      "status": "Supported",
+      "notes": "Synthetic invoice/payment export total.",
+      "source": {
+        "system": "Sample invoice app",
+        "kind": "csv-rollup",
+        "file": "sample-invoices.csv"
+      }
+    },
+    {
+      "id": "sample-row-remaining-income",
+      "use": true,
+      "date": "2026-06-01",
+      "type": "Revenue",
+      "description": "Known remaining monthly retainer forecast",
+      "amount": 7000,
+      "bucket": "Gross receipts",
+      "subcategory": "Forecast",
+      "businessPct": 100,
+      "status": "Estimate",
+      "notes": "Synthetic forecast. Replace with actual contracts."
+    },
+    {
+      "id": "sample-row-software",
+      "use": true,
+      "date": "2026-06-01",
+      "type": "Expense",
+      "description": "Business software subscriptions",
+      "amount": 3600,
+      "bucket": "Other expenses",
+      "subcategory": "Software subscriptions",
+      "businessPct": 100,
+      "status": "Needs support",
+      "notes": "Synthetic transaction category rollup."
+    },
+    {
+      "id": "sample-row-home-office-rent",
+      "use": true,
+      "date": "2026-12-31",
+      "type": "Expense",
+      "description": "Home-office rent allocation estimate",
+      "amount": 2400,
+      "bucket": "Rent or lease - other business property",
+      "subcategory": "Home office - rent allocation",
+      "businessPct": 100,
+      "status": "CPA review",
+      "notes": "Synthetic prorated amount. Keep raw rent records and review allocation."
+    },
+    {
+      "id": "sample-row-internet",
+      "use": true,
+      "date": "2026-12-31",
+      "type": "Expense",
+      "description": "Internet business-use estimate",
+      "amount": 420,
+      "bucket": "Utilities",
+      "subcategory": "Internet",
+      "businessPct": 100,
+      "status": "CPA review",
+      "notes": "Synthetic estimate."
+    },
+    {
+      "id": "sample-row-dividends",
+      "use": true,
+      "date": "2026-12-31",
+      "type": "Investment / other income",
+      "description": "Dividend estimate",
+      "amount": 650,
+      "bucket": "Not Schedule C",
+      "subcategory": "Dividends",
+      "businessPct": 100,
+      "status": "Estimate",
+      "notes": "Synthetic brokerage estimate."
+    },
+    {
+      "id": "sample-row-traditional-ira",
+      "use": true,
+      "date": "2026-12-31",
+      "type": "Above-line deduction",
+      "description": "Traditional IRA deduction scenario",
+      "amount": 7500,
+      "bucket": "Not Schedule C",
+      "subcategory": "Traditional IRA",
+      "businessPct": 100,
+      "status": "Needs support",
+      "notes": "Must be actually contributed and deductible for the tax year."
+    },
+    {
+      "id": "sample-row-student-loan-interest",
+      "use": true,
+      "date": "2026-12-31",
+      "type": "Above-line deduction",
+      "description": "Student loan interest estimate",
+      "amount": 300,
+      "bucket": "Not Schedule C",
+      "subcategory": "Student loan interest",
+      "businessPct": 100,
+      "status": "Estimate",
+      "notes": "Verify against year-end loan servicer form."
+    }
+  ]
+}

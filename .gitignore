@@ -1,0 +1,28 @@
+# Dependencies / build output
+node_modules/
+dist/
+build/
+
+# Local private source material
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.heic
+*.webp
+*.csv
+*.xlsx
+*.xls
+
+# Generated exports and local browser backups
+*export*
+*backup*
+*.local.json
+
+# Private real-world seeds should never be committed.
+*.private.json
+2026-xkylan-tracker.seed.json
+
+# Keep synthetic fixtures and docs.
+!sample-tracker.seed.json
+!covered-ca-medi-cal-ca-2026.program.json

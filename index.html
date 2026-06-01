@@ -1,0 +1,1785 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local Financial Tracker</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --ink: #202a36;
+      --muted: #637083;
+      --line: #d8dee8;
+      --soft: #f1f4f8;
+      --blue: #245f9f;
+      --green: #22744b;
+      --red: #b42318;
+      --amber: #9a6700;
+      --violet: #6941c6;
+      --teal: #0f766e;
+      --shadow: 0 18px 45px rgba(18, 34, 50, 0.07);
+      --shadow-sm: 0 8px 22px rgba(18, 34, 50, 0.055);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(180deg, #eef4f6 0, #f5f7f8 220px, #f5f7f8 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 24px 30px 18px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 6px; font-size: 30px; line-height: 1.1; letter-spacing: 0; }
+    h2 { margin-bottom: 14px; font-size: 18px; }
+    h3 { margin-bottom: 10px; font-size: 15px; }
+    p { color: var(--muted); }
+
+    main {
+      width: min(100%, 1280px);
+      margin: 0 auto;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .panel {
+      min-width: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .source-list {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .source-list a {
+      color: var(--blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .source-list a:hover { text-decoration: underline; }
+
+    .source-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      max-width: 520px;
+    }
+
+    .source-chip,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      padding: 5px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      text-decoration: none;
+      box-shadow: 0 1px 0 rgba(18, 34, 50, 0.03);
+    }
+
+    .source-chip:hover {
+      border-color: #b8c7d9;
+      color: var(--blue);
+    }
+
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .status-pill strong {
+      margin-left: 5px;
+      color: var(--ink);
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+
+    .kpi {
+      min-width: 0;
+      min-height: 98px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+      box-shadow: 0 1px 0 rgba(18, 34, 50, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--blue);
+    }
+
+    .kpi:nth-child(1)::before { background: var(--green); }
+    .kpi:nth-child(2)::before { background: var(--blue); }
+    .kpi:nth-child(3)::before { background: var(--teal); }
+    .kpi:nth-child(4)::before { background: var(--violet); }
+    .kpi:nth-child(5)::before { background: var(--amber); }
+    .kpi:nth-child(6)::before { background: #334155; }
+
+    .kpi:hover {
+      border-color: #c5d0dd;
+      box-shadow: 0 10px 26px rgba(18, 34, 50, 0.08);
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .value {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 760;
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: anywhere;
+    }
+
+    .status {
+      display: inline-flex;
+      margin-top: 9px;
+      padding: 5px 9px;
+      border: 1px solid;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .ok { color: var(--green); background: #ecfdf3; border-color: #a6d8bf; }
+    .warn { color: var(--amber); background: #fffaeb; border-color: #e8c878; }
+    .bad { color: var(--red); background: #fef3f2; border-color: #f1aaa6; }
+    .purple { color: var(--violet); background: #f4f0ff; border-color: #d8c9ff; }
+    .teal { color: var(--teal); background: #ecfdf9; border-color: #9dd9cf; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    button {
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      background: var(--blue);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 760;
+      padding: 8px 11px;
+      box-shadow: 0 1px 0 rgba(18, 34, 50, 0.05);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+
+    button:hover {
+      background: #1d4f85;
+      box-shadow: 0 8px 20px rgba(36, 95, 159, 0.18);
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      background: #fff;
+      color: var(--blue);
+    }
+
+    button.secondary:hover {
+      background: #f4f8fd;
+      box-shadow: 0 7px 18px rgba(36, 95, 159, 0.12);
+    }
+
+    button.danger {
+      border-color: #c1463d;
+      background: #fff;
+      color: #b42318;
+    }
+
+    button.danger:hover {
+      background: #fff7f6;
+      box-shadow: 0 7px 18px rgba(180, 35, 24, 0.12);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      padding: 8px 9px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #8ab4df;
+      box-shadow: 0 0 0 3px rgba(36, 95, 159, 0.13);
+    }
+
+    input[type="file"]::file-selector-button {
+      margin-right: 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f8fafc;
+      color: var(--ink);
+      cursor: pointer;
+      font-weight: 760;
+      padding: 7px 10px;
+    }
+
+    textarea {
+      min-height: 92px;
+      resize: vertical;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .threshold {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .buffer-meter {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+      padding: 12px;
+    }
+
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .meter-track {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eef5;
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--teal));
+      transition: width .18s ease;
+    }
+
+    .formula-grid {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 18px;
+    }
+
+    .scenario-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      background: #fbfcfe;
+    }
+
+    .scenario strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .scenario .amount {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .scenario .amount span:last-child {
+      flex: 0 0 auto;
+      text-align: right;
+    }
+
+    .ledger-tools {
+      display: grid;
+      grid-template-columns: 1.4fr .85fr .85fr auto;
+      gap: 10px;
+      align-items: end;
+      margin: 0 0 12px;
+    }
+
+    .inline-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .inline-check input {
+      width: auto;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 760;
+      background: #fbfcfe;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+
+    td.amount, th.amount {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    tr.total-row td {
+      background: #f8fafc;
+      font-weight: 800;
+    }
+
+    tbody tr:hover td {
+      background: #fbfdff;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: auto;
+      max-height: 520px;
+      background: #fff;
+    }
+
+    .ledger input, .ledger select, .ledger textarea {
+      min-width: 112px;
+      font-size: 13px;
+      padding: 7px 8px;
+    }
+
+    .ledger textarea {
+      min-width: 180px;
+      min-height: 40px;
+    }
+
+    .ledger .description { min-width: 230px; }
+    .ledger .subcategory { min-width: 170px; }
+    .ledger .bucket { min-width: 220px; }
+    .ledger .date { min-width: 126px; }
+    .ledger .type { min-width: 154px; }
+    .ledger .small { min-width: 82px; }
+    .ledger .notes { min-width: 230px; }
+
+    .summary-grid {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+    }
+
+    .note {
+      border-left: 4px solid var(--blue);
+      border-radius: 4px;
+      background: #eef5ff;
+      color: #29415f;
+      padding: 10px 12px;
+    }
+
+    .fine-print {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .checks {
+      display: grid;
+      gap: 10px;
+    }
+
+    .check {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--amber);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fffdf7;
+    }
+
+    .check.okline {
+      border-left-color: var(--green);
+      background: #f6fef9;
+    }
+
+    .product-note {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .product-note div {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+      padding: 12px;
+    }
+
+    .product-note strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .product-note span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .file-input {
+      max-width: 260px;
+    }
+
+    .file-input input {
+      margin-top: 5px;
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media (max-width: 1050px) {
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .summary-grid { grid-template-columns: 1fr; }
+      .threshold { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .formula-grid { grid-template-columns: 1fr; }
+      .ledger-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .intro { grid-template-columns: 1fr; }
+      .source-chips { justify-content: flex-start; }
+      .product-note { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      header { padding: 22px 16px 16px; }
+      main { padding: 14px; }
+      .kpis, .threshold { grid-template-columns: 1fr; }
+      .ledger-tools { grid-template-columns: 1fr; }
+      .value { font-size: 22px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      header, main { padding: 0; }
+      button, .actions, .ledger-tools, .no-print { display: none !important; }
+      .panel { border: 0; padding: 10px 0; page-break-inside: avoid; }
+      .table-wrap { max-height: none; overflow: visible; border: 0; }
+      th { position: static; }
+      .print-only { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="intro">
+      <div>
+        <div class="eyebrow">Sample Business / 2026 Tax Ops</div>
+        <h1>Local Financial Tracker</h1>
+        <p>Local-first planning surface for Medi-Cal eligibility, Schedule C support, and accountant handoff. Keep final tax treatment with the accountant.</p>
+        <div class="status-strip">
+          <span class="status-pill">Mode <strong>Local-first</strong></span>
+          <span class="status-pill">Audit trail <strong>Ledger rows</strong></span>
+          <span class="status-pill">Export <strong>CPA ready</strong></span>
+        </div>
+      </div>
+      <div>
+        <p class="source-list">Source checks</p>
+        <div class="source-chips">
+          <a class="source-chip" href="https://www.coveredca.com/PDFs/FPL-chart.pdf">CoveredCA 2026 FPL</a>
+          <a class="source-chip" href="https://www.dhcs.ca.gov/services/medi-cal-resources/medi-cal-eligibility-division/all-county-welfare-directors-medi-cal-eligibility-division-information-letters/2026-fpl-calculation-chart-monthly-values-enclosure-1/">DHCS monthly chart</a>
+          <a class="source-chip" href="https://www.irs.gov/newsroom/401k-limit-increases-to-24500-for-2026-ira-limit-increases-to-7500">IRS 2026 IRA limit</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="kpis">
+        <div class="kpi">
+          <div class="label">Planning MAGI</div>
+          <div class="value" id="kpiMagi">$0</div>
+          <div class="status" id="kpiStatus">Status</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Medi-Cal Threshold</div>
+          <div class="value" id="kpiThreshold">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Remaining Buffer</div>
+          <div class="value" id="kpiBuffer">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Gross Receipts</div>
+          <div class="value" id="kpiGross">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Schedule C Expenses</div>
+          <div class="value" id="kpiExpenses">$0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Net Schedule C</div>
+          <div class="value" id="kpiNet">$0</div>
+        </div>
+      </div>
+
+      <div class="threshold">
+        <label>Medi-Cal annual tracking threshold
+          <input id="threshold" type="number" step="0.01">
+        </label>
+        <label>CoveredCA PDF projected annual income
+          <input id="coveredCaProjected" type="number" step="0.01">
+        </label>
+        <label>CoveredCA next 12-month income
+          <input id="coveredCaNext12" type="number" step="0.01">
+        </label>
+        <label>Review date
+          <input id="reviewDate" type="date">
+        </label>
+      </div>
+      <div class="buffer-meter">
+        <div class="meter-label">
+          <span>Threshold usage</span>
+          <span id="bufferMeterText">0% used</span>
+        </div>
+        <div class="meter-track">
+          <div class="meter-fill" id="bufferMeterFill"></div>
+        </div>
+      </div>
+      <p class="fine-print">Official 2026 Covered California FPL chart shows household size 1 at 138% FPL as $22,025/year. DHCS monthly values show $1,836/month. This tracker uses the annual value for the main buffer.</p>
+    </section>
+
+    <section class="panel formula-grid">
+      <div>
+        <h2>Current Calculation</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th class="amount">Amount</th>
+                <th>How it is used</th>
+              </tr>
+            </thead>
+            <tbody id="formulaTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h2>Scenario Checks</h2>
+        <div id="scenarioChecks" class="scenario-grid"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <h2>Tracking Ledger</h2>
+          <p class="fine-print">Rows drive the MAGI estimate and the accountant export. Replace seeded estimates with actual support as records come in.</p>
+        </div>
+        <div class="actions">
+          <button id="addRow">Add Row</button>
+          <label class="file-input">Import Monarch CSV
+            <input id="importMonarch" type="file" accept=".csv,text/csv">
+          </label>
+          <button class="secondary" id="saveState">Save</button>
+          <button class="secondary" id="exportBackup">Export Backup</button>
+          <label class="file-input">Import Backup
+            <input id="importBackup" type="file" accept="application/json">
+          </label>
+          <button class="danger" id="resetState">Reset</button>
+        </div>
+      </div>
+
+      <div class="ledger-tools">
+        <label>Search rows
+          <input id="searchRows" type="search" placeholder="Merchant, bucket, note">
+        </label>
+        <label>Type
+          <select id="filterType">
+            <option value="">All types</option>
+          </select>
+        </label>
+        <label>Status
+          <select id="filterStatus">
+            <option value="">All statuses</option>
+          </select>
+        </label>
+        <label class="inline-check">
+          <input id="includedOnly" type="checkbox"> Included only
+        </label>
+      </div>
+
+      <div class="table-wrap">
+        <table class="ledger">
+          <thead>
+            <tr>
+              <th>Use</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th class="amount">Amount</th>
+              <th>Tax Bucket</th>
+              <th>Subcategory</th>
+              <th class="amount">Business %</th>
+              <th>Status</th>
+              <th>Notes / Evidence</th>
+              <th class="amount">Included</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="ledgerBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="summary-grid">
+      <div class="panel">
+        <h2>Schedule C Bucket Summary</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Schedule C heading</th>
+                <th>Internal subcategory</th>
+                <th class="amount">Deductible amount</th>
+              </tr>
+            </thead>
+            <tbody id="bucketSummary"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Review Checks</h2>
+        <div id="checks" class="checks"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Monthly Run Rate</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th class="amount">Revenue</th>
+              <th class="amount">Schedule C expenses</th>
+              <th class="amount">Net Schedule C</th>
+              <th class="amount">Other income</th>
+              <th class="amount">Above-line deductions</th>
+            </tr>
+          </thead>
+          <tbody id="monthlySummary"></tbody>
+        </table>
+      </div>
+      <p class="fine-print">Rows dated in future months are treated as forecast rows. Monarch rows that were internally amortized should be collapsed back to original purchases before final tax handoff.</p>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <h2>Accountant Export</h2>
+          <p class="fine-print">The CSV includes rollups and row-level support. The copied summary is readable enough for email or a CPA portal note.</p>
+        </div>
+        <div class="actions">
+          <button id="exportCsv">Export CPA CSV</button>
+          <button id="exportMarkdown">Export Accountant Markdown</button>
+          <button class="secondary" id="copySummary">Copy Summary</button>
+          <button class="secondary" id="printView">Print / Save PDF</button>
+        </div>
+      </div>
+      <textarea id="summaryText" readonly></textarea>
+    </section>
+
+    <section class="panel">
+      <h2>Monthly Evidence Checklist</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Area</th>
+            <th>What to update</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Revenue</td><td>Paid invoices and deposits actually collected</td><td>Zoho, bank, Stripe</td></tr>
+          <tr><td>Processor fees</td><td>Stripe fees, bank fees, platform fees</td><td>Stripe, bank, Monarch</td></tr>
+          <tr><td>Software</td><td>AI tools, hosting, domains, APIs, email, storage, business apps</td><td>Monarch export, receipts</td></tr>
+          <tr><td>Home office</td><td>Rent paid, SDG&E, internet, renter's insurance, square footage support</td><td>Lease, bills, Monarch</td></tr>
+          <tr><td>Investments</td><td>Dividends, interest, realized capital gains/losses</td><td>Brokerage, bank 1099 estimate</td></tr>
+          <tr><td>Deductions</td><td>Traditional IRA contribution, student loan interest, health premiums if any</td><td>Brokerage, Aidvantage, Medi-Cal/CoveredCA</td></tr>
+        </tbody>
+      </table>
+      <p class="note">This tracker is for planning and organization. It should reflect real income, real expenses, and real deductions only. Do not omit income, invent expenses, or classify personal spending as business spending.</p>
+    </section>
+  </main>
+
+  <script>
+    const storageKey = "local-financial-tracker-v1";
+    const seedDataPath = "sample-tracker.seed.json";
+    const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
+
+    const types = [
+      "Revenue",
+      "Expense",
+      "Investment / other income",
+      "Above-line deduction",
+      "Info only"
+    ];
+
+    const buckets = [
+      "Gross receipts",
+      "Not Schedule C",
+      "Advertising",
+      "Car and truck expenses",
+      "Parking fees and tolls",
+      "Commissions and fees",
+      "Contract labor",
+      "Employee benefit programs and health insurance (other than pension/profit-sharing)",
+      "Insurance (other than health)",
+      "Interest - mortgage",
+      "Interest - other",
+      "Legal and professional fees",
+      "Office expense",
+      "Pension and profit-sharing plans",
+      "Rent or lease - vehicles, machinery and equipment",
+      "Rent or lease - other business property",
+      "Repairs and maintenance",
+      "Supplies",
+      "Taxes and licenses",
+      "Travel",
+      "Meals",
+      "Entertainment",
+      "Utilities",
+      "Wages",
+      "Dependent care benefits",
+      "Other expenses",
+      "Property & equipment tracking"
+    ];
+
+    const statuses = [
+      "Estimate",
+      "Needs support",
+      "Supported",
+      "CPA review",
+      "Exclude"
+    ];
+
+    const defaultState = {
+          "schemaVersion": "0.1.0",
+          "profile": {
+                "workspace": "Sample freelance business 2026",
+                "privacy": "Synthetic demo data safe for documentation and OSS examples."
+          },
+          "settings": {
+                "threshold": 22025,
+                "coveredCaProjected": 18420,
+                "coveredCaNext12": 18420,
+                "reviewDate": "2026-06-01",
+                "programId": "covered-ca-medi-cal-ca-2026-hh1"
+          },
+          "rows": [
+                {
+                      "id": "sample-row-client-receipts-ytd",
+                      "use": true,
+                      "date": "2026-05-31",
+                      "type": "Revenue",
+                      "description": "Client receipts collected to date",
+                      "amount": 18000,
+                      "bucket": "Gross receipts",
+                      "subcategory": "Paid receipts",
+                      "businessPct": 100,
+                      "status": "Supported",
+                      "notes": "Synthetic invoice/payment export total.",
+                      "source": {
+                            "system": "Sample invoice app",
+                            "kind": "csv-rollup",
+                            "file": "sample-invoices.csv"
+                      }
+                },
+                {
+                      "id": "sample-row-remaining-income",
+                      "use": true,
+                      "date": "2026-06-01",
+                      "type": "Revenue",
+                      "description": "Known remaining monthly retainer forecast",
+                      "amount": 7000,
+                      "bucket": "Gross receipts",
+                      "subcategory": "Forecast",
+                      "businessPct": 100,
+                      "status": "Estimate",
+                      "notes": "Synthetic forecast. Replace with actual contracts."
+                },
+                {
+                      "id": "sample-row-software",
+                      "use": true,
+                      "date": "2026-06-01",
+                      "type": "Expense",
+                      "description": "Business software subscriptions",
+                      "amount": 3600,
+                      "bucket": "Other expenses",
+                      "subcategory": "Software subscriptions",
+                      "businessPct": 100,
+                      "status": "Needs support",
+                      "notes": "Synthetic transaction category rollup."
+                },
+                {
+                      "id": "sample-row-home-office-rent",
+                      "use": true,
+                      "date": "2026-12-31",
+                      "type": "Expense",
+                      "description": "Home-office rent allocation estimate",
+                      "amount": 2400,
+                      "bucket": "Rent or lease - other business property",
+                      "subcategory": "Home office - rent allocation",
+                      "businessPct": 100,
+                      "status": "CPA review",
+                      "notes": "Synthetic prorated amount. Keep raw rent records and review allocation."
+                },
+                {
+                      "id": "sample-row-internet",
+                      "use": true,
+                      "date": "2026-12-31",
+                      "type": "Expense",
+                      "description": "Internet business-use estimate",
+                      "amount": 420,
+                      "bucket": "Utilities",
+                      "subcategory": "Internet",
+                      "businessPct": 100,
+                      "status": "CPA review",
+                      "notes": "Synthetic estimate."
+                },
+                {
+                      "id": "sample-row-dividends",
+                      "use": true,
+                      "date": "2026-12-31",
+                      "type": "Investment / other income",
+                      "description": "Dividend estimate",
+                      "amount": 650,
+                      "bucket": "Not Schedule C",
+                      "subcategory": "Dividends",
+                      "businessPct": 100,
+                      "status": "Estimate",
+                      "notes": "Synthetic brokerage estimate."
+                },
+                {
+                      "id": "sample-row-traditional-ira",
+                      "use": true,
+                      "date": "2026-12-31",
+                      "type": "Above-line deduction",
+                      "description": "Traditional IRA deduction scenario",
+                      "amount": 7500,
+                      "bucket": "Not Schedule C",
+                      "subcategory": "Traditional IRA",
+                      "businessPct": 100,
+                      "status": "Needs support",
+                      "notes": "Must be actually contributed and deductible for the tax year."
+                },
+                {
+                      "id": "sample-row-student-loan-interest",
+                      "use": true,
+                      "date": "2026-12-31",
+                      "type": "Above-line deduction",
+                      "description": "Student loan interest estimate",
+                      "amount": 300,
+                      "bucket": "Not Schedule C",
+                      "subcategory": "Student loan interest",
+                      "businessPct": 100,
+                      "status": "Estimate",
+                      "notes": "Verify against year-end loan servicer form."
+                }
+          ]
+    };
+
+    let state = null;
+    const filters = {
+      search: "",
+      type: "",
+      status: "",
+      includedOnly: false
+    };
+
+    function id() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return "row-" + Math.random().toString(36).slice(2);
+    }
+
+    function clone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    function normalizeState(candidate) {
+      const next = clone(candidate);
+      next.settings = { ...defaultState.settings, ...(next.settings || {}) };
+      next.rows = Array.isArray(next.rows) ? next.rows.map(row => ({
+        id: row.id || id(),
+        use: row.use !== false,
+        date: row.date || next.settings.reviewDate || "2026-06-01",
+        type: types.includes(row.type) ? row.type : "Info only",
+        description: row.description || "",
+        amount: cleanNumber(row.amount),
+        bucket: buckets.includes(row.bucket) ? row.bucket : "Not Schedule C",
+        subcategory: row.subcategory || "",
+        businessPct: row.businessPct === undefined ? 100 : cleanNumber(row.businessPct),
+        status: statuses.includes(row.status) ? row.status : "Needs support",
+        notes: row.notes || "",
+        source: row.source || null,
+        provenance: row.provenance || []
+      })) : clone(defaultState.rows);
+      return next;
+    }
+
+    async function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+        if (saved && saved.rows && saved.settings) return normalizeState(saved);
+      } catch {}
+      try {
+        const response = await fetch(seedDataPath, { cache: "no-store" });
+        if (response.ok) {
+          const seed = await response.json();
+          if (seed && seed.rows && seed.settings) return normalizeState(seed);
+        }
+      } catch {}
+      return normalizeState(defaultState);
+    }
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function money(value) {
+      return currency.format(Number(value) || 0);
+    }
+
+    function cleanNumber(value) {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      if (/[",\n]/.test(text)) return '"' + text.replaceAll('"', '""') + '"';
+      return text;
+    }
+
+    function deductibleAmount(row) {
+      if (!row.use || row.status === "Exclude") return 0;
+      if (row.type !== "Expense") return 0;
+      return cleanNumber(row.amount) * cleanNumber(row.businessPct) / 100;
+    }
+
+    function activeAmount(row) {
+      if (!row.use || row.status === "Exclude") return 0;
+      return cleanNumber(row.amount);
+    }
+
+    function activeRows() {
+      return state.rows.filter(row => row.use && row.status !== "Exclude");
+    }
+
+    function includedValue(row) {
+      return row.type === "Expense" ? deductibleAmount(row) : activeAmount(row);
+    }
+
+    function filteredRows() {
+      const needle = filters.search.trim().toLowerCase();
+      return state.rows
+        .map((row, index) => ({ row, index }))
+        .filter(({ row }) => {
+          if (filters.type && row.type !== filters.type) return false;
+          if (filters.status && row.status !== filters.status) return false;
+          if (filters.includedOnly && (!row.use || row.status === "Exclude")) return false;
+          if (!needle) return true;
+          const haystack = [row.date, row.type, row.description, row.bucket, row.subcategory, row.status, row.notes].join(" ").toLowerCase();
+          return haystack.includes(needle);
+        });
+    }
+
+    function totals() {
+      const rows = state.rows;
+      const gross = rows.filter(r => r.type === "Revenue").reduce((sum, r) => sum + activeAmount(r), 0);
+      const expenses = rows.reduce((sum, r) => sum + deductibleAmount(r), 0);
+      const netScheduleC = Math.max(0, gross - expenses);
+      const investmentIncome = rows.filter(r => r.type === "Investment / other income").reduce((sum, r) => sum + activeAmount(r), 0);
+      const manualDeductions = rows.filter(r => r.type === "Above-line deduction").reduce((sum, r) => sum + activeAmount(r), 0);
+      const seTaxDeduction = Math.max(0, netScheduleC * 0.9235 * 0.153 / 2);
+      const magi = netScheduleC + investmentIncome - manualDeductions - seTaxDeduction;
+      const threshold = cleanNumber(state.settings.threshold);
+      const buffer = threshold - magi;
+      const withoutIra = magi + rows
+        .filter(r => r.type === "Above-line deduction" && /traditional ira/i.test(r.subcategory + " " + r.description))
+        .reduce((sum, r) => sum + activeAmount(r), 0);
+      const cpaReviewExpenses = rows
+        .filter(r => r.type === "Expense" && r.status === "CPA review")
+        .reduce((sum, r) => sum + deductibleAmount(r), 0);
+      const magiWithoutCpaReviewExpenses = magi + cpaReviewExpenses;
+      return { gross, expenses, netScheduleC, investmentIncome, manualDeductions, seTaxDeduction, magi, threshold, buffer, withoutIra, cpaReviewExpenses, magiWithoutCpaReviewExpenses };
+    }
+
+    function expenseBuckets() {
+      const grouped = new Map();
+      for (const row of state.rows) {
+        const amount = deductibleAmount(row);
+        if (!amount) continue;
+        const key = row.bucket + "||" + (row.subcategory || "");
+        const current = grouped.get(key) || { bucket: row.bucket, subcategory: row.subcategory || "", amount: 0 };
+        current.amount += amount;
+        grouped.set(key, current);
+      }
+      return [...grouped.values()].sort((a, b) => a.bucket.localeCompare(b.bucket) || b.amount - a.amount);
+    }
+
+    function renderSettings() {
+      document.getElementById("threshold").value = state.settings.threshold;
+      document.getElementById("coveredCaProjected").value = state.settings.coveredCaProjected;
+      document.getElementById("coveredCaNext12").value = state.settings.coveredCaNext12;
+      document.getElementById("reviewDate").value = state.settings.reviewDate;
+    }
+
+    function renderFilterOptions() {
+      const typeSelect = document.getElementById("filterType");
+      const statusSelect = document.getElementById("filterStatus");
+      typeSelect.innerHTML = `<option value="">All types</option>` + optionList(types, filters.type);
+      statusSelect.innerHTML = `<option value="">All statuses</option>` + optionList(statuses, filters.status);
+      typeSelect.value = filters.type;
+      statusSelect.value = filters.status;
+    }
+
+    function optionList(options, selected) {
+      return options.map(item => `<option value="${escapeHtml(item)}"${item === selected ? " selected" : ""}>${escapeHtml(item)}</option>`).join("");
+    }
+
+    function renderLedger() {
+      const body = document.getElementById("ledgerBody");
+      const visible = filteredRows();
+      if (!visible.length) {
+        body.innerHTML = `<tr><td colspan="12">No rows match the current filters.</td></tr>`;
+        return;
+      }
+      body.innerHTML = visible.map(({ row, index }) => {
+        const included = includedValue(row);
+        return `
+          <tr data-index="${index}">
+            <td><input class="small" data-field="use" type="checkbox"${row.use ? " checked" : ""}></td>
+            <td><input class="date" data-field="date" type="date" value="${escapeHtml(row.date)}"></td>
+            <td><select class="type" data-field="type">${optionList(types, row.type)}</select></td>
+            <td><input class="description" data-field="description" value="${escapeHtml(row.description)}"></td>
+            <td><input class="small" data-field="amount" type="number" step="0.01" value="${escapeHtml(row.amount)}"></td>
+            <td><select class="bucket" data-field="bucket">${optionList(buckets, row.bucket)}</select></td>
+            <td><input class="subcategory" data-field="subcategory" value="${escapeHtml(row.subcategory)}"></td>
+            <td><input class="small" data-field="businessPct" type="number" min="0" max="100" step="1" value="${escapeHtml(row.businessPct)}"></td>
+            <td><select data-field="status">${optionList(statuses, row.status)}</select></td>
+            <td><textarea class="notes" data-field="notes">${escapeHtml(row.notes)}</textarea></td>
+            <td class="amount">${money(included)}</td>
+            <td><button class="danger" data-action="delete">Remove</button></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderKpis() {
+      const t = totals();
+      document.getElementById("kpiMagi").textContent = money(t.magi);
+      document.getElementById("kpiThreshold").textContent = money(t.threshold);
+      document.getElementById("kpiBuffer").textContent = money(t.buffer);
+      document.getElementById("kpiGross").textContent = money(t.gross);
+      document.getElementById("kpiExpenses").textContent = money(t.expenses);
+      document.getElementById("kpiNet").textContent = money(t.netScheduleC);
+      const status = document.getElementById("kpiStatus");
+      status.className = "status " + (t.buffer >= 2500 ? "ok" : t.buffer >= 0 ? "warn" : "bad");
+      status.textContent = t.buffer >= 2500 ? "Looks under threshold" : t.buffer >= 0 ? "Close to threshold" : "Over threshold";
+      const usedPct = t.threshold > 0 ? Math.max(0, Math.min(140, (t.magi / t.threshold) * 100)) : 0;
+      const meterFill = document.getElementById("bufferMeterFill");
+      const meterText = document.getElementById("bufferMeterText");
+      meterFill.style.width = Math.min(100, usedPct).toFixed(1) + "%";
+      meterFill.style.background = t.buffer >= 2500
+        ? "linear-gradient(90deg, var(--green), var(--teal))"
+        : t.buffer >= 0
+          ? "linear-gradient(90deg, #d69e2e, var(--amber))"
+          : "linear-gradient(90deg, #d92d20, var(--red))";
+      meterText.textContent = `${usedPct.toFixed(1)}% of threshold used`;
+    }
+
+    function renderFormulaTable() {
+      const t = totals();
+      const rows = [
+        ["Gross self-employment receipts", t.gross, "Zoho collected receipts plus forecast rows marked as Revenue"],
+        ["Schedule C expenses", -t.expenses, "Included expense rows, adjusted by business percentage"],
+        ["Net Schedule C", t.netScheduleC, "Gross receipts minus included Schedule C expenses"],
+        ["Investment / other income", t.investmentIncome, "Capital gains, dividends, taxable interest, and similar non-business income"],
+        ["Above-line deductions", -t.manualDeductions, "Traditional IRA, student loan interest, SEHI, and other manual deductions entered as rows"],
+        ["Deductible half of SE tax", -t.seTaxDeduction, "Auto-estimated from net Schedule C profit"],
+        ["Planning MAGI / application income", t.magi, "Number to monitor against Medi-Cal threshold"]
+      ];
+      document.getElementById("formulaTable").innerHTML = rows.map((row, index) => `
+        <tr class="${index === rows.length - 1 ? "total-row" : ""}">
+          <td>${escapeHtml(row[0])}</td>
+          <td class="amount">${money(row[1])}</td>
+          <td>${escapeHtml(row[2])}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderScenarioChecks() {
+      const t = totals();
+      const scenarios = [
+        {
+          label: "Current planning estimate",
+          magi: t.magi,
+          detail: `${money(t.buffer)} buffer against ${money(t.threshold)}`
+        },
+        {
+          label: "If the traditional IRA is not deductible",
+          magi: t.withoutIra,
+          detail: `${money(t.threshold - t.withoutIra)} buffer after removing the IRA deduction`
+        },
+        {
+          label: "If CPA-review expenses are excluded",
+          magi: t.magiWithoutCpaReviewExpenses,
+          detail: `${money(t.threshold - t.magiWithoutCpaReviewExpenses)} buffer after excluding ${money(t.cpaReviewExpenses)} of CPA-review expenses`
+        }
+      ];
+      document.getElementById("scenarioChecks").innerHTML = scenarios.map(item => {
+        const buffer = t.threshold - item.magi;
+        const cls = buffer >= 2500 ? "ok" : buffer >= 0 ? "warn" : "bad";
+        return `
+          <div class="scenario">
+            <strong>${escapeHtml(item.label)}</strong>
+            <div class="amount"><span>Estimated income</span><span>${money(item.magi)}</span></div>
+            <div class="amount"><span>Threshold buffer</span><span class="${cls} status">${money(buffer)}</span></div>
+            <p class="fine-print">${escapeHtml(item.detail)}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderBucketSummary() {
+      const body = document.getElementById("bucketSummary");
+      const rows = expenseBuckets();
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="3">No included expense rows yet.</td></tr>`;
+        return;
+      }
+      body.innerHTML = rows.map(row => `
+        <tr>
+          <td>${escapeHtml(row.bucket)}</td>
+          <td>${escapeHtml(row.subcategory)}</td>
+          <td class="amount">${money(row.amount)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function monthLabel(value) {
+      if (!/^\d{4}-\d{2}/.test(value || "")) return "Undated";
+      const [year, month] = value.slice(0, 7).split("-");
+      return new Date(Number(year), Number(month) - 1, 1).toLocaleString("en-US", { month: "short", year: "numeric" });
+    }
+
+    function renderMonthlySummary() {
+      const grouped = new Map();
+      for (const row of activeRows()) {
+        const key = /^\d{4}-\d{2}/.test(row.date || "") ? row.date.slice(0, 7) : "Undated";
+        const current = grouped.get(key) || { key, revenue: 0, expenses: 0, otherIncome: 0, deductions: 0 };
+        if (row.type === "Revenue") current.revenue += activeAmount(row);
+        if (row.type === "Expense") current.expenses += deductibleAmount(row);
+        if (row.type === "Investment / other income") current.otherIncome += activeAmount(row);
+        if (row.type === "Above-line deduction") current.deductions += activeAmount(row);
+        grouped.set(key, current);
+      }
+      const rows = [...grouped.values()].sort((a, b) => a.key.localeCompare(b.key));
+      if (!rows.length) {
+        document.getElementById("monthlySummary").innerHTML = `<tr><td colspan="6">No included rows yet.</td></tr>`;
+        return;
+      }
+      const totalsRow = rows.reduce((sum, row) => ({
+        revenue: sum.revenue + row.revenue,
+        expenses: sum.expenses + row.expenses,
+        otherIncome: sum.otherIncome + row.otherIncome,
+        deductions: sum.deductions + row.deductions
+      }), { revenue: 0, expenses: 0, otherIncome: 0, deductions: 0 });
+      document.getElementById("monthlySummary").innerHTML = rows.map(row => `
+        <tr>
+          <td>${escapeHtml(monthLabel(row.key))}</td>
+          <td class="amount">${money(row.revenue)}</td>
+          <td class="amount">${money(row.expenses)}</td>
+          <td class="amount">${money(row.revenue - row.expenses)}</td>
+          <td class="amount">${money(row.otherIncome)}</td>
+          <td class="amount">${money(row.deductions)}</td>
+        </tr>
+      `).join("") + `
+        <tr class="total-row">
+          <td>Total</td>
+          <td class="amount">${money(totalsRow.revenue)}</td>
+          <td class="amount">${money(totalsRow.expenses)}</td>
+          <td class="amount">${money(totalsRow.revenue - totalsRow.expenses)}</td>
+          <td class="amount">${money(totalsRow.otherIncome)}</td>
+          <td class="amount">${money(totalsRow.deductions)}</td>
+        </tr>
+      `;
+    }
+
+    function renderChecks() {
+      const t = totals();
+      const checks = [];
+      const ira = state.rows.filter(r => r.type === "Above-line deduction" && /traditional ira/i.test(r.subcategory + " " + r.description)).reduce((sum, r) => sum + activeAmount(r), 0);
+      const unsupported = state.rows.filter(r => r.use && r.status !== "Supported" && r.status !== "Exclude").length;
+      const cpaReview = state.rows.filter(r => r.use && r.status === "CPA review").length;
+      const grossReceiptsRows = state.rows.filter(r => r.use && r.type === "Revenue").length;
+
+      checks.push({ ok: t.buffer > 0, text: t.buffer > 0 ? `Planning estimate is ${money(t.buffer)} under the threshold.` : `Planning estimate is ${money(Math.abs(t.buffer))} over the threshold.` });
+      checks.push({ ok: ira >= 7500, text: ira >= 7500 ? "Traditional IRA deduction is modeled at $7,500." : "Traditional IRA deduction is below $7,500. Recheck eligibility buffer." });
+      checks.push({ ok: unsupported === 0, text: unsupported === 0 ? "All included rows are marked supported." : `${unsupported} included row(s) still need support or final review.` });
+      checks.push({ ok: cpaReview === 0, text: cpaReview === 0 ? "No included rows are marked CPA review." : `${cpaReview} included row(s) should be reviewed by the accountant.` });
+      checks.push({ ok: grossReceiptsRows > 0, text: grossReceiptsRows > 0 ? "Gross receipts rows are present." : "Add gross receipts rows from Zoho/bank records." });
+
+      document.getElementById("checks").innerHTML = checks.map(check => `
+        <div class="check ${check.ok ? "okline" : ""}">${escapeHtml(check.text)}</div>
+      `).join("");
+    }
+
+    function summaryText() {
+      const t = totals();
+      const bucketsText = expenseBuckets()
+        .map(row => `- ${row.bucket}${row.subcategory ? " / " + row.subcategory : ""}: ${money(row.amount)}`)
+        .join("\n");
+      return `2026 Sample Business threshold / Schedule C tracking snapshot
+Review date: ${state.settings.reviewDate}
+
+Covered California PDF reference:
+- Projected annual income shown in PDF: ${money(state.settings.coveredCaProjected)}
+- Next 12-month income shown by Covered California: ${money(state.settings.coveredCaNext12)}
+
+Current planning calculation:
+- Gross self-employment receipts: ${money(t.gross)}
+- Schedule C expense estimate: ${money(t.expenses)}
+- Net Schedule C estimate: ${money(t.netScheduleC)}
+- Investment / other income: ${money(t.investmentIncome)}
+- Manual above-line deductions: ${money(t.manualDeductions)}
+- Auto-estimated deductible half of SE tax: ${money(t.seTaxDeduction)}
+- Planning MAGI / application income: ${money(t.magi)}
+- Medi-Cal threshold used: ${money(t.threshold)}
+- Estimated buffer: ${money(t.buffer)}
+- Estimated income without IRA deduction: ${money(t.withoutIra)}
+- Estimated income if CPA-review expenses are excluded: ${money(t.magiWithoutCpaReviewExpenses)}
+
+Schedule C bucket rollup:
+${bucketsText || "- No expense buckets yet."}
+
+Notes:
+- Traditional IRA contribution must actually be made and deductible for 2026.
+- Roth IRA contributions do not reduce MAGI.
+- Keep support for each row before year-end handoff.
+- Report material income or household changes promptly through the appropriate Medi-Cal / Covered California / county channel.
+- This tracker is for organization and planning only; final tax treatment belongs with the accountant.`;
+    }
+
+    function accountantMarkdown() {
+      const t = totals();
+      const flaggedRows = state.rows.filter(row => row.use && row.status !== "Supported" && row.status !== "Exclude");
+      const ledgerLines = state.rows.map(row => {
+        const included = includedValue(row);
+        return `| ${row.date || ""} | ${row.type} | ${row.bucket} | ${row.subcategory || ""} | ${row.description || ""} | ${money(row.amount)} | ${row.businessPct || 0}% | ${money(included)} | ${row.status} | ${String(row.notes || "").replaceAll("|", "/")} |`;
+      }).join("\n");
+      const bucketLines = expenseBuckets().map(row => `| ${row.bucket} | ${row.subcategory || ""} | ${money(row.amount)} |`).join("\n");
+      const flagLines = flaggedRows.map(row => `- ${row.status}: ${row.description} (${money(row.amount)}) - ${row.notes || "Needs support."}`).join("\n");
+      return `# Sample Business 2026 Accountant Tracking Export
+
+Prepared from local tracker on ${state.settings.reviewDate || new Date().toISOString().slice(0, 10)}.
+
+This is an organizer, not a tax return. Please validate final tax treatment, IRA deductibility, home-office treatment, vehicle method, and Schedule C classifications.
+
+## Planning Summary
+
+| Line | Amount |
+|---|---:|
+| Gross self-employment receipts | ${money(t.gross)} |
+| Schedule C expense estimate | ${money(t.expenses)} |
+| Net Schedule C estimate | ${money(t.netScheduleC)} |
+| Investment / other income | ${money(t.investmentIncome)} |
+| Manual above-line deductions | ${money(t.manualDeductions)} |
+| Auto-estimated deductible half of SE tax | ${money(t.seTaxDeduction)} |
+| Planning MAGI / application income | ${money(t.magi)} |
+| Medi-Cal threshold used | ${money(t.threshold)} |
+| Estimated buffer | ${money(t.buffer)} |
+| Estimated income without IRA deduction | ${money(t.withoutIra)} |
+| Estimated income if CPA-review expenses are excluded | ${money(t.magiWithoutCpaReviewExpenses)} |
+
+## Schedule C Bucket Rollup
+
+| Schedule C heading | Internal subcategory | Included amount |
+|---|---|---:|
+${bucketLines || "| No expenses yet | | $0.00 |"}
+
+## Review Flags
+
+${flagLines || "- No included rows are currently flagged."}
+
+## Ledger Detail
+
+| Date | Type | Schedule C heading | Internal subcategory | Description | Raw amount | Business % | Included amount | Status | Notes |
+|---|---|---|---|---|---:|---:|---:|---|---|
+${ledgerLines}
+`;
+    }
+
+    function renderSummaryText() {
+      document.getElementById("summaryText").value = summaryText();
+    }
+
+    function renderAll() {
+      renderSettings();
+      renderFilterOptions();
+      renderLedger();
+      renderKpis();
+      renderFormulaTable();
+      renderScenarioChecks();
+      renderBucketSummary();
+      renderMonthlySummary();
+      renderChecks();
+      renderSummaryText();
+      saveState();
+    }
+
+    function updateRowFromControl(control) {
+      const tr = control.closest("tr");
+      if (!tr) return;
+      const row = state.rows[Number(tr.dataset.index)];
+      const field = control.dataset.field;
+      if (!row || !field) return;
+      if (field === "use") {
+        row.use = control.checked;
+      } else if (field === "amount" || field === "businessPct") {
+        row[field] = cleanNumber(control.value);
+      } else {
+        row[field] = control.value;
+      }
+      renderKpis();
+      renderFormulaTable();
+      renderScenarioChecks();
+      renderBucketSummary();
+      renderMonthlySummary();
+      renderChecks();
+      renderSummaryText();
+      saveState();
+      const includedCell = tr.querySelector("td:nth-last-child(2)");
+      if (includedCell) includedCell.textContent = money(includedValue(row));
+    }
+
+    function addRow() {
+      state.rows.push({
+        id: id(),
+        use: true,
+        date: state.settings.reviewDate || "2026-06-01",
+        type: "Expense",
+        description: "",
+        amount: 0,
+        bucket: "Other expenses",
+        subcategory: "",
+        businessPct: 100,
+        status: "Needs support",
+        notes: ""
+      });
+      renderAll();
+    }
+
+    function exportBackup() {
+      download("local-financial-tracker-backup.json", JSON.stringify(state, null, 2), "application/json");
+    }
+
+    function buildCsv() {
+      const t = totals();
+      const lines = [];
+      lines.push(["Section", "Tax Area", "Schedule C Heading", "Internal Subcategory", "Date", "Description", "Amount", "Business %", "Included Amount", "Status", "Notes"].map(csvEscape).join(","));
+      const summaryRows = [
+        ["Summary", "Gross receipts", "", "", "", "Gross self-employment receipts", t.gross, "", t.gross, "", ""],
+        ["Summary", "Schedule C", "", "", "", "Schedule C expenses", t.expenses, "", t.expenses, "", ""],
+        ["Summary", "Schedule C", "", "", "", "Net Schedule C", t.netScheduleC, "", t.netScheduleC, "", ""],
+        ["Summary", "Other income", "", "", "", "Investment / other income", t.investmentIncome, "", t.investmentIncome, "", ""],
+        ["Summary", "Above-line deductions", "", "", "", "Manual above-line deductions", t.manualDeductions, "", t.manualDeductions, "", ""],
+        ["Summary", "Above-line deductions", "", "", "", "Deductible half of SE tax estimate", t.seTaxDeduction, "", t.seTaxDeduction, "", ""],
+        ["Summary", "MAGI", "", "", "", "Planning MAGI", t.magi, "", t.magi, "", ""],
+        ["Summary", "Medi-Cal", "", "", "", "Threshold", t.threshold, "", t.threshold, "", ""],
+        ["Summary", "Medi-Cal", "", "", "", "Buffer", t.buffer, "", t.buffer, "", ""],
+        ["Summary", "Medi-Cal", "", "", "", "Income without IRA deduction", t.withoutIra, "", t.withoutIra, "", ""],
+        ["Summary", "Medi-Cal", "", "", "", "Income if CPA-review expenses are excluded", t.magiWithoutCpaReviewExpenses, "", t.magiWithoutCpaReviewExpenses, "", ""]
+      ];
+      for (const row of summaryRows) lines.push(row.map(csvEscape).join(","));
+      for (const row of expenseBuckets()) {
+        lines.push(["Bucket Summary", "Schedule C", row.bucket, row.subcategory, "", "", row.amount, "", row.amount, "", ""].map(csvEscape).join(","));
+      }
+      for (const row of state.rows) {
+        const included = row.type === "Expense" ? deductibleAmount(row) : activeAmount(row);
+        lines.push([
+          "Ledger",
+          row.type,
+          row.bucket,
+          row.subcategory,
+          row.date,
+          row.description,
+          row.amount,
+          row.businessPct,
+          included,
+          row.status,
+          row.notes
+        ].map(csvEscape).join(","));
+      }
+      return lines.join("\n");
+    }
+
+    function exportCsv() {
+      download("local-financial-tracker-cpa-export.csv", buildCsv(), "text/csv");
+    }
+
+    function exportMarkdown() {
+      download("local-financial-tracker-accountant-export.md", accountantMarkdown(), "text/markdown");
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (quoted) {
+          if (char === '"' && next === '"') {
+            value += '"';
+            i++;
+          } else if (char === '"') {
+            quoted = false;
+          } else {
+            value += char;
+          }
+        } else if (char === '"') {
+          quoted = true;
+        } else if (char === ",") {
+          row.push(value);
+          value = "";
+        } else if (char === "\n") {
+          row.push(value);
+          rows.push(row);
+          row = [];
+          value = "";
+        } else if (char !== "\r") {
+          value += char;
+        }
+      }
+      row.push(value);
+      if (row.some(cell => cell !== "")) rows.push(row);
+      const headers = rows.shift() || [];
+      return rows.map(values => Object.fromEntries(headers.map((header, index) => [header.trim(), values[index] ?? ""])));
+    }
+
+    function monarchMapping(row) {
+      const category = row.Category || "";
+      const merchant = row.Merchant || "";
+      const notes = row.Notes || "";
+      const text = `${category} ${merchant} ${notes}`.toLowerCase();
+      const mapped = {
+        bucket: "Other expenses",
+        subcategory: "Software subscriptions",
+        status: "Needs support",
+        type: "Expense",
+        notes: "Imported from Monarch CSV. Verify business purpose, original purchase date, and support before year-end."
+      };
+      if (/rent|gas & electric|internet|renter/.test(category.toLowerCase())) {
+        mapped.type = "Info only";
+        mapped.bucket = "Not Schedule C";
+        mapped.subcategory = "Home office raw input";
+        mapped.status = "CPA review";
+        mapped.notes = "Mixed-use home-office input imported from Monarch. Keep raw support; accountant should validate any deductible allocation.";
+      } else if (/tax/.test(category.toLowerCase()) || /franchise tax|department of motor vehicles/.test(text)) {
+        mapped.bucket = "Taxes and licenses";
+        mapped.subcategory = "Business licenses / taxes";
+      } else if (/car registration|vehicle|dmv/.test(text)) {
+        mapped.bucket = "Car and truck expenses";
+        mapped.subcategory = "Vehicle support";
+        mapped.status = "CPA review";
+        mapped.notes = "Vehicle method unclear. Track mileage before claiming vehicle costs.";
+      } else if (/legal|financial/.test(category.toLowerCase())) {
+        mapped.bucket = "Legal and professional fees";
+        mapped.subcategory = "Legal/accounting";
+      } else if (/electronics|computer|apple|best buy|amazon/.test(text)) {
+        mapped.bucket = "Property & equipment tracking";
+        mapped.subcategory = "Hardware / fixed assets";
+        mapped.status = "CPA review";
+      } else if (/insurance/.test(category.toLowerCase())) {
+        mapped.bucket = "Insurance (other than health)";
+        mapped.subcategory = "Business insurance";
+      } else if (/travel/.test(category.toLowerCase())) {
+        mapped.bucket = "Travel";
+        mapped.subcategory = "Business travel";
+        mapped.status = "CPA review";
+      } else if (/meal|restaurant|coffee/.test(text)) {
+        mapped.bucket = "Meals";
+        mapped.subcategory = "Business meals";
+        mapped.status = "CPA review";
+      } else if (/cloudflare|hostinger|domain|dns/.test(text)) {
+        mapped.bucket = "Other expenses";
+        mapped.subcategory = "Domains & DNS / hosting";
+      } else if (/stripe|bank fee|fee/.test(text)) {
+        mapped.bucket = "Other expenses";
+        mapped.subcategory = "Processor fees";
+      } else if (/real estate|course|school|training|certification/.test(text)) {
+        mapped.bucket = "Other expenses";
+        mapped.subcategory = "Education & certifications";
+        mapped.status = "CPA review";
+      }
+      return mapped;
+    }
+
+    async function importMonarchCsv(file) {
+      const text = await file.text();
+      const rows = parseCsv(text);
+      const imported = rows
+        .filter(row => /sample business|business|llc/i.test(row["Business Entity"] || ""))
+        .map(row => {
+          const amount = Math.abs(cleanNumber(row.Amount));
+          if (!amount) return null;
+          const mapping = monarchMapping(row);
+          return {
+            id: id(),
+            use: true,
+            date: row.Date || state.settings.reviewDate || "2026-06-01",
+            type: cleanNumber(row.Amount) > 0 ? "Revenue" : mapping.type,
+            description: row.Merchant || row["Original Statement"] || "Monarch import row",
+            amount,
+            bucket: cleanNumber(row.Amount) > 0 ? "Gross receipts" : mapping.bucket,
+            subcategory: cleanNumber(row.Amount) > 0 ? "Monarch positive amount" : mapping.subcategory,
+            businessPct: cleanNumber(row.Amount) > 0 ? 100 : (mapping.type === "Info only" ? 0 : 100),
+            status: cleanNumber(row.Amount) > 0 ? "Needs support" : mapping.status,
+            notes: [mapping.notes, row.Notes ? `Monarch note: ${row.Notes}` : "", row.Tags ? `Tags: ${row.Tags}` : ""].filter(Boolean).join(" ")
+          };
+        })
+        .filter(Boolean);
+      if (!imported.length) {
+        alert("No matching rows were found in that Monarch CSV.");
+        return;
+      }
+      const proceed = confirm(`Import ${imported.length} Monarch row(s)? Imported expenses append to the ledger, so exclude or remove seeded estimates if they would double-count.`);
+      if (!proceed) return;
+      state.rows.push(...imported);
+      renderAll();
+    }
+
+    function download(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("ledgerBody").addEventListener("input", event => {
+      if (event.target.dataset.field) updateRowFromControl(event.target);
+    });
+
+    document.getElementById("ledgerBody").addEventListener("change", event => {
+      if (event.target.dataset.field) updateRowFromControl(event.target);
+    });
+
+    document.getElementById("ledgerBody").addEventListener("click", event => {
+      if (event.target.dataset.action !== "delete") return;
+      const tr = event.target.closest("tr");
+      state.rows.splice(Number(tr.dataset.index), 1);
+      renderAll();
+    });
+
+    for (const field of ["threshold", "coveredCaProjected", "coveredCaNext12", "reviewDate"]) {
+      document.getElementById(field).addEventListener("input", event => {
+        state.settings[field] = field === "reviewDate" ? event.target.value : cleanNumber(event.target.value);
+        renderKpis();
+        renderFormulaTable();
+        renderScenarioChecks();
+        renderChecks();
+        renderSummaryText();
+        saveState();
+      });
+    }
+
+    document.getElementById("addRow").addEventListener("click", addRow);
+    document.getElementById("saveState").addEventListener("click", saveState);
+    document.getElementById("exportBackup").addEventListener("click", exportBackup);
+    document.getElementById("exportCsv").addEventListener("click", exportCsv);
+    document.getElementById("exportMarkdown").addEventListener("click", exportMarkdown);
+    document.getElementById("printView").addEventListener("click", () => window.print());
+    document.getElementById("searchRows").addEventListener("input", event => {
+      filters.search = event.target.value;
+      renderLedger();
+    });
+    document.getElementById("filterType").addEventListener("change", event => {
+      filters.type = event.target.value;
+      renderLedger();
+    });
+    document.getElementById("filterStatus").addEventListener("change", event => {
+      filters.status = event.target.value;
+      renderLedger();
+    });
+    document.getElementById("includedOnly").addEventListener("change", event => {
+      filters.includedOnly = event.target.checked;
+      renderLedger();
+    });
+    document.getElementById("copySummary").addEventListener("click", async () => {
+      await navigator.clipboard.writeText(document.getElementById("summaryText").value);
+    });
+    document.getElementById("resetState").addEventListener("click", () => {
+      if (!confirm("Reset tracker to the seeded baseline?")) return;
+      state = normalizeState(defaultState);
+      localStorage.removeItem(storageKey);
+      renderAll();
+    });
+    document.getElementById("importBackup").addEventListener("change", async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      const imported = JSON.parse(text);
+      if (!imported.rows || !imported.settings) throw new Error("Invalid tracker backup");
+      state = normalizeState(imported);
+      renderAll();
+      event.target.value = "";
+    });
+    document.getElementById("importMonarch").addEventListener("change", async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        await importMonarchCsv(file);
+      } catch (error) {
+        alert(`Could not import Monarch CSV: ${error.message}`);
+      } finally {
+        event.target.value = "";
+      }
+    });
+
+    loadState().then(loaded => {
+      state = loaded;
+      renderAll();
+    }).catch(error => {
+      console.error(error);
+      state = normalizeState(defaultState);
+      renderAll();
+    });
+  </script>
+</body>
+</html>

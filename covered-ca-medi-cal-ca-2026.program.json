@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "0.1.0",
+  "programId": "covered-ca-medi-cal-ca-2026-hh1",
+  "name": "California Medi-Cal MAGI threshold tracker",
+  "jurisdiction": "California",
+  "effectiveYear": 2026,
+  "householdSize": 1,
+  "thresholds": [
+    {
+      "name": "138% FPL annual threshold",
+      "amount": 22025,
+      "period": "year",
+      "sourceId": "coveredca-2026-fpl-chart"
+    },
+    {
+      "name": "138% FPL monthly threshold",
+      "amount": 1836,
+      "period": "month",
+      "sourceId": "dhcs-2026-monthly-fpl-values"
+    }
+  ],
+  "incomeView": {
+    "label": "Planning MAGI / application income",
+    "calculation": [
+      "net_schedule_c",
+      "plus_investment_and_other_income",
+      "minus_above_line_deductions",
+      "minus_auto_estimated_deductible_half_of_self_employment_tax"
+    ]
+  },
+  "citations": [
+    {
+      "id": "coveredca-2026-fpl-chart",
+      "title": "Covered California 2026 Federal Poverty Level Chart",
+      "url": "https://www.coveredca.com/PDFs/FPL-chart.pdf",
+      "retrieved": "2026-06-01"
+    },
+    {
+      "id": "dhcs-2026-monthly-fpl-values",
+      "title": "DHCS 2026 FPL Calculation Chart Monthly Values",
+      "url": "https://www.dhcs.ca.gov/services/medi-cal-resources/medi-cal-eligibility-division/all-county-welfare-directors-medi-cal-eligibility-division-information-letters/2026-fpl-calculation-chart-monthly-values-enclosure-1/",
+      "retrieved": "2026-06-01"
+    },
+    {
+      "id": "irs-2026-ira-limit",
+      "title": "IRS 2026 IRA contribution limit notice",
+      "url": "https://www.irs.gov/newsroom/401k-limit-increases-to-24500-for-2026-ira-limit-increases-to-7500",
+      "retrieved": "2026-06-01"
+    }
+  ],
+  "disclaimer": "This is a planning configuration, not a tax, legal, benefits, or insurance determination."
+}
