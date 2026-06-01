@@ -1,97 +1,111 @@
 # SMB Financial Tracker
 
-SMB Financial Tracker is a small, local-first financial tracking project for freelancers, consultants, and small business owners.
+[![ci](https://github.com/XKYLAN-LLC/smb-financial-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/XKYLAN-LLC/smb-financial-tracker/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Status: alpha](https://img.shields.io/badge/status-alpha-orange.svg)](docs/project-status.md)
+[![Local-first](https://img.shields.io/badge/local--first-yes-brightgreen.svg)](docs/private-data.md)
 
-The current version is a static dashboard with synthetic sample data. The goal is to make it easy to track income, expenses, deductions, review items, and accountant-ready exports without putting private financial records into Git.
+SMB Financial Tracker is an AI-assisted, local-first financial tracking surface for freelancers, consultants, and small business owners.
 
-This project is designed to be used with an AI assistant. The repo gives the assistant and user a shared local surface: a ledger shape, source-document manifest, review queue, accountant package checklist, and privacy guardrails. The assistant can use user-provided context and attached private files during a session, while the public repo stays synthetic and safe.
+It gives a user and an AI assistant a shared place to maintain a simple ledger, source-document references, review flags, planning settings, and accountant-ready exports. Private financial records stay local. Public repo data stays synthetic.
 
-This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and planning tool. Final tax treatment should be reviewed by a qualified professional.
-
-## Project Goals
-
-- Give small business owners a simple dashboard for income, expenses, deductions, review queues, P&L, and planning scenarios.
-- Keep data local-first, transparent, and easy to audit.
-- Provide synthetic public examples while keeping real user data private.
-- Make AI-assisted CSV/PDF/source-document review easier to run over time.
-- Preserve provenance so imported or edited records can be reviewed later.
-- Export clean summaries that make accountant handoff easier.
-- Give AI agents enough structure to maintain a user's financial picture without building premature bank, OAuth, CSV-routing, or PDF-parsing integrations.
+This is not tax, legal, benefits, insurance, accounting, or financial advice. It is a recordkeeping and review tool.
 
 ## Preview
 
 ![Dashboard overview](docs/assets/screenshots/dashboard-overview.png)
 
-See `docs/walkthrough.md` for a short visual walkthrough and `docs/assets/video/README.md` for the synthetic demo video workflow.
+See the [walkthrough](docs/walkthrough.md) and synthetic [video workflow](docs/assets/video/README.md).
 
-Video walkthrough: [`docs/assets/video/smb-financial-tracker-walkthrough.mp4`](docs/assets/video/smb-financial-tracker-walkthrough.mp4)
+## Quick Start
 
-## Files
+Run the static dashboard locally:
+
+```bash
+python3 -m http.server 8765 --bind 127.0.0.1
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8765/index.html
+```
+
+The UI reads saved browser state first, then falls back to `sample-tracker.seed.json`. Use Reset in the dashboard, or clear the `local-financial-tracker-v1` localStorage key, to reload the synthetic sample data.
+
+## What This Provides
+
+- Static local dashboard for income, expenses, deductions, review items, P&L, and planning scenarios.
+- Plain JSON seed data that is easy for humans and agents to inspect.
+- Source-document and accountant-package manifest examples.
+- Agent instructions for preserving provenance, flagging uncertainty, and keeping private data out of Git.
+- Validation scripts and CI checks for public examples.
+- Privacy docs and ignored local folders for real work.
+
+## Framework Surface
+
+The project intentionally focuses on the surface an AI assistant can work with:
+
+| Surface | Purpose |
+|---|---|
+| Ledger rows | Reviewable income, expense, transfer, owner contribution, and owner draw records. |
+| Review statuses | Keep missing support, CPA questions, info-only items, and exclusions visible. |
+| Source manifests | Track local-only PDFs, CSVs, receipts, statements, invoices, and notes by safe IDs. |
+| Accountant packages | Collect exports, source checklists, and open questions into one local handoff. |
+| Program configs | Store cited planning thresholds with effective dates. |
+| Agent skills | Give assistants clear rules for privacy, provenance, and conservative review. |
+
+The repo should not spend early effort on live integrations or heavy parsing logic. Users can attach CSVs, PDFs, and other documents to an AI session or place them under ignored `private/` folders; the durable output is reviewable rows, source references, and package checklists.
+
+## Documentation
+
+- [Docs index](docs/README.md)
+- [Core concepts](docs/concepts.md)
+- [AI agent surface](docs/agent-surface.md)
+- [Private data rules](docs/private-data.md)
+- [Data model](DATA_MODEL.md)
+- [Agent guide](AGENT_GUIDE.md)
+- [Accountant package](docs/accountant-package.md)
+- [AI prompts](docs/ai-prompts.md)
+- [Roadmap](docs/roadmap.md)
+- [Project status](docs/project-status.md)
+
+## Key Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | Local static UI for the current tracker. It reads saved browser state first, then falls back to the sample seed JSON. |
-| `sample-tracker.seed.json` | Synthetic seed ledger and settings for demos, tests, and future OSS examples. |
-| `covered-ca-medi-cal-ca-2026.program.json` | Program threshold configuration with source citations and effective year. |
-| `docs/v1-scope.md` | Scope and roadmap notes, including reusable open-source product direction. |
-| `docs/agent-surface.md` | How AI agents use this repo as a local financial workspace. |
-| `docs/accountant-package.md` | Accountant-package handoff structure and local private folder guidance. |
-| `docs/ai-prompts.md` | Copyable prompts for using the repo with an AI assistant. |
-| `docs/private-data.md` | Public-repo privacy rules and local-only folder guidance. |
-| `docs/roadmap.md` | Simple V1/V2/V3 product roadmap. |
-| `docs/walkthrough.md` | Screenshot-based walkthrough for new users. |
-| `AGENT_GUIDE.md` | Workflow guide for assisted data updates and imports. |
-| `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
-| `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
-| `skills/financial-tracker/SKILL.md` | Concise skill instructions for agents maintaining this repo. |
-| `skills/import-csv/SKILL.md` | AI-assisted CSV review rules for reviewable ledger rows. |
-| `scripts/validate-sample-json.py` | Dependency-free validator for public sample JSON and obvious private-data patterns. |
-| `scripts/validate-agent-surface.py` | Validator for AI-agent surface examples and required docs. |
-| `examples/agent-workspace.example.json` | Synthetic source-document and review-queue manifest. |
-| `examples/accountant-package.example.json` | Synthetic accountant-package manifest. |
-| `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
-| `LICENSE` | MIT license. |
-| `NOTICE` | Short project attribution note. |
-| `CONTRIBUTING.md` | Contribution guide and privacy requirements. |
-| `SECURITY.md` | Security and sensitive-data reporting policy. |
-| `GOVERNANCE.md` | Project governance and decision-making model. |
-| `CHANGELOG.md` | Release notes and project history. |
-
-## Current Workflow
-
-1. Open the tracker through a local server:
-
-   ```bash
-   python3 -m http.server 8765 --bind 127.0.0.1
-   ```
-
-2. Visit `http://127.0.0.1:8765/index.html`.
-3. Update ledger rows, imports, or settings.
-4. Export CPA CSV or accountant Markdown.
-5. Save source documents and support in a local ignored folder such as `private/source-documents/`.
-
-The UI stores edits in browser `localStorage` under `local-financial-tracker-v1`. To reload from the sample JSON seed, use Reset or clear that localStorage key.
+| `index.html` | Local static dashboard. |
+| `sample-tracker.seed.json` | Synthetic seed ledger and settings. |
+| `covered-ca-medi-cal-ca-2026.program.json` | Cited program threshold config. |
+| `examples/` | Synthetic agent workspace and accountant-package manifests. |
+| `skills/` | Agent skill instructions. |
+| `scripts/` | Validation and screenshot capture scripts. |
+| `docs/` | Product, privacy, agent, walkthrough, and roadmap docs. |
+| `AGENTS.md` | Short repo instructions for AI coding agents. |
 
 ## AI-Assisted Workflow
 
-1. Put private PDFs, CSVs, receipts, statements, and exports in ignored local folders under `private/`.
-2. Ask an AI assistant to review those files with you and update ledger rows, source-document manifests, and review flags.
-3. Keep uncertain tax, legal, benefits, or insurance treatment marked as `Needs support`, `CPA review`, `Info only`, or `Exclude`.
-4. Use the dashboard to review totals and export a local accountant package.
+1. Put private PDFs, CSVs, receipts, statements, invoices, and exports under ignored local folders in `private/`.
+2. Ask an AI assistant to review those files with you and update local ledger rows, source manifests, and review flags.
+3. Keep uncertain treatment marked as `Needs support`, `CPA review`, `Info only`, or `Exclude`.
+4. Use the dashboard to review totals and export local accountant materials.
 5. Keep generated package files and raw documents out of Git.
 
-See `docs/ai-prompts.md` for copyable prompts.
+See [AI prompts](docs/ai-prompts.md) for copyable prompts.
 
 ## Validation
 
-Run the sample validator before committing public data or agent changes:
+Run these before committing public data or agent-surface changes:
 
 ```bash
 python3 scripts/validate-sample-json.py
 python3 scripts/validate-agent-surface.py
+python3 -m py_compile scripts/validate-sample-json.py scripts/validate-agent-surface.py
+node --check scripts/capture-screenshots.mjs
+git diff --check
 ```
 
-For publication work, also run a targeted privacy scan and inspect the diff manually for raw imports, generated exports, screenshots, PDFs, backups, and private records.
+For publication work, also run a targeted privacy scan and inspect the diff manually for raw imports, generated exports, screenshots, PDFs, backups, private records, account-like numbers, emails, phone numbers, and live keys.
 
 To regenerate public screenshots from synthetic data:
 
@@ -99,43 +113,23 @@ To regenerate public screenshots from synthetic data:
 node scripts/capture-screenshots.mjs
 ```
 
-## Privacy Warning
+## Privacy
 
-Before adding real user data to this repo:
+Do not commit:
 
-- Remove personal name, address, contact details, SSN fragments, case/application IDs, client names, and exact private financial records.
-- Replace the private seed JSON with `sample-tracker.seed.json` or another synthetic fixture.
-- Keep real tax returns, health-insurance PDFs, brokerage statements, bank statements, and Monarch exports out of Git. Use ignored local folders under `private/` instead.
-- Review `.gitignore` before creating a public repository.
+- SSNs, tax IDs, account numbers, addresses, phone numbers, emails, or application IDs.
+- Bank, brokerage, insurance, benefits, tax, payment-processor, or health-care records.
+- Private PDFs, screenshots, CSV exports, spreadsheets, statements, receipts, or tax returns.
+- Secrets, tokens, cookies, credential files, or private seed data.
 
-## Contribution And Review Policy
+Use ignored local folders under `private/` for real work. See [private data rules](docs/private-data.md).
 
-All meaningful changes should be made through pull requests and receive at least one review before merging to `main`.
+## Contributing
 
-Repository administrators should enable GitHub branch protection or a ruleset for `main` with:
+Contributions should be small, practical, and public-safe. Good first improvements include docs, synthetic examples, validation, dashboard usability, and accountant-handoff workflow refinements.
 
-- Require a pull request before merging.
-- Require at least 1 approving review.
-- Require review from Code Owners after `.github/CODEOWNERS` is updated with a real user or team.
-- Do not allow force pushes.
-- Do not allow deletions.
+Read [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPPORT.md) before opening an issue or pull request.
 
-## License And Credits
+## License
 
-This project is released under the MIT License. You can use, copy, modify, merge, publish, distribute, sublicense, and sell copies, as long as the copyright and license notice are included with copies or substantial portions of the software.
-
-If you build on this project, please keep the license notice and link back to the repository when practical:
-
-https://github.com/XKYLAN-LLC/smb-financial-tracker
-
-## Roadmap
-
-The project is intentionally simple right now. Future work may add:
-
-- Local ledger/database with transparent provenance.
-- AI-assisted CSV, PDF, and source-document review workflows.
-- Accountant-package manifests and local package assembly guidance.
-- Pluggable program configs with citations and effective dates.
-- Review queues for uncertain classifications.
-- Accountant-ready exports for P&L, Schedule C buckets, and supporting notes.
-- Conservative calculations with explicit review flags.
+MIT. See [LICENSE](LICENSE).

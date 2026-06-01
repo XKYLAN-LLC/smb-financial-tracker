@@ -1,6 +1,6 @@
 # Governance
 
-SMB Financial Tracker is an open-source project stewarded by XKYLAN LLC.
+SMB Financial Tracker is an open-source project from XKYLAN LLC.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ The project exists to help small business owners and self-employed people mainta
 - model income-threshold scenarios with cited program configs
 - document safe workflows for importing and reviewing financial data
 
-## Decision-Making
+## Decisions
 
 Project direction should be discussed in issues or pull requests when changes affect public APIs, data models, privacy posture, imports, exports, or program-threshold calculations.
 

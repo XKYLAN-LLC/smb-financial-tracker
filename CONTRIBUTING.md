@@ -2,6 +2,8 @@
 
 Thanks for considering a contribution to SMB Financial Tracker.
 
+Start with `README.md`, `docs/README.md`, and `docs/concepts.md` if you are new to the project.
+
 ## Good First Contributions
 
 - Improve documentation for local setup and private data handling.
@@ -20,6 +22,18 @@ Thanks for considering a contribution to SMB Financial Tracker.
 4. Run any validation scripts or tests that exist.
 5. Keep the pull request focused.
 6. Explain what changed and what remains uncertain.
+
+## Local Checks
+
+Run the checks that match your change:
+
+```bash
+python3 scripts/validate-sample-json.py
+python3 scripts/validate-agent-surface.py
+python3 -m py_compile scripts/validate-sample-json.py scripts/validate-agent-surface.py
+node --check scripts/capture-screenshots.mjs
+git diff --check
+```
 
 ## Privacy Rules
 
