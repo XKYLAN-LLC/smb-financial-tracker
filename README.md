@@ -4,6 +4,8 @@ SMB Financial Tracker is a small, local-first financial tracking project for fre
 
 The current version is a static dashboard with synthetic sample data. The goal is to make it easy to track income, expenses, deductions, review items, and accountant-ready exports without putting private financial records into Git.
 
+This project is designed to be used with an AI assistant. The repo gives the assistant and user a shared local surface: a ledger shape, source-document manifest, review queue, accountant package checklist, and privacy guardrails. The assistant can use user-provided context and attached private files during a session, while the public repo stays synthetic and safe.
+
 This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and planning tool. Final tax treatment should be reviewed by a qualified professional.
 
 ## Project Goals
@@ -11,9 +13,18 @@ This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and
 - Give small business owners a simple dashboard for income, expenses, deductions, review queues, P&L, and planning scenarios.
 - Keep data local-first, transparent, and easy to audit.
 - Provide synthetic public examples while keeping real user data private.
-- Make CSV/PDF import workflows easier to build over time.
+- Make AI-assisted CSV/PDF/source-document review easier to run over time.
 - Preserve provenance so imported or edited records can be reviewed later.
 - Export clean summaries that make accountant handoff easier.
+- Give AI agents enough structure to maintain a user's financial picture without building premature bank, OAuth, CSV-routing, or PDF-parsing integrations.
+
+## Preview
+
+![Dashboard overview](docs/assets/screenshots/dashboard-overview.png)
+
+See `docs/walkthrough.md` for a short visual walkthrough and `docs/assets/video/README.md` for the synthetic demo video workflow.
+
+Video walkthrough: [`docs/assets/video/smb-financial-tracker-walkthrough.mp4`](docs/assets/video/smb-financial-tracker-walkthrough.mp4)
 
 ## Files
 
@@ -23,20 +34,28 @@ This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and
 | `sample-tracker.seed.json` | Synthetic seed ledger and settings for demos, tests, and future OSS examples. |
 | `covered-ca-medi-cal-ca-2026.program.json` | Program threshold configuration with source citations and effective year. |
 | `docs/v1-scope.md` | Scope and roadmap notes, including reusable open-source product direction. |
+| `docs/agent-surface.md` | How AI agents use this repo as a local financial workspace. |
+| `docs/accountant-package.md` | Accountant-package handoff structure and local private folder guidance. |
+| `docs/ai-prompts.md` | Copyable prompts for using the repo with an AI assistant. |
 | `docs/private-data.md` | Public-repo privacy rules and local-only folder guidance. |
 | `docs/roadmap.md` | Simple V1/V2/V3 product roadmap. |
+| `docs/walkthrough.md` | Screenshot-based walkthrough for new users. |
 | `AGENT_GUIDE.md` | Workflow guide for assisted data updates and imports. |
 | `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
 | `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
 | `skills/financial-tracker/SKILL.md` | Concise skill instructions for agents maintaining this repo. |
-| `skills/import-csv/SKILL.md` | CSV import rules for reviewable ledger rows. |
+| `skills/import-csv/SKILL.md` | AI-assisted CSV review rules for reviewable ledger rows. |
 | `scripts/validate-sample-json.py` | Dependency-free validator for public sample JSON and obvious private-data patterns. |
+| `scripts/validate-agent-surface.py` | Validator for AI-agent surface examples and required docs. |
+| `examples/agent-workspace.example.json` | Synthetic source-document and review-queue manifest. |
+| `examples/accountant-package.example.json` | Synthetic accountant-package manifest. |
 | `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
 | `LICENSE` | MIT license. |
 | `NOTICE` | Short project attribution note. |
 | `CONTRIBUTING.md` | Contribution guide and privacy requirements. |
 | `SECURITY.md` | Security and sensitive-data reporting policy. |
 | `GOVERNANCE.md` | Project governance and decision-making model. |
+| `CHANGELOG.md` | Release notes and project history. |
 
 ## Current Workflow
 
@@ -53,15 +72,32 @@ This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and
 
 The UI stores edits in browser `localStorage` under `local-financial-tracker-v1`. To reload from the sample JSON seed, use Reset or clear that localStorage key.
 
+## AI-Assisted Workflow
+
+1. Put private PDFs, CSVs, receipts, statements, and exports in ignored local folders under `private/`.
+2. Ask an AI assistant to review those files with you and update ledger rows, source-document manifests, and review flags.
+3. Keep uncertain tax, legal, benefits, or insurance treatment marked as `Needs support`, `CPA review`, `Info only`, or `Exclude`.
+4. Use the dashboard to review totals and export a local accountant package.
+5. Keep generated package files and raw documents out of Git.
+
+See `docs/ai-prompts.md` for copyable prompts.
+
 ## Validation
 
 Run the sample validator before committing public data or agent changes:
 
 ```bash
 python3 scripts/validate-sample-json.py
+python3 scripts/validate-agent-surface.py
 ```
 
 For publication work, also run a targeted privacy scan and inspect the diff manually for raw imports, generated exports, screenshots, PDFs, backups, and private records.
+
+To regenerate public screenshots from synthetic data:
+
+```bash
+node scripts/capture-screenshots.mjs
+```
 
 ## Privacy Warning
 
@@ -97,8 +133,8 @@ https://github.com/XKYLAN-LLC/smb-financial-tracker
 The project is intentionally simple right now. Future work may add:
 
 - Local ledger/database with transparent provenance.
-- CSV import helpers.
-- PDF/source-document review workflows.
+- AI-assisted CSV, PDF, and source-document review workflows.
+- Accountant-package manifests and local package assembly guidance.
 - Pluggable program configs with citations and effective dates.
 - Review queues for uncertain classifications.
 - Accountant-ready exports for P&L, Schedule C buckets, and supporting notes.

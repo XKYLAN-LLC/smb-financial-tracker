@@ -115,6 +115,35 @@ Every imported record should retain:
 
 The current HTML prototype does not enforce all of this yet, but the JSON shape leaves room for it.
 
+## Source Document Manifest
+
+Public examples live in `examples/agent-workspace.example.json`. Real manifests should live under `private/`.
+
+A source document entry should capture:
+
+- safe source id
+- document kind such as CSV, PDF, receipt, statement, invoice, note, or spreadsheet
+- local path hint under `private/`
+- period or tax year
+- what the user says the document proves
+- review status
+- related ledger row ids
+- notes and open questions
+
+The manifest points to private files; it does not put private file contents in Git.
+
+## Accountant Package Manifest
+
+Public examples live in `examples/accountant-package.example.json`. Real package manifests and generated package files should live under `private/exports/`.
+
+The package manifest should track:
+
+- package year and local folder
+- generated ledger backup, CPA CSV, and accountant Markdown status
+- source documents that support the package
+- open accountant questions
+- user/agent checklist items before handoff
+
 ## Export Requirements
 
 Accountant exports should include:

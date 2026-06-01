@@ -47,8 +47,12 @@ Future agents should expose operations like:
 - `watch_threshold(program_id)`
 - `generate_accountant_export(format)`
 - `build_review_queue()`
+- `update_source_manifest(source_context)`
+- `build_accountant_package_manifest(year)`
 
 For now, implement those operations by editing the JSON seed, using the tracker UI, or exporting from the UI.
+
+Do not build source-specific CSV/PDF parsers or live integrations unless the user explicitly asks. The expected workflow is that the user supplies private files and context to the AI assistant, and the assistant updates the local ledger, source manifest, review queue, and package manifest in a reviewable way.
 
 ## Classification Standard
 

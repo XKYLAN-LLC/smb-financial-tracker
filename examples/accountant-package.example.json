@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "0.1.0",
+  "package": {
+    "id": "sample-accountant-package-2026",
+    "year": 2026,
+    "businessLabel": "Sample freelance business",
+    "localPathHint": "private/exports/2026-accountant-package/",
+    "status": "draft",
+    "privacy": "Synthetic manifest only. Real package files stay local and ignored."
+  },
+  "includedFiles": [
+    {
+      "label": "Ledger backup",
+      "localPathHint": "private/exports/2026-accountant-package/ledger-backup.json",
+      "status": "not-generated",
+      "notes": "Export from the dashboard after the user reviews rows."
+    },
+    {
+      "label": "Accountant summary",
+      "localPathHint": "private/exports/2026-accountant-package/accountant-summary.md",
+      "status": "not-generated",
+      "notes": "Markdown export from the dashboard."
+    },
+    {
+      "label": "CPA CSV",
+      "localPathHint": "private/exports/2026-accountant-package/cpa-export.csv",
+      "status": "not-generated",
+      "notes": "CSV export from the dashboard."
+    }
+  ],
+  "sourceDocumentChecklist": [
+    {
+      "sourceId": "source-sample-bank-csv-2026-05",
+      "label": "Sample bank CSV",
+      "localPathHint": "private/imports/sample-bank-export-2026-05.csv",
+      "status": "reviewed",
+      "supports": [
+        "sample-row-software"
+      ]
+    },
+    {
+      "sourceId": "source-sample-receipt-pdf",
+      "label": "Sample vendor receipt",
+      "localPathHint": "private/source-documents/sample-vendor-receipt.pdf",
+      "status": "needs-review",
+      "supports": [
+        "sample-row-software"
+      ]
+    }
+  ],
+  "openQuestions": [
+    {
+      "id": "question-home-office",
+      "audience": "CPA",
+      "question": "Please review whether the home-office allocation should be included and how it should be calculated.",
+      "relatedRows": [
+        "sample-row-home-office-rent",
+        "sample-row-internet"
+      ]
+    },
+    {
+      "id": "question-ira-deductibility",
+      "audience": "CPA",
+      "question": "Please confirm whether the modeled traditional IRA deduction is actually deductible for the year.",
+      "relatedRows": [
+        "sample-row-traditional-ira"
+      ]
+    }
+  ],
+  "agentChecklist": [
+    "Confirm the user reviewed ledger rows before package handoff.",
+    "Confirm private source files exist locally if they are referenced.",
+    "Keep unresolved professional questions in the package.",
+    "Do not commit package outputs or private source documents."
+  ]
+}
