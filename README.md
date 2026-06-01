@@ -1,8 +1,29 @@
-# Local-First Financial Tracker Prototype
+# SMB Financial Tracker
 
-This repository contains a local-first financial tracker prototype. The immediate demo use case is a sample freelance business tracking income, expenses, Schedule C support, and an income-threshold program scenario. The broader product direction is an agent-first tool that helps individuals and small business owners keep accountant-ready financial records without manually rebuilding the same packet every year.
+SMB Financial Tracker is a local-first, agent-friendly financial tracking project for small business owners and self-employed people.
+
+The current version is a simple static dashboard with synthetic sample data. The broader goal is to become a downloadable/forkable workspace where users can keep private financial records out of Git while agents help organize source files, maintain a ledger, build review queues, calculate financial scenarios, and prepare accountant-ready exports.
 
 This is not tax, legal, benefits, or insurance advice. The tracker organizes records, performs transparent calculations, cites program thresholds, and flags review items for a CPA or other qualified reviewer.
+
+## Project Goals
+
+- Give small business owners a simple dashboard for income, expenses, deductions, review queues, P&L, and threshold-program scenarios.
+- Keep data local-first, transparent, and easy to audit.
+- Provide synthetic public examples while keeping real user data private.
+- Create reusable agent instructions and skills for safe CSV/PDF/browser-assisted financial workflows.
+- Preserve provenance so imported or agent-edited records can be reviewed later.
+- Export clean summaries that make accountant handoff easier.
+
+## Maintainers
+
+This project is stewarded by XKYLAN LLC.
+
+- Kaya Lopez, maintainer
+- Thailand, maintainer
+- Kylan Tomita, project founder and product sponsor
+
+See `MAINTAINERS.md` and `GOVERNANCE.md` for maintainer expectations and review policy.
 
 ## Files
 
@@ -16,6 +37,10 @@ This is not tax, legal, benefits, or insurance advice. The tracker organizes rec
 | `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
 | `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
 | `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
+| `MAINTAINERS.md` | Maintainer list and review expectations. |
+| `CONTRIBUTING.md` | Contribution guide and privacy requirements. |
+| `SECURITY.md` | Security and sensitive-data reporting policy. |
+| `GOVERNANCE.md` | Project governance and decision-making model. |
 
 ## Current Workflow
 
@@ -40,6 +65,18 @@ Before adding real user data to this repo:
 - Replace the private seed JSON with `sample-tracker.seed.json` or another synthetic fixture.
 - Keep real tax returns, health-insurance PDFs, brokerage statements, bank statements, and Monarch exports out of Git.
 - Review `.gitignore` before creating a public repository.
+
+## Contribution And Review Policy
+
+All meaningful changes should be made through pull requests and receive at least one maintainer review before merging to `main`.
+
+Repository administrators should enable GitHub branch protection or a ruleset for `main` with:
+
+- Require a pull request before merging.
+- Require at least 1 approving review.
+- Require review from Code Owners after `.github/CODEOWNERS` is updated with real maintainer handles/team.
+- Do not allow force pushes.
+- Do not allow deletions.
 
 ## Open-Source Direction
 
