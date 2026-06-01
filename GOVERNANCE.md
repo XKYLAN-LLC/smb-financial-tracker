@@ -15,7 +15,7 @@ The project exists to help small business owners and self-employed people mainta
 
 ## Decision-Making
 
-Project direction is set by the maintainers listed in `MAINTAINERS.md`. Changes should be discussed in issues or pull requests when they affect public APIs, data models, privacy posture, agent workflows, imports, exports, or program-threshold calculations.
+Project direction should be discussed in issues or pull requests when changes affect public APIs, data models, privacy posture, agent workflows, imports, exports, or program-threshold calculations.
 
 ## Contribution Standard
 
@@ -23,7 +23,7 @@ Contributions should be practical, conservative, and public-safe. The best contr
 
 ## Review Requirement
 
-Changes to `main` should be made through pull requests with at least one approving maintainer review. Repository administrators should configure GitHub branch protection or rulesets to enforce this requirement.
+Changes to `main` should be made through pull requests with at least one approving review. Repository administrators should configure GitHub branch protection or rulesets to enforce this requirement.
 
 ## Boundaries
 

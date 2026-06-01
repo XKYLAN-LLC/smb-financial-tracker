@@ -6,7 +6,7 @@ This project is early-stage. Security and privacy reports for the default branch
 
 ## Reporting A Security Or Privacy Issue
 
-Please open a GitHub issue if the report does not include sensitive information. If the report includes private data, do not paste it publicly. Contact the maintainers through a private channel first.
+Please open a GitHub issue if the report does not include sensitive information. If the report includes private data, do not paste it publicly; use a private reporting channel instead.
 
 ## Sensitive Data Policy
 

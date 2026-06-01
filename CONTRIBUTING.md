@@ -39,4 +39,4 @@ AI agents are welcome to help with this project, but agent-generated changes sho
 
 ## Pull Request Reviews
 
-All pull requests should receive at least one maintainer review before merging.
+All pull requests should receive at least one review before merging.

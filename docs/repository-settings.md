@@ -13,7 +13,7 @@ Configure GitHub branch protection or a repository ruleset with:
 
 - Require a pull request before merging.
 - Require at least 1 approving review.
-- Require review from Code Owners after `.github/CODEOWNERS` has real maintainer handles or a real XKYLAN LLC team slug.
+- Require review from Code Owners after `.github/CODEOWNERS` has a real user or team.
 - Dismiss stale approvals when new commits are pushed.
 - Require conversation resolution before merging.
 - Do not allow force pushes.
@@ -22,13 +22,13 @@ Configure GitHub branch protection or a repository ruleset with:
 
 ## CODEOWNERS
 
-Current `CODEOWNERS` uses a placeholder team:
+`CODEOWNERS` is currently a placeholder. Add a real GitHub user or organization team when review ownership is ready.
 
 ```text
-@XKYLAN-LLC/smb-financial-tracker-maintainers
+* @XKYLAN-LLC/team-slug
 ```
 
-Replace it with real GitHub usernames or a real XKYLAN LLC team slug when confirmed.
+Do not leave non-existent teams in `CODEOWNERS`; invalid owners can make review requirements confusing.
 
 ## Repository Metadata
 
@@ -63,7 +63,7 @@ Recommended GitHub settings:
 
 ## Review Process
 
-All changes should flow through pull requests once branch protection is active. Maintainers should review for:
+All changes should flow through pull requests once branch protection is active. Reviews should check for:
 
 - private-data exposure
 - calculation correctness

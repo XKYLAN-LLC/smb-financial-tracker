@@ -23,4 +23,4 @@ Contributors are expected to communicate respectfully, assume good intent, and h
 
 ## Enforcement
 
-Maintainers may remove comments, reject pull requests, or block contributors who violate this code of conduct.
+Project administrators may remove comments, reject pull requests, or block contributors who violate this code of conduct.

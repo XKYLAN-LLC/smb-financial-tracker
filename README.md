@@ -15,16 +15,6 @@ This is not tax, legal, benefits, or insurance advice. The tracker organizes rec
 - Preserve provenance so imported or agent-edited records can be reviewed later.
 - Export clean summaries that make accountant handoff easier.
 
-## Maintainers
-
-This project is stewarded by XKYLAN LLC.
-
-- Kaya Lopez, maintainer
-- Thailand, maintainer
-- Kylan Tomita, project founder and product sponsor
-
-See `MAINTAINERS.md` and `GOVERNANCE.md` for maintainer expectations and review policy.
-
 ## Files
 
 | File | Purpose |
@@ -37,7 +27,6 @@ See `MAINTAINERS.md` and `GOVERNANCE.md` for maintainer expectations and review 
 | `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
 | `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
 | `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
-| `MAINTAINERS.md` | Maintainer list and review expectations. |
 | `CONTRIBUTING.md` | Contribution guide and privacy requirements. |
 | `SECURITY.md` | Security and sensitive-data reporting policy. |
 | `GOVERNANCE.md` | Project governance and decision-making model. |
@@ -68,13 +57,13 @@ Before adding real user data to this repo:
 
 ## Contribution And Review Policy
 
-All meaningful changes should be made through pull requests and receive at least one maintainer review before merging to `main`.
+All meaningful changes should be made through pull requests and receive at least one review before merging to `main`.
 
 Repository administrators should enable GitHub branch protection or a ruleset for `main` with:
 
 - Require a pull request before merging.
 - Require at least 1 approving review.
-- Require review from Code Owners after `.github/CODEOWNERS` is updated with real maintainer handles/team.
+- Require review from Code Owners after `.github/CODEOWNERS` is updated with a real user or team.
 - Do not allow force pushes.
 - Do not allow deletions.
 
