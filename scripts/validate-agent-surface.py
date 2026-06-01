@@ -13,10 +13,15 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
+    "AGENTS.md",
+    "SUPPORT.md",
+    "docs/README.md",
     "docs/agent-surface.md",
     "docs/accountant-package.md",
     "docs/ai-prompts.md",
+    "docs/concepts.md",
     "docs/private-data.md",
+    "docs/project-status.md",
     "docs/roadmap.md",
     "docs/walkthrough.md",
     "docs/assets/video/README.md",
@@ -29,6 +34,11 @@ REQUIRED_FILES = [
     "scripts/capture-screenshots.mjs",
     "examples/agent-workspace.example.json",
     "examples/accountant-package.example.json",
+    "examples/README.md",
+    ".github/dependabot.yml",
+    ".github/ISSUE_TEMPLATE/bug_report.md",
+    ".github/ISSUE_TEMPLATE/config.yml",
+    ".github/ISSUE_TEMPLATE/docs_improvement.md",
 ]
 
 PRIVATE_PATTERNS = {

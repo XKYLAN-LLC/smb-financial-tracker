@@ -22,13 +22,13 @@ Configure GitHub branch protection or a repository ruleset with:
 
 ## CODEOWNERS
 
-`CODEOWNERS` currently assigns repository ownership to `@kayalopez`.
+`CODEOWNERS` currently routes repository review to `@kayalopez`.
 
 ```text
 * @kayalopez
 ```
 
-If ownership moves to an organization team later, replace this with a real team slug. Do not leave non-existent teams in `CODEOWNERS`; invalid owners can make review requirements confusing.
+If review should move to an organization team later, replace this with a real team slug. Do not leave non-existent teams in `CODEOWNERS`; invalid entries can make review requirements confusing.
 
 ## Required Status Checks
 
