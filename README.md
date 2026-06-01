@@ -23,9 +23,14 @@ This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and
 | `sample-tracker.seed.json` | Synthetic seed ledger and settings for demos, tests, and future OSS examples. |
 | `covered-ca-medi-cal-ca-2026.program.json` | Program threshold configuration with source citations and effective year. |
 | `docs/v1-scope.md` | Scope and roadmap notes, including reusable open-source product direction. |
+| `docs/private-data.md` | Public-repo privacy rules and local-only folder guidance. |
+| `docs/roadmap.md` | Simple V1/V2/V3 product roadmap. |
 | `AGENT_GUIDE.md` | Workflow guide for assisted data updates and imports. |
 | `DATA_MODEL.md` | Ledger, source, provenance, program, and export schema notes. |
 | `PRODUCT_SPEC.md` | Product requirements and future architecture direction. |
+| `skills/financial-tracker/SKILL.md` | Concise skill instructions for agents maintaining this repo. |
+| `skills/import-csv/SKILL.md` | CSV import rules for reviewable ledger rows. |
+| `scripts/validate-sample-json.py` | Dependency-free validator for public sample JSON and obvious private-data patterns. |
 | `.gitignore` | Starter privacy guardrails for raw imports, exports, PDFs, screenshots, and private seed data. |
 | `LICENSE` | MIT license. |
 | `NOTICE` | Short project attribution note. |
@@ -44,9 +49,19 @@ This is not tax, legal, benefits, or insurance advice. It is a recordkeeping and
 2. Visit `http://127.0.0.1:8765/index.html`.
 3. Update ledger rows, imports, or settings.
 4. Export CPA CSV or accountant Markdown.
-5. Save source documents and support in the tax folder.
+5. Save source documents and support in a local ignored folder such as `private/source-documents/`.
 
 The UI stores edits in browser `localStorage` under `local-financial-tracker-v1`. To reload from the sample JSON seed, use Reset or clear that localStorage key.
+
+## Validation
+
+Run the sample validator before committing public data or agent changes:
+
+```bash
+python3 scripts/validate-sample-json.py
+```
+
+For publication work, also run a targeted privacy scan and inspect the diff manually for raw imports, generated exports, screenshots, PDFs, backups, and private records.
 
 ## Privacy Warning
 
@@ -54,7 +69,7 @@ Before adding real user data to this repo:
 
 - Remove personal name, address, contact details, SSN fragments, case/application IDs, client names, and exact private financial records.
 - Replace the private seed JSON with `sample-tracker.seed.json` or another synthetic fixture.
-- Keep real tax returns, health-insurance PDFs, brokerage statements, bank statements, and Monarch exports out of Git.
+- Keep real tax returns, health-insurance PDFs, brokerage statements, bank statements, and Monarch exports out of Git. Use ignored local folders under `private/` instead.
 - Review `.gitignore` before creating a public repository.
 
 ## Contribution And Review Policy

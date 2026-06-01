@@ -2,8 +2,12 @@
 node_modules/
 dist/
 build/
+__pycache__/
+*.pyc
 
 # Local private source material
+private/
+.local/
 *.pdf
 *.png
 *.jpg
@@ -21,6 +25,7 @@ build/
 
 # Private real-world seeds should never be committed.
 *.private.json
+*.private.*
 2026-xkylan-tracker.seed.json
 
 # Keep synthetic fixtures and docs.
