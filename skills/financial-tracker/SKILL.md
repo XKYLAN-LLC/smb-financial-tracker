@@ -15,6 +15,8 @@ Before editing data, calculations, docs, or agent workflows, read:
 - `DATA_MODEL.md`
 - `AGENT_GUIDE.md`
 - `docs/agent-surface.md`
+- `docs/agent-workflows.md`
+- `docs/classification.md`
 - `docs/accountant-package.md`
 - `docs/private-data.md`
 - `docs/roadmap.md`
@@ -23,6 +25,7 @@ Before editing data, calculations, docs, or agent workflows, read:
 
 - Use synthetic sample data in Git. Keep private records in ignored local folders.
 - Preserve provenance for material numbers: source system, source file, row id/hash, import date, original description, original category, and classification changes when available.
+- Read private business profile, classification policy, source manifest, and agent notes when present.
 - Keep calculations traceable back to ledger rows and program configs.
 - Use conservative statuses: `Supported`, `Estimate`, `Needs support`, `CPA review`, or `Exclude`.
 - Flag uncertain tax, benefits, insurance, or legal treatment for human review.
@@ -35,6 +38,7 @@ Before editing data, calculations, docs, or agent workflows, read:
 - Treat `sample-tracker.seed.json` as the public synthetic fixture.
 - Treat exported backups, raw imports, PDFs, screenshots, spreadsheets, statements, receipts, tax forms, and real financial records as private local data.
 - Use `private/imports/`, `private/source-documents/`, `private/exports/`, and `private/backups/` for local work with real records.
+- Use `private/profile/` and `private/agent-notes/` for durable local context that future sessions can reuse.
 - Do not add secrets, account numbers, SSNs, addresses, emails, phone numbers, application IDs, or client/customer identifiers to public files.
 
 ## Safe Agent Work

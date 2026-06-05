@@ -9,6 +9,7 @@ The expected workflow is that a user works with an AI assistant, attaches or poi
 - A local static dashboard for reviewing ledger rows, calculations, flags, and exports.
 - A simple JSON ledger model that agents can edit with provenance.
 - A source-document manifest shape for PDFs, CSVs, statements, receipts, invoices, and notes.
+- Business profile, classification policy, and agent-note examples for durable private context.
 - An accountant-package manifest shape for tracking what should be included in a year-end handoff.
 - Skills and docs that tell agents how to stay conservative, privacy-aware, and review-oriented.
 - Validation scripts and CI checks that make public examples safer to maintain.
@@ -19,6 +20,7 @@ Agents should help the user:
 
 - turn user-provided context into reviewable ledger rows;
 - preserve source references without committing private source files;
+- use private profile and policy files to keep categories and business-use percentages consistent over time;
 - build a review queue for missing support, duplicates, mixed-use items, and professional-review questions;
 - maintain a manifest of source documents and final package contents;
 - summarize totals and questions for an accountant.
@@ -41,7 +43,9 @@ The point is to give the assistant and user a shared, auditable surface. The ass
 Use ignored folders for real work:
 
 - `private/imports/` for CSVs, spreadsheets, and raw exports.
+- `private/profile/` for business facts, user-approved classification rules, and allocation notes.
 - `private/source-documents/` for PDFs, receipts, screenshots, invoices, and statements.
+- `private/agent-notes/` for future-session notes and unresolved assumptions.
 - `private/exports/` for accountant packets and generated handoffs.
 - `private/backups/` for local JSON backups and snapshots.
 

@@ -6,6 +6,8 @@ Start with the README, then use this index to find the right surface.
 
 - [Core concepts](concepts.md): the framework pieces this repo gives to users and AI agents.
 - [AI agent surface](agent-surface.md): how agents use the local workspace safely.
+- [Agent workflows](agent-workflows.md): repeatable document-review, classification, reconciliation, and handoff loops.
+- [Classification guide](classification.md): shared row types, categories, review statuses, and business-use guidance.
 - [Accountant package](accountant-package.md): how to collect exports, support, and open questions for handoff.
 - [AI prompts](ai-prompts.md): copyable prompts for using this repo with an assistant.
 - [Walkthrough](walkthrough.md): visual walkthrough using synthetic data.

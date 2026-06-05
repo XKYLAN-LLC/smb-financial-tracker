@@ -10,7 +10,10 @@ The important pieces are small:
 - Review statuses: simple labels that keep uncertain items visible.
 - Source documents: local-only PDFs, CSVs, receipts, statements, invoices, notes, or exports referenced by safe IDs.
 - Provenance: source IDs, row hashes when useful, notes, timestamps, and user context that explain where a row came from.
+- Business profile: private durable facts about the business, accounting assumptions, and open professional-review questions.
+- Classification policy: private user-approved or CPA-approved category and allocation guidance.
 - Accountant packages: a local checklist of exports, source documents, and open questions for year-end review.
+- Agent notes: private future-session notes that preserve what an agent reviewed, changed, and left unresolved.
 - Program configs: cited threshold or planning data with effective dates.
 - Skills and prompts: instructions that help AI agents work conservatively and consistently.
 - Validation: small checks that keep public examples shaped correctly and free of obvious private-data patterns.
@@ -25,7 +28,7 @@ That means the repo should not spend early effort on heavy deterministic import 
 
 Use review statuses to keep uncertainty visible:
 
-- `Ready`: support is present and the treatment looks straightforward.
+- `Supported`: support is present and the treatment looks straightforward.
 - `Needs support`: a source document, receipt, invoice, or explanation is missing.
 - `CPA review`: the item needs professional review before final tax treatment.
 - `Info only`: useful context, but not part of deductible or taxable totals.
@@ -36,7 +39,9 @@ Use review statuses to keep uncertainty visible:
 Public repo files should be synthetic. Private work belongs under ignored folders such as:
 
 - `private/imports/`
+- `private/profile/`
 - `private/source-documents/`
+- `private/agent-notes/`
 - `private/exports/`
 - `private/backups/`
 

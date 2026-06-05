@@ -14,7 +14,9 @@ This is a public repository. Keep it useful for demos, forks, and agent work by 
 Create these folders locally when working with private data. They are intentionally ignored by Git through `private/`.
 
 - `private/imports/` for raw CSV exports from banks, Monarch, Zoho, Stripe, or spreadsheets.
+- `private/profile/` for business profiles, classification policies, allocation rules, and user-approved preferences.
 - `private/source-documents/` for PDFs, statements, receipts, invoices, screenshots, tax forms, and benefit notices.
+- `private/agent-notes/` for future-session notes, unresolved questions, and private review logs.
 - `private/exports/` for accountant packets, CSV exports, Markdown summaries, and review handoffs generated from real data.
 - `private/backups/` for browser JSON backups, local database snapshots, and private working copies.
 

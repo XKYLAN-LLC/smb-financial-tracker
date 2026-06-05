@@ -9,6 +9,8 @@ Read these files first:
 - `README.md`
 - `docs/README.md`
 - `docs/agent-surface.md`
+- `docs/agent-workflows.md`
+- `docs/classification.md`
 - `docs/private-data.md`
 - `DATA_MODEL.md`
 - `AGENT_GUIDE.md`
@@ -19,6 +21,7 @@ Read these files first:
 - Use ignored local folders under `private/` for user-provided source files.
 - Preserve provenance when adding or changing ledger rows.
 - Use conservative review statuses when support is incomplete or classification is uncertain.
+- Use private business profiles, classification policies, source manifests, and agent notes when present.
 - Keep calculations traceable to rows, assumptions, and source notes.
 - Prefer small documentation, validation, and dashboard improvements over new infrastructure.
 - Do not add live bank integrations, OAuth, real payment-provider integrations, PDF parsing engines, or heavy CSV routing logic.

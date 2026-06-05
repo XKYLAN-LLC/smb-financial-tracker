@@ -12,6 +12,7 @@ CSV review should create reviewable ledger rows with provenance. This repo does 
 - Keep raw CSV files outside Git, usually under `private/imports/`.
 - Do not commit real CSV exports, generated import backups, screenshots, or spreadsheets.
 - Use synthetic CSV examples only when a public fixture is needed.
+- Read `docs/classification.md` and the private classification policy before applying categories or business-use percentages.
 
 ## Review Rules
 
@@ -22,6 +23,7 @@ CSV review should create reviewable ledger rows with provenance. This repo does 
 - Use `type` to decide how a row affects totals: `Revenue`, `Expense`, `Investment / other income`, `Above-line deduction`, or `Info only`.
 - Keep transfers, duplicate rows, raw mixed-use inputs, and uncertain support as `Info only` or `Exclude` until reviewed.
 - Record the source in a local manifest when the raw CSV should stay outside Git.
+- Update private agent notes with assumptions, unresolved questions, and any classification rules used.
 
 ## Ledger Mapping
 
