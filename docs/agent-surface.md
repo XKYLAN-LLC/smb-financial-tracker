@@ -25,7 +25,7 @@ Agents should help the user:
 - maintain a manifest of source documents and final package contents;
 - summarize totals and questions for an accountant.
 
-Agents may use reasoning and user context to classify records, but every uncertain item should remain visible through `Needs support`, `CPA review`, `Info only`, or `Exclude`.
+Agents may use reasoning and user context to classify records, but every uncertain item should remain visible through `Needs support`, `CPA review`, `Exclude`, or row type `Info only`.
 
 ## What This Repo Should Not Build Yet
 

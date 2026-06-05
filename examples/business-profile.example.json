@@ -66,7 +66,7 @@
     "mixedUseStatus": "CPA review",
     "taxJudgmentStatus": "CPA review",
     "personalOrDuplicateStatus": "Exclude",
-    "rawContextStatus": "Info only"
+    "rawContextType": "Info only"
   },
   "userApprovedRules": [
     {

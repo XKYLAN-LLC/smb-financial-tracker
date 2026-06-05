@@ -59,6 +59,9 @@ PRIVATE_PATTERNS = {
     "long_account_like_number": re.compile(r"\b(?:\d[ -]?){12,}\b"),
 }
 
+LEDGER_STATUSES = {"Supported", "Estimate", "Needs support", "CPA review", "Exclude"}
+ROW_TYPES = {"Revenue", "Expense", "Investment / other income", "Above-line deduction", "Info only"}
+
 
 def load_json(path: Path, errors: list[str]) -> Any:
     try:
@@ -209,7 +212,13 @@ def validate_business_profile(data: Any, errors: list[str]) -> None:
             require_string(fact, key, item_label, errors)
         require_list(fact, "appliesTo", item_label, errors)
 
-    require_dict(data, "reviewDefaults", label, errors)
+    review_defaults = require_dict(data, "reviewDefaults", label, errors)
+    for key, value in review_defaults.items():
+        if key.endswith("Status") and value not in LEDGER_STATUSES:
+            errors.append(f"{label}.reviewDefaults.{key} must be a ledger status")
+    raw_context_type = review_defaults.get("rawContextType")
+    if raw_context_type not in ROW_TYPES:
+        errors.append(f"{label}.reviewDefaults.rawContextType must be a valid row type")
     require_list(data, "agentInstructions", label, errors)
 
 
@@ -229,7 +238,7 @@ def validate_classification_policy(data: Any, errors: list[str]) -> None:
     require_dict(data, "amountRules", label, errors)
     statuses = require_list(data, "statuses", label, errors)
     status_set = {item for item in statuses if isinstance(item, str)}
-    for required_status in ("Supported", "Estimate", "Needs support", "CPA review", "Exclude"):
+    for required_status in LEDGER_STATUSES:
         if required_status not in status_set:
             errors.append(f"{label}.statuses must include {required_status!r}")
 
