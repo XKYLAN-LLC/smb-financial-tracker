@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "0.1.0",
+  "policy": {
+    "id": "sample-classification-policy-2026",
+    "label": "Sample classification policy",
+    "taxYear": 2026,
+    "currency": "USD",
+    "privacy": "Synthetic example. Real policies belong under private/profile/ and should reflect user and professional guidance."
+  },
+  "amountRules": {
+    "ledgerAmount": "Store amounts as positive numbers. Row type controls whether a value is revenue, expense, deduction, or info only.",
+    "businessPct": "Use 0 through 100. Use 100 only when the item is clearly business and supported. Use a documented allocation for mixed-use items or mark CPA review.",
+    "deductiblePct": "Do not invent current-year tax limitations. Store user or CPA-approved treatment in private policy notes and flag uncertain items."
+  },
+  "statuses": [
+    "Supported",
+    "Estimate",
+    "Needs support",
+    "CPA review",
+    "Exclude",
+    "Info only"
+  ],
+  "categoryRules": [
+    {
+      "id": "cat-revenue",
+      "label": "Revenue",
+      "type": "Revenue",
+      "bucket": "Gross receipts",
+      "subcategory": "Client payments",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "invoice export",
+        "payment processor export",
+        "bank deposit support"
+      ],
+      "reviewTriggers": [
+        "refund",
+        "transfer",
+        "loan proceeds",
+        "owner contribution"
+      ]
+    },
+    {
+      "id": "cat-software",
+      "label": "Software subscriptions",
+      "type": "Expense",
+      "bucket": "Office expense",
+      "subcategory": "Software subscriptions",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "invoice",
+        "receipt",
+        "card statement"
+      ],
+      "reviewTriggers": [
+        "personal plan",
+        "annual prepayment",
+        "unclear business purpose"
+      ]
+    },
+    {
+      "id": "cat-hosting",
+      "label": "Hosting and infrastructure",
+      "type": "Expense",
+      "bucket": "Other expenses",
+      "subcategory": "Hosting & infrastructure",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "cloud invoice",
+        "domain registrar receipt",
+        "card statement"
+      ],
+      "reviewTriggers": [
+        "mixed personal project",
+        "capitalized setup cost"
+      ]
+    },
+    {
+      "id": "cat-professional-services",
+      "label": "Professional services",
+      "type": "Expense",
+      "bucket": "Legal and professional fees",
+      "subcategory": "Legal/accounting",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "invoice",
+        "engagement letter",
+        "payment record"
+      ],
+      "reviewTriggers": [
+        "personal planning mixed with business",
+        "entity formation",
+        "tax planning treatment"
+      ]
+    },
+    {
+      "id": "cat-advertising",
+      "label": "Advertising and marketing",
+      "type": "Expense",
+      "bucket": "Advertising",
+      "subcategory": "Marketing",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "ad platform invoice",
+        "campaign receipt",
+        "card statement"
+      ],
+      "reviewTriggers": [
+        "personal brand expense",
+        "event sponsorship"
+      ]
+    },
+    {
+      "id": "cat-meals",
+      "label": "Business meals",
+      "type": "Expense",
+      "bucket": "Meals",
+      "subcategory": "Business meals",
+      "defaultBusinessPct": null,
+      "defaultStatus": "CPA review",
+      "supportExamples": [
+        "receipt",
+        "business purpose note",
+        "attendee note"
+      ],
+      "reviewTriggers": [
+        "missing attendee",
+        "missing business purpose",
+        "current-year limitation unclear"
+      ]
+    },
+    {
+      "id": "cat-travel",
+      "label": "Business travel",
+      "type": "Expense",
+      "bucket": "Travel",
+      "subcategory": "Travel",
+      "defaultBusinessPct": null,
+      "defaultStatus": "CPA review",
+      "supportExamples": [
+        "itinerary",
+        "receipt",
+        "business purpose note"
+      ],
+      "reviewTriggers": [
+        "mixed personal travel",
+        "missing itinerary",
+        "companion travel"
+      ]
+    },
+    {
+      "id": "cat-vehicle",
+      "label": "Vehicle",
+      "type": "Expense",
+      "bucket": "Car and truck expenses",
+      "subcategory": "Vehicle",
+      "defaultBusinessPct": null,
+      "defaultStatus": "CPA review",
+      "supportExamples": [
+        "mileage log",
+        "parking receipt",
+        "toll record"
+      ],
+      "reviewTriggers": [
+        "mileage vs actual method",
+        "commuting",
+        "missing log"
+      ]
+    },
+    {
+      "id": "cat-home-office",
+      "label": "Home office",
+      "type": "Expense",
+      "bucket": "Other expenses",
+      "subcategory": "Home office allocation",
+      "defaultBusinessPct": null,
+      "defaultStatus": "CPA review",
+      "supportExamples": [
+        "workspace square footage note",
+        "rent or mortgage support",
+        "utility bill"
+      ],
+      "reviewTriggers": [
+        "exclusive-use question",
+        "allocation method",
+        "shared household expense"
+      ]
+    },
+    {
+      "id": "cat-equipment",
+      "label": "Equipment and hardware",
+      "type": "Expense",
+      "bucket": "Property & equipment tracking",
+      "subcategory": "Hardware / fixed assets",
+      "defaultBusinessPct": null,
+      "defaultStatus": "CPA review",
+      "supportExamples": [
+        "receipt",
+        "asset note",
+        "business use note"
+      ],
+      "reviewTriggers": [
+        "capitalization",
+        "depreciation",
+        "mixed personal use"
+      ]
+    },
+    {
+      "id": "cat-bank-fees",
+      "label": "Bank and processor fees",
+      "type": "Expense",
+      "bucket": "Commissions and fees",
+      "subcategory": "Processor fees",
+      "defaultBusinessPct": 100,
+      "defaultStatus": "Needs support",
+      "supportExamples": [
+        "processor export",
+        "bank statement",
+        "settlement report"
+      ],
+      "reviewTriggers": [
+        "fees netted from revenue",
+        "duplicate fee import"
+      ]
+    },
+    {
+      "id": "cat-transfer",
+      "label": "Transfer",
+      "type": "Info only",
+      "bucket": "Not Schedule C",
+      "subcategory": "Transfer",
+      "defaultBusinessPct": 0,
+      "defaultStatus": "Exclude",
+      "supportExamples": [
+        "matching account transfer",
+        "owner movement note"
+      ],
+      "reviewTriggers": [
+        "could be owner contribution",
+        "could be revenue"
+      ]
+    }
+  ],
+  "decisionRules": [
+    "Do not classify a row as Supported unless source support and business purpose are both clear.",
+    "Use Needs support when the likely category is clear but a receipt, statement, invoice, or business-purpose note is missing.",
+    "Use CPA review for mixed-use, home-office, vehicle, meals, travel, equipment, education, and judgment-heavy treatment.",
+    "Use Info only for raw source facts that should stay visible but not affect totals.",
+    "Use Exclude for confirmed personal items, duplicates, transfers, and unsupported rows that should not affect totals."
+  ]
+}
