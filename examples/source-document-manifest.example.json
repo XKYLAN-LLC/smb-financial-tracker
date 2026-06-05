@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "0.1.0",
+  "manifest": {
+    "id": "sample-source-manifest-2026",
+    "label": "Sample source document manifest",
+    "taxYear": 2026,
+    "localRootHint": "private/source-documents/",
+    "privacy": "Synthetic manifest only. Real documents and extracted private facts must stay under private/."
+  },
+  "documents": [
+    {
+      "id": "source-sample-bank-statement-2026-05",
+      "kind": "pdf",
+      "system": "Sample bank",
+      "localPathHint": "private/source-documents/bank-statement-2026-05.pdf",
+      "period": "2026-05",
+      "status": "needs-review",
+      "storageStatus": "local-only",
+      "hashHint": "sha256:sample-hash-not-real",
+      "supports": [
+        "monthly deposit review",
+        "expense support"
+      ],
+      "relatedRows": [],
+      "notes": "Synthetic path and source label. Do not commit real statements."
+    },
+    {
+      "id": "source-sample-bank-csv-2026-05",
+      "kind": "csv",
+      "system": "Sample bank",
+      "localPathHint": "private/imports/bank-export-2026-05.csv",
+      "period": "2026-05",
+      "status": "reviewed",
+      "storageStatus": "local-only",
+      "hashHint": "sha256:sample-csv-hash-not-real",
+      "supports": [
+        "ledger row creation",
+        "transfer review"
+      ],
+      "relatedRows": [
+        "sample-row-software"
+      ],
+      "notes": "Use a CSV parser during review. Preserve row hashes when useful."
+    },
+    {
+      "id": "source-sample-invoice-export-2026",
+      "kind": "spreadsheet",
+      "system": "Sample invoice app",
+      "localPathHint": "private/imports/invoice-export-2026.xlsx",
+      "period": "2026",
+      "status": "needs-review",
+      "storageStatus": "local-only",
+      "hashHint": "sha256:sample-invoice-export-hash",
+      "supports": [
+        "revenue reconciliation",
+        "open invoice review"
+      ],
+      "relatedRows": [],
+      "notes": "Compare invoice totals to bank deposits before treating all deposits as revenue."
+    }
+  ],
+  "extractedFacts": [
+    {
+      "id": "fact-bank-may-deposit-summary",
+      "sourceDocumentId": "source-sample-bank-statement-2026-05",
+      "factType": "statement-summary",
+      "valueLabel": "May deposit summary",
+      "value": "Synthetic placeholder. Real extracted totals belong in private notes.",
+      "evidencePointer": "statement summary page",
+      "confidence": "medium",
+      "reviewStatus": "Needs support",
+      "relatedRows": []
+    },
+    {
+      "id": "fact-software-subscription-row",
+      "sourceDocumentId": "source-sample-bank-csv-2026-05",
+      "factType": "csv-row",
+      "valueLabel": "Software subscription candidate",
+      "value": "Synthetic row maps to sample-row-software.",
+      "evidencePointer": "CSV row hash sample-row-hash",
+      "confidence": "high",
+      "reviewStatus": "Needs support",
+      "relatedRows": [
+        "sample-row-software"
+      ]
+    }
+  ],
+  "reviewQuestions": [
+    {
+      "id": "question-reconcile-deposits",
+      "question": "Do bank deposits reconcile to invoice and payment processor exports for the period?",
+      "status": "open",
+      "relatedSources": [
+        "source-sample-bank-statement-2026-05",
+        "source-sample-invoice-export-2026"
+      ]
+    },
+    {
+      "id": "question-missing-receipts",
+      "question": "Which expense rows still need receipts or business-purpose notes?",
+      "status": "open",
+      "relatedSources": [
+        "source-sample-bank-csv-2026-05"
+      ]
+    }
+  ]
+}

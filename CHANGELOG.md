@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added agent context templates for business profiles, classification policies, source manifests, and future-session notes.
+- Added workflow and classification docs plus skills for source-document review and record classification.
+- Expanded agent-surface validation for the new public examples.
 - Added lightweight open-source polish with a docs index, concepts page, project status page, support guide, agent instructions, examples README, issue templates, and Dependabot for GitHub Actions.
 - Added AI-agent surface docs for maintaining a local financial workspace.
 - Added synthetic source-document and accountant-package manifest examples.

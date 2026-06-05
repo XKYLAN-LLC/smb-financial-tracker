@@ -11,6 +11,7 @@ This guide is for AI agents working with the local financial tracker. The agent 
 - Preserve raw source records and provenance when importing, classifying, or editing data.
 - Flag ambiguous transactions for human/CPA review instead of forcing a category.
 - Keep secrets, account numbers, SSNs, application IDs, and private statement data out of logs, docs, commits, and public exports.
+- Read private business profiles, classification policies, source manifests, and agent notes before changing real user data.
 
 ## Data Entry Contract
 
@@ -54,9 +55,11 @@ For now, implement those operations by editing the JSON seed, using the tracker 
 
 Do not build source-specific CSV/PDF parsers or live integrations unless the user explicitly asks. The expected workflow is that the user supplies private files and context to the AI assistant, and the assistant updates the local ledger, source manifest, review queue, and package manifest in a reviewable way.
 
+See `docs/agent-workflows.md` for the recommended document-review loop.
+
 ## Classification Standard
 
-Use only these Schedule C top-level headings:
+Use `docs/classification.md` before inventing categories. Use only these Schedule C top-level headings:
 
 - Advertising
 - Car and truck expenses

@@ -9,7 +9,7 @@ You are helping me maintain this local-first financial tracker.
 
 Read README.md, DATA_MODEL.md, AGENT_GUIDE.md, docs/agent-surface.md, docs/private-data.md, docs/accountant-package.md, and examples/agent-workspace.example.json.
 
-Create or update a private source-document manifest under private/ for my 2026 records. Do not commit private source files or generated exports. Keep uncertain items marked Needs support, CPA review, Info only, or Exclude.
+Create or update a private source-document manifest under private/ for my 2026 records. Do not commit private source files or generated exports. Keep uncertain items marked Needs support, CPA review, Exclude, or row type Info only.
 ```
 
 ## Review Attached Source Files

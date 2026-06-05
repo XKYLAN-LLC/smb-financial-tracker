@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "0.1.0",
+  "profile": {
+    "id": "sample-business-profile-2026",
+    "label": "Sample freelance studio",
+    "taxYear": 2026,
+    "entityType": "sole proprietor",
+    "accountingMethod": "cash",
+    "country": "US",
+    "state": "CA",
+    "privacy": "Synthetic example. Real business profiles belong under private/profile/ and must not be committed."
+  },
+  "preferredLocalPaths": {
+    "businessProfile": "private/profile/business-profile.json",
+    "classificationPolicy": "private/profile/classification-policy.json",
+    "sourceManifest": "private/source-documents/source-document-manifest.json",
+    "agentNotes": "private/agent-notes/session-log.md",
+    "accountantPackage": "private/exports/2026-accountant-package/"
+  },
+  "operatingFacts": [
+    {
+      "id": "fact-business-activity",
+      "statement": "The business provides design and software consulting services to small organizations.",
+      "source": "Synthetic user interview note",
+      "status": "user-confirmed",
+      "appliesTo": [
+        "revenue",
+        "software",
+        "professional-services"
+      ]
+    },
+    {
+      "id": "fact-home-workspace",
+      "statement": "The user works from a dedicated home workspace part of the year, but the allocation method is not confirmed.",
+      "source": "Synthetic user context",
+      "status": "needs-review",
+      "appliesTo": [
+        "home-office",
+        "utilities",
+        "rent"
+      ]
+    },
+    {
+      "id": "fact-vehicle-use",
+      "statement": "The vehicle is occasionally used for client meetings. A mileage log is required before expense treatment.",
+      "source": "Synthetic user context",
+      "status": "needs-support",
+      "appliesTo": [
+        "vehicle",
+        "parking",
+        "tolls"
+      ]
+    },
+    {
+      "id": "fact-meals-policy",
+      "statement": "Business meals should stay in CPA review unless the business purpose, attendees, and current-year limitation are documented.",
+      "source": "Synthetic review policy",
+      "status": "policy",
+      "appliesTo": [
+        "meals"
+      ]
+    }
+  ],
+  "reviewDefaults": {
+    "missingSourceStatus": "Needs support",
+    "mixedUseStatus": "CPA review",
+    "taxJudgmentStatus": "CPA review",
+    "personalOrDuplicateStatus": "Exclude",
+    "rawContextStatus": "Info only"
+  },
+  "userApprovedRules": [
+    {
+      "id": "rule-software-subscriptions",
+      "description": "Business software subscriptions used only for client work can default to 100 percent business use when an invoice or statement supports the charge.",
+      "status": "sample-rule",
+      "requiresSupport": true
+    }
+  ],
+  "professionalReviewQuestions": [
+    {
+      "id": "question-home-office-method",
+      "question": "Confirm whether the home-office allocation should be used and which method applies.",
+      "status": "open"
+    },
+    {
+      "id": "question-vehicle-method",
+      "question": "Confirm whether mileage or actual vehicle expenses should be used after reviewing the mileage log.",
+      "status": "open"
+    }
+  ],
+  "agentInstructions": [
+    "Treat this file as durable local context for future sessions.",
+    "Do not add personal identifiers, account numbers, exact private balances, or source-document contents to the public example.",
+    "When a rule is user-approved or CPA-approved in real work, record who approved it, when, and what source supports it.",
+    "If no rule applies, keep the ledger row reviewable instead of forcing a final category."
+  ]
+}
