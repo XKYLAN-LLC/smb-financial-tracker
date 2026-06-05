@@ -20,7 +20,7 @@ This is a synthetic example for a private future-session note. Real notes should
 | Rule | Decision | Source | Status |
 |---|---|---|---|
 | Software subscription | Use `Office expense` / `Software subscriptions` when support exists. | User context plus receipt support | Needs support |
-| Bank transfer | Keep as `Info only` or `Exclude` unless the user confirms it is revenue or owner contribution. | Bank CSV review | Exclude |
+| Bank transfer | Use row type `Info only` with status `Exclude` unless the user confirms it is revenue or owner contribution. | Bank CSV review | Exclude |
 | Business meals | Keep in `CPA review` until business purpose and attendees are documented. | Classification policy | CPA review |
 
 ## Open Questions

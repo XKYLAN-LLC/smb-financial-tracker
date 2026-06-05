@@ -54,7 +54,7 @@ For each candidate row:
 4. Set `businessPct` to a documented value from the profile, classification policy, user context, or source support.
 5. Use `Needs support` if the likely category is clear but evidence is missing.
 6. Use `CPA review` for mixed-use, meals, travel, vehicle, home-office, equipment, education, and other judgment-heavy items.
-7. Use `Info only` or `Exclude` for transfers, personal items, duplicate rows, raw context rows, and unsupported items that should not affect totals.
+7. Use row type `Info only` with status `Exclude` for transfers, personal items, duplicate rows, raw context rows, and unsupported items that should not affect totals.
 8. Add notes explaining the reason for the category and status.
 
 ## Business Percentage Rules

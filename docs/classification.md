@@ -47,7 +47,7 @@ Use these categories before inventing new ones.
 | Home-office allocation | `Expense` | `Other expenses` | `Home office allocation` | `CPA review` |
 | Hardware and equipment | `Expense` | `Property & equipment tracking` | `Hardware / fixed assets` | `CPA review` |
 | Transfers between accounts | `Info only` | `Not Schedule C` | `Transfer` | `Exclude` |
-| Owner draw or contribution | `Info only` | `Not Schedule C` | `Owner movement` | `Info only` |
+| Owner draw or contribution | `Info only` | `Not Schedule C` | `Owner movement` | `Exclude` |
 | Personal or unsupported item | `Info only` | `Not Schedule C` | `Personal / exclude` | `Exclude` |
 
 ## Business Percentage

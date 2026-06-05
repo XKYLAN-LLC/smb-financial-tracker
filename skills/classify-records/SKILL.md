@@ -29,7 +29,7 @@ For real work, also read private copies when present:
 - Use `businessPct` from documented support, user-confirmed policy, or professional guidance.
 - Use `Needs support` when evidence is missing.
 - Use `CPA review` for mixed-use, meals, travel, vehicle, home-office, equipment, education, and tax-treatment judgment.
-- Use `Info only` or `Exclude` for transfers, duplicates, owner movements, personal items, and raw support rows.
+- Use row type `Info only` with status `Exclude` for transfers, duplicates, owner movements, personal items, and raw support rows.
 - Record source ids, row hashes, local path hints, and notes when available.
 
 ## Output

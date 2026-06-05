@@ -31,8 +31,9 @@ Use review statuses to keep uncertainty visible:
 - `Supported`: support is present and the treatment looks straightforward.
 - `Needs support`: a source document, receipt, invoice, or explanation is missing.
 - `CPA review`: the item needs professional review before final tax treatment.
-- `Info only`: useful context, but not part of deductible or taxable totals.
 - `Exclude`: should remain visible but stay out of business totals.
+
+Use row type `Info only` for useful context that should not affect deductible, taxable, or business totals.
 
 ## Local-First Boundary
 
