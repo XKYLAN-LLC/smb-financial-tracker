@@ -9,6 +9,7 @@ SMB Financial Tracker is early-stage and useful as an AI-assisted local workspac
 - Edit local ledger rows in the browser.
 - Export accountant-facing CSV and Markdown summaries.
 - Use the docs and skills to guide an AI assistant through private source review.
+- Keep durable private context in a business profile, classification policy, source manifest, and agent notes.
 - Track local source documents and accountant-package contents with synthetic manifest examples.
 - Run validation and privacy scans before publishing changes.
 
@@ -22,7 +23,7 @@ SMB Financial Tracker is early-stage and useful as an AI-assisted local workspac
 
 ## Current Product Bet
 
-The early value is the surface: a local dashboard, plain JSON, source-document manifests, review queues, and accountant-package checklists. AI agents can use that surface with user context and attached files, while the public repository remains synthetic and safe.
+The early value is the surface: a local dashboard, plain JSON, business profile, classification policy, source-document manifests, review queues, agent notes, and accountant-package checklists. AI agents can use that surface with user context and attached files, while the public repository remains synthetic and safe.
 
 ## Stability
 

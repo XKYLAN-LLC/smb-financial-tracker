@@ -117,7 +117,7 @@ The current HTML prototype does not enforce all of this yet, but the JSON shape 
 
 ## Source Document Manifest
 
-Public examples live in `examples/agent-workspace.example.json`. Real manifests should live under `private/`.
+Public examples live in `examples/agent-workspace.example.json` and `examples/source-document-manifest.example.json`. Real manifests should live under `private/`.
 
 A source document entry should capture:
 
@@ -131,6 +131,46 @@ A source document entry should capture:
 - notes and open questions
 
 The manifest points to private files; it does not put private file contents in Git.
+
+## Business Profile And Classification Policy
+
+Public examples live in `examples/business-profile.example.json` and `examples/classification-policy.example.json`. Real profiles and policies should live under `private/profile/`.
+
+A business profile should capture:
+
+- tax year and business context;
+- accounting method and entity assumptions;
+- user-confirmed operating facts;
+- recurring source folders;
+- professional-review questions;
+- user-approved or CPA-approved rules.
+
+A classification policy should capture:
+
+- allowed row categories and Schedule C buckets;
+- default statuses;
+- default or documented business-use percentages;
+- support examples;
+- review triggers;
+- decision rules for transfers, duplicates, mixed-use items, and missing support.
+
+Agents should read these files before classifying real rows. If a rule is missing, keep the row reviewable instead of inventing final treatment.
+
+## Agent Notes
+
+Public example: `examples/agent-notes.example.md`. Real notes should live under `private/agent-notes/`.
+
+Agent notes should capture:
+
+- documents reviewed;
+- rows added or changed;
+- classification decisions;
+- user-confirmed facts;
+- open questions;
+- missing support;
+- next actions.
+
+These notes help future sessions continue work without committing private data to the public repo.
 
 ## Accountant Package Manifest
 

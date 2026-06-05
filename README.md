@@ -90,7 +90,7 @@ The repo should not spend early effort on live integrations or heavy parsing log
 1. Put private PDFs, CSVs, receipts, statements, invoices, and exports under ignored local folders in `private/`.
 2. Ask an AI assistant to review those files with you and update local ledger rows, source manifests, and review flags.
 3. Use the business profile and classification policy to keep categories, business-use percentages, and review statuses consistent.
-4. Keep uncertain treatment marked as `Needs support`, `CPA review`, `Info only`, or `Exclude`.
+4. Keep uncertain treatment marked with `Needs support`, `CPA review`, `Exclude`, or row type `Info only`.
 5. Use the dashboard to review totals and export local accountant materials.
 6. Keep generated package files and raw documents out of Git.
 

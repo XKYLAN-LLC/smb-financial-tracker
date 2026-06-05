@@ -17,8 +17,7 @@
     "Estimate",
     "Needs support",
     "CPA review",
-    "Exclude",
-    "Info only"
+    "Exclude"
   ],
   "categoryRules": [
     {
@@ -250,7 +249,7 @@
     "Do not classify a row as Supported unless source support and business purpose are both clear.",
     "Use Needs support when the likely category is clear but a receipt, statement, invoice, or business-purpose note is missing.",
     "Use CPA review for mixed-use, home-office, vehicle, meals, travel, equipment, education, and judgment-heavy treatment.",
-    "Use Info only for raw source facts that should stay visible but not affect totals.",
+    "Use row type Info only for raw source facts that should stay visible but not affect totals.",
     "Use Exclude for confirmed personal items, duplicates, transfers, and unsupported rows that should not affect totals."
   ]
 }
