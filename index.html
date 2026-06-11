@@ -627,14 +627,14 @@
       margin-bottom: 4px;
     }
 
-    .workbench-tabs {
+    .workbench-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 10px;
     }
 
-    .workbench-tab {
+    .workbench-tag {
       border: 1px solid var(--line);
       border-radius: 999px;
       background: #fff;
@@ -644,7 +644,7 @@
       padding: 5px 9px;
     }
 
-    .workbench-tab.active {
+    .workbench-tag.primary {
       border-color: #b8cdf5;
       background: var(--blue-soft);
       color: var(--blue);
@@ -1020,7 +1020,7 @@
       .app-shell { display: block; }
       .sidebar, .topbar { display: none; }
       main { padding: 0; max-width: none; }
-      button, .actions, .ledger-tools, .no-print, .workbench-tabs { display: none !important; }
+      button, .actions, .ledger-tools, .no-print, .workbench-tags { display: none !important; }
       .action-grid { grid-template-columns: 1fr; }
       .panel { border: 0; padding: 10px 0; page-break-inside: avoid; }
       .table-wrap { max-height: none; overflow: visible; border: 0; }
@@ -1164,10 +1164,10 @@
         <div>
           <h2>AI Workbench</h2>
           <p>Start the next agent pass from the open review queue, source gaps, and accountant package status.</p>
-          <div class="workbench-tabs">
-            <span class="workbench-tab active">Agent Brief</span>
-            <span class="workbench-tab">Source Manifest</span>
-            <span class="workbench-tab">Next Actions</span>
+          <div class="workbench-tags" aria-label="Workbench output areas">
+            <span class="workbench-tag primary">Agent Brief</span>
+            <span class="workbench-tag">Source Manifest</span>
+            <span class="workbench-tag">Next Actions</span>
           </div>
         </div>
         <div class="actions">
@@ -2531,10 +2531,10 @@ ${ledgerLines}
     document.getElementById("copyManifestStarter").addEventListener("click", async event => {
       await copyText(sourceManifestStarter(), event.target);
     });
-    document.getElementById("resetState").addEventListener("click", () => {
+    document.getElementById("resetState").addEventListener("click", async () => {
       if (!confirm("Reset tracker to the seeded baseline?")) return;
-      state = normalizeState(defaultState);
       localStorage.removeItem(storageKey);
+      state = await loadState();
       renderAll();
     });
     document.getElementById("importBackup").addEventListener("change", async event => {
