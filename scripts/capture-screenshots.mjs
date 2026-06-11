@@ -183,6 +183,17 @@ async function main() {
     await capture(client, "action-center.png", "document.getElementById('copyAgentBrief').closest('section').scrollIntoView()");
     await capture(client, "ledger-review.png", "document.querySelector('.ledger').closest('section').scrollIntoView()");
     await capture(client, "accountant-export.png", "document.getElementById('summaryText').closest('section').scrollIntoView()");
+    await client.send("Emulation.setDeviceMetricsOverride", {
+      width: 390,
+      height: 900,
+      deviceScaleFactor: 1,
+      mobile: true,
+    });
+    const mobileLoaded = client.once("Page.loadEventFired");
+    await client.send("Page.navigate", { url: `http://127.0.0.1:${port}/index.html` });
+    await mobileLoaded;
+    await wait(1000);
+    await capture(client, "mobile-dashboard.png", "window.scrollTo(0, 0)");
     client.close();
   } finally {
     chrome.kill("SIGTERM");

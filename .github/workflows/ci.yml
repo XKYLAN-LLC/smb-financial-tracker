@@ -69,8 +69,10 @@ jobs:
           test -f examples/agent-workspace.example.json
           test -f examples/accountant-package.example.json
           test -f docs/assets/screenshots/dashboard-overview.png
+          test -f docs/assets/screenshots/action-center.png
           test -f docs/assets/screenshots/ledger-review.png
           test -f docs/assets/screenshots/accountant-export.png
+          test -f docs/assets/screenshots/mobile-dashboard.png
           test -f docs/assets/video/smb-financial-tracker-walkthrough.mp4
 
   browser-smoke:
@@ -86,6 +88,8 @@ jobs:
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/tmp/index.html
           grep -q "Local Financial Tracker" /tmp/index.html
+      - name: Exercise dashboard buttons and mobile layout
+        run: node scripts/smoke-dashboard-buttons.mjs
 
   dependency-review:
     name: dependency-review

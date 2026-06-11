@@ -18,6 +18,10 @@ Open `http://127.0.0.1:8765/index.html`.
 
 The dashboard uses a local app-shell layout with sidebar navigation, compact planning metrics, threshold settings, source references, and the AI Workbench immediately visible.
 
+Mobile layout:
+
+![Mobile dashboard](assets/screenshots/mobile-dashboard.png)
+
 ## 2. Use The Action Center
 
 ![Action Center](assets/screenshots/action-center.png)
@@ -70,6 +74,7 @@ Run:
 ```bash
 python3 scripts/validate-sample-json.py
 python3 scripts/validate-agent-surface.py
+node scripts/smoke-dashboard-buttons.mjs
 ```
 
 Then run a targeted privacy scan before committing public changes.
