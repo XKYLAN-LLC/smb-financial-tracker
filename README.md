@@ -35,7 +35,7 @@ The UI reads saved browser state first, then falls back to `sample-tracker.seed.
 
 ## What This Provides
 
-- Static local dashboard for income, expenses, deductions, review items, P&L, and planning scenarios.
+- Static local app-shell dashboard for income, expenses, deductions, review items, P&L, source evidence, and planning scenarios.
 - Action Center that turns ledger rows into a review queue, evidence gap list, agent brief, and source-manifest starter.
 - Plain JSON seed data that is easy for humans and agents to inspect.
 - Source-document and accountant-package manifest examples.

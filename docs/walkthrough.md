@@ -16,7 +16,7 @@ Open `http://127.0.0.1:8765/index.html`.
 
 ![Dashboard overview](assets/screenshots/dashboard-overview.png)
 
-The top of the dashboard shows planning income, threshold buffer, gross receipts, expenses, and net Schedule C estimate.
+The dashboard uses a local app-shell layout with sidebar navigation, compact planning metrics, threshold settings, source references, and the AI Workbench immediately visible.
 
 ## 2. Use The Action Center
 
