@@ -180,6 +180,7 @@ async function main() {
     await wait(1000);
 
     await capture(client, "dashboard-overview.png", "window.scrollTo(0, 0)");
+    await capture(client, "action-center.png", "document.getElementById('copyAgentBrief').closest('section').scrollIntoView()");
     await capture(client, "ledger-review.png", "document.querySelector('.ledger').closest('section').scrollIntoView()");
     await capture(client, "accountant-export.png", "document.getElementById('summaryText').closest('section').scrollIntoView()");
     client.close();

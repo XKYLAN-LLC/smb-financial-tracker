@@ -241,6 +241,12 @@
       transform: translateY(-1px);
     }
 
+    button:disabled {
+      cursor: wait;
+      opacity: .72;
+      transform: none;
+    }
+
     button.secondary {
       background: #fff;
       color: var(--blue);
@@ -509,6 +515,110 @@
       background: #f6fef9;
     }
 
+    .action-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(280px, .85fr);
+      gap: 14px;
+    }
+
+    .action-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+      padding: 14px;
+    }
+
+    .action-card h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-card h3 .status {
+      margin-top: 0;
+    }
+
+    .action-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .action-item {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .action-item.warning { border-left-color: var(--amber); }
+    .action-item.danger { border-left-color: var(--red); }
+    .action-item.good { border-left-color: var(--green); }
+
+    .action-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .action-title {
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .action-meta {
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .action-copy {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric-stack {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .metric-tile {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .metric-tile strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric-tile span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .quick-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
     .product-note {
       display: grid;
       gap: 10px;
@@ -551,6 +661,7 @@
       .summary-grid { grid-template-columns: 1fr; }
       .threshold { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .formula-grid { grid-template-columns: 1fr; }
+      .action-grid { grid-template-columns: 1fr; }
       .ledger-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .intro { grid-template-columns: 1fr; }
       .source-chips { justify-content: flex-start; }
@@ -569,6 +680,7 @@
       body { background: #fff; }
       header, main { padding: 0; }
       button, .actions, .ledger-tools, .no-print { display: none !important; }
+      .action-grid { grid-template-columns: 1fr; }
       .panel { border: 0; padding: 10px 0; page-break-inside: avoid; }
       .table-wrap { max-height: none; overflow: visible; border: 0; }
       th { position: static; }
@@ -675,6 +787,39 @@
       <div>
         <h2>Scenario Checks</h2>
         <div id="scenarioChecks" class="scenario-grid"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div>
+          <h2>Action Center</h2>
+          <p class="fine-print">Prioritized worklist for the owner, AI assistant, and accountant package. It updates from the ledger.</p>
+        </div>
+        <div class="actions">
+          <button id="copyAgentBrief">Copy Agent Brief</button>
+          <button class="secondary" id="copyManifestStarter">Copy Source Manifest Starter</button>
+        </div>
+      </div>
+      <div class="action-grid">
+        <div class="action-card">
+          <h3>Review Queue <span class="status warn" id="reviewQueueCount">0</span></h3>
+          <div id="actionReviewList" class="action-list"></div>
+          <div class="quick-filters">
+            <button class="secondary" data-filter-status="Needs support">Needs support</button>
+            <button class="secondary" data-filter-status="CPA review">CPA review</button>
+            <button class="secondary" data-filter-status="Estimate">Estimates</button>
+          </div>
+        </div>
+        <div class="action-card">
+          <h3>Evidence Gaps <span class="status purple" id="evidenceGapCount">0</span></h3>
+          <div id="evidenceGapList" class="action-list"></div>
+        </div>
+        <div class="action-card">
+          <h3>Handoff Snapshot <span class="status teal" id="handoffReadiness">Draft</span></h3>
+          <div id="handoffMetrics" class="metric-stack"></div>
+          <p class="fine-print">Use the copied brief to start a new AI session or hand a clean queue to an accountant.</p>
+        </div>
       </div>
     </section>
 
@@ -1335,6 +1480,109 @@
       `;
     }
 
+    function statusTone(status) {
+      if (status === "Supported") return "good";
+      if (status === "CPA review") return "danger";
+      if (status === "Needs support" || status === "Estimate") return "warning";
+      return "";
+    }
+
+    function reviewPriority(row) {
+      const statusWeight = {
+        "CPA review": 4,
+        "Needs support": 3,
+        "Estimate": 2,
+        "Supported": 1,
+        "Exclude": 0
+      }[row.status] ?? 0;
+      const typeWeight = row.type === "Revenue" ? 2 : row.type === "Expense" ? 1 : 0;
+      return statusWeight * 100000000 + typeWeight * 1000000 + includedValue(row);
+    }
+
+    function actionForRow(row) {
+      if (row.status === "CPA review") return "Add professional-review question and keep supporting docs attached locally.";
+      if (row.status === "Needs support") return "Attach receipt, statement, invoice, source export, or business-purpose note.";
+      if (row.status === "Estimate") return "Replace forecast with actual support or leave clearly marked as estimate.";
+      if (row.type === "Info only") return "Keep visible for context but out of totals until reviewed.";
+      return "No immediate action.";
+    }
+
+    function reviewRows() {
+      return state.rows
+        .filter(row => row.use && !["Supported", "Exclude"].includes(row.status))
+        .sort((a, b) => reviewPriority(b) - reviewPriority(a));
+    }
+
+    function sourceNeededRows() {
+      return state.rows
+        .filter(row => row.use && row.status !== "Supported" && row.status !== "Exclude")
+        .sort((a, b) => reviewPriority(b) - reviewPriority(a));
+    }
+
+    function actionItemHtml(row) {
+      const amount = row.type === "Expense" ? deductibleAmount(row) : activeAmount(row);
+      return `
+        <div class="action-item ${statusTone(row.status)}">
+          <div class="action-topline">
+            <span class="action-title">${escapeHtml(row.description || "Untitled row")}</span>
+            <span class="action-meta">${money(amount)}</span>
+          </div>
+          <div class="action-copy">${escapeHtml(row.status)} · ${escapeHtml(row.type)} · ${escapeHtml(row.bucket)}</div>
+          <p class="action-copy">${escapeHtml(actionForRow(row))}</p>
+        </div>
+      `;
+    }
+
+    function renderActionCenter() {
+      const rows = reviewRows();
+      const sourceRows = sourceNeededRows();
+      const supported = state.rows.filter(row => row.use && row.status === "Supported").length;
+      const cpaReview = state.rows.filter(row => row.use && row.status === "CPA review").length;
+      const needsSupport = state.rows.filter(row => row.use && row.status === "Needs support").length;
+      const estimates = state.rows.filter(row => row.use && row.status === "Estimate").length;
+      const excluded = state.rows.filter(row => row.status === "Exclude" || !row.use).length;
+      const readiness = cpaReview || needsSupport ? "Needs review" : estimates ? "Has estimates" : "Ready";
+
+      const reviewCount = document.getElementById("reviewQueueCount");
+      reviewCount.textContent = rows.length;
+      reviewCount.className = "status " + (rows.length ? "warn" : "ok");
+      document.getElementById("actionReviewList").innerHTML = rows.length
+        ? rows.slice(0, 5).map(actionItemHtml).join("")
+        : `<div class="action-item good"><div class="action-title">No open review rows</div><p class="action-copy">Included rows are either supported or intentionally excluded.</p></div>`;
+
+      const gapCount = document.getElementById("evidenceGapCount");
+      gapCount.textContent = sourceRows.length;
+      gapCount.className = "status " + (sourceRows.length ? "purple" : "ok");
+      document.getElementById("evidenceGapList").innerHTML = sourceRows.length
+        ? sourceRows.slice(0, 5).map(row => `
+            <div class="action-item ${statusTone(row.status)}">
+              <div class="action-topline">
+                <span class="action-title">${escapeHtml(row.description || "Untitled row")}</span>
+                <span class="action-meta">${escapeHtml(row.status)}</span>
+              </div>
+              <p class="action-copy">${escapeHtml(row.notes || "Needs a local source document, evidence pointer, or review note.")}</p>
+            </div>
+          `).join("")
+        : `<div class="action-item good"><div class="action-title">No evidence gaps found</div><p class="action-copy">All included rows are marked supported or excluded.</p></div>`;
+
+      const readinessPill = document.getElementById("handoffReadiness");
+      readinessPill.textContent = readiness;
+      readinessPill.className = "status " + (readiness === "Ready" ? "ok" : readiness === "Has estimates" ? "warn" : "bad");
+      document.getElementById("handoffMetrics").innerHTML = [
+        ["Rows", state.rows.length],
+        ["Supported", supported],
+        ["Need support", needsSupport],
+        ["CPA review", cpaReview],
+        ["Estimates", estimates],
+        ["Excluded", excluded]
+      ].map(([label, value]) => `
+        <div class="metric-tile">
+          <strong>${escapeHtml(value)}</strong>
+          <span>${escapeHtml(label)}</span>
+        </div>
+      `).join("");
+    }
+
     function renderChecks() {
       const t = totals();
       const checks = [];
@@ -1354,10 +1602,81 @@
       `).join("");
     }
 
+    function agentReviewBrief() {
+      const t = totals();
+      const queue = reviewRows();
+      const queueLines = queue.map(row => `- ${row.status}: ${row.description} (${row.type}, ${row.bucket}, ${money(includedValue(row))}) - ${actionForRow(row)}`).join("\n");
+      const sourceLines = sourceNeededRows().map(row => `- ${row.id}: ${row.description} -> add support under private/source-documents/ and link it in the source manifest.`).join("\n");
+      return `# Agent Review Brief
+
+Generated from SMB Financial Tracker on ${new Date().toISOString().slice(0, 10)}.
+
+## Current Totals
+
+- Planning MAGI: ${money(t.magi)}
+- Threshold: ${money(t.threshold)}
+- Buffer: ${money(t.buffer)}
+- Gross receipts: ${money(t.gross)}
+- Schedule C expenses: ${money(t.expenses)}
+- Net Schedule C: ${money(t.netScheduleC)}
+
+## Review Queue
+
+${queueLines || "- No included rows are currently flagged."}
+
+## Source Documents To Gather
+
+${sourceLines || "- No missing source-document tasks found."}
+
+## Agent Instructions
+
+- Read private/profile/business-profile.json and private/profile/classification-policy.json before changing categories.
+- Keep raw source files under private/ and never commit them.
+- Preserve source ids, row hashes, evidence pointers, and notes.
+- Use row type Info only plus status Exclude for transfers, duplicates, owner movements, and raw context rows that should not affect totals.
+- Keep CPA review flags visible until the user or accountant resolves them.`;
+    }
+
+    function sourceManifestStarter() {
+      const documents = sourceNeededRows().map(row => ({
+        id: `source-needed-${row.id}`,
+        kind: "unknown",
+        system: "Needs local source",
+        localPathHint: `private/source-documents/${row.id}-support`,
+        period: /^\d{4}-\d{2}/.test(row.date || "") ? row.date.slice(0, 7) : "unknown",
+        status: "needed",
+        storageStatus: "missing",
+        supports: [row.id],
+        relatedRows: [row.id],
+        notes: `${row.status}: ${row.description}. ${actionForRow(row)}`
+      }));
+      return JSON.stringify({
+        schemaVersion: "0.1.0",
+        manifest: {
+          id: `source-manifest-${state.settings.reviewDate || new Date().toISOString().slice(0, 10)}`,
+          label: `${state.profile?.workspace || "Local financial tracker"} source manifest starter`,
+          taxYear: Number((state.settings.reviewDate || "").slice(0, 4)) || new Date().getFullYear(),
+          localRootHint: "private/source-documents/",
+          privacy: "Private local manifest starter generated from dashboard review rows. Do not commit real source contents."
+        },
+        documents,
+        extractedFacts: [],
+        reviewQuestions: reviewRows().map(row => ({
+          id: `review-${row.id}`,
+          question: `${row.status}: confirm support and treatment for ${row.description}.`,
+          status: "open",
+          relatedSources: documents.some(document => document.supports.includes(row.id)) ? [`source-needed-${row.id}`] : []
+        }))
+      }, null, 2);
+    }
+
     function summaryText() {
       const t = totals();
       const bucketsText = expenseBuckets()
         .map(row => `- ${row.bucket}${row.subcategory ? " / " + row.subcategory : ""}: ${money(row.amount)}`)
+        .join("\n");
+      const actionText = reviewRows()
+        .map(row => `- ${row.status}: ${row.description} (${money(includedValue(row))}) - ${actionForRow(row)}`)
         .join("\n");
       return `2026 Sample Business threshold / Schedule C tracking snapshot
 Review date: ${state.settings.reviewDate}
@@ -1381,6 +1700,9 @@ Current planning calculation:
 
 Schedule C bucket rollup:
 ${bucketsText || "- No expense buckets yet."}
+
+Open action items:
+${actionText || "- No included rows are currently flagged."}
 
 Notes:
 - Traditional IRA contribution must actually be made and deductible for 2026.
@@ -1450,6 +1772,7 @@ ${ledgerLines}
       renderKpis();
       renderFormulaTable();
       renderScenarioChecks();
+      renderActionCenter();
       renderBucketSummary();
       renderMonthlySummary();
       renderChecks();
@@ -1470,6 +1793,7 @@ ${ledgerLines}
       } else {
         row[field] = control.value;
       }
+      renderActionCenter();
       renderKpis();
       renderFormulaTable();
       renderScenarioChecks();
@@ -1480,6 +1804,31 @@ ${ledgerLines}
       saveState();
       const includedCell = tr.querySelector("td:nth-last-child(2)");
       if (includedCell) includedCell.textContent = money(includedValue(row));
+    }
+
+    async function copyText(text, button) {
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(text);
+      } catch (error) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+      if (!button) return;
+      const original = button.textContent;
+      button.textContent = "Copied";
+      button.disabled = true;
+      setTimeout(() => {
+        button.textContent = original;
+        button.disabled = false;
+      }, 1000);
     }
 
     function addRow() {
@@ -1741,8 +2090,27 @@ ${ledgerLines}
       filters.includedOnly = event.target.checked;
       renderLedger();
     });
+    document.querySelector(".action-grid").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter-status]");
+      if (!button) return;
+      filters.status = button.dataset.filterStatus;
+      filters.type = "";
+      filters.search = "";
+      filters.includedOnly = false;
+      document.getElementById("searchRows").value = "";
+      document.getElementById("includedOnly").checked = false;
+      renderFilterOptions();
+      renderLedger();
+      document.querySelector(".ledger").closest("section").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
     document.getElementById("copySummary").addEventListener("click", async () => {
-      await navigator.clipboard.writeText(document.getElementById("summaryText").value);
+      await copyText(document.getElementById("summaryText").value, document.getElementById("copySummary"));
+    });
+    document.getElementById("copyAgentBrief").addEventListener("click", async event => {
+      await copyText(agentReviewBrief(), event.target);
+    });
+    document.getElementById("copyManifestStarter").addEventListener("click", async event => {
+      await copyText(sourceManifestStarter(), event.target);
     });
     document.getElementById("resetState").addEventListener("click", () => {
       if (!confirm("Reset tracker to the seeded baseline?")) return;

@@ -6,6 +6,7 @@ SMB Financial Tracker is early-stage and useful as an AI-assisted local workspac
 
 - Open the static dashboard locally.
 - Review synthetic sample income, expenses, deduction categories, and review flags.
+- Use the Action Center to copy an agent brief or source-manifest starter from flagged rows.
 - Edit local ledger rows in the browser.
 - Export accountant-facing CSV and Markdown summaries.
 - Use the docs and skills to guide an AI assistant through private source review.

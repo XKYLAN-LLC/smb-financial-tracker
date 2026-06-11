@@ -28,6 +28,14 @@ Please help me:
 Do not build a parser or integration. Use the files and my context to produce a reviewable local update.
 ```
 
+## Continue From The Dashboard Action Center
+
+```text
+I copied this Agent Review Brief from the dashboard Action Center. Use it as the starting point for this session.
+
+Please update my private source-document manifest, review queue, and ledger rows from the attached private documents. Keep raw files under private/, preserve source references, and keep unresolved items marked Needs support, CPA review, Exclude, or row type Info only.
+```
+
 ## Build A Review Queue
 
 ```text
