@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Redesigned the dashboard into a denser app-shell workbench with sidebar navigation, compact KPI cards, source evidence, and accountant readiness panels.
+- Added a dashboard smoke test for core buttons, generated exports, synthetic imports, reset behavior, editable ledger controls, and mobile layout.
+- Added a mobile dashboard screenshot to the public walkthrough.
 - Added a dashboard Action Center with prioritized review rows, evidence gaps, handoff readiness metrics, an agent brief copier, and a source-manifest starter copier.
 - Added agent context templates for business profiles, classification policies, source manifests, and future-session notes.
 - Added workflow and classification docs plus skills for source-document review and record classification.
