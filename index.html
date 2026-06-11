@@ -7,22 +7,26 @@
   <style>
     :root {
       color-scheme: light;
-      --bg: #f4f6f8;
+      --bg: #dfe7ef;
       --panel: #ffffff;
-      --ink: #182233;
+      --ink: #111827;
       --muted: #667085;
-      --line: #d9e1eb;
-      --soft: #f7f9fc;
-      --blue: #1456d9;
-      --blue-soft: #eef4ff;
-      --green: #1f9a5f;
+      --line: #d7e0ea;
+      --soft: #f5f8fb;
+      --blue: #175ce5;
+      --blue-soft: #edf4ff;
+      --dark: #0f172a;
+      --accent: #7460ee;
+      --accent-soft: #f1edff;
+      --green: #168a4a;
       --red: #cf2e2e;
       --amber: #d97706;
-      --violet: #6846c5;
-      --teal: #0f766e;
-      --sidebar: #fbfcfe;
-      --shadow: 0 18px 45px rgba(21, 32, 48, 0.08);
-      --shadow-sm: 0 8px 22px rgba(21, 32, 48, 0.05);
+      --violet: #7357d9;
+      --teal: #0f7c72;
+      --lime: #9be66b;
+      --sidebar: #ffffff;
+      --shadow: 0 34px 90px rgba(25, 38, 61, 0.2);
+      --shadow-sm: 0 14px 34px rgba(25, 38, 61, 0.08);
       --radius: 8px;
     }
 
@@ -36,11 +40,20 @@
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.42;
+      padding: 20px;
     }
 
     .app-shell {
-      min-height: 100vh;
-      display: block;
+      width: min(1500px, 100%);
+      min-height: calc(100vh - 40px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(164, 178, 195, 0.55);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
     }
 
     h1, h2, h3, p { margin-top: 0; }
@@ -50,27 +63,25 @@
     p { color: var(--muted); }
 
     .sidebar {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 248px;
-      height: auto;
+      position: relative;
+      width: auto;
+      min-height: 100%;
       display: grid;
       grid-template-rows: auto 1fr auto;
       gap: 18px;
       border-right: 1px solid var(--line);
       background: var(--sidebar);
-      padding: 18px 18px 16px;
+      padding: 18px 12px 16px;
       z-index: 5;
     }
 
     .brand {
       display: flex;
-      gap: 12px;
+      justify-content: center;
+      gap: 0;
       align-items: center;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--line);
+      padding: 2px 0 18px;
+      border-bottom: 1px solid #edf1f5;
     }
 
     .brand-mark {
@@ -79,15 +90,15 @@
       width: 38px;
       height: 38px;
       border-radius: 7px;
-      background: var(--blue);
+      background: #111827;
       color: #fff;
       font-size: 18px;
       font-weight: 850;
-      box-shadow: 0 10px 22px rgba(20, 86, 217, 0.22);
+      box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18);
     }
 
     .brand strong {
-      display: block;
+      display: none;
       font-size: 15px;
       line-height: 1.2;
     }
@@ -98,6 +109,8 @@
       color: var(--muted);
       font-size: 12px;
     }
+
+    .brand span { display: none; }
 
     .sidebar-scroll {
       min-height: 0;
@@ -112,7 +125,12 @@
     }
 
     .nav-heading {
-      margin: 14px 0 6px;
+      height: 1px;
+      margin: 14px auto 8px;
+      width: 22px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #edf1f5;
       color: var(--muted);
       font-size: 11px;
       font-weight: 850;
@@ -122,44 +140,98 @@
 
     .nav-link {
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
-      min-height: 36px;
-      border-radius: 6px;
-      color: #314056;
-      font-size: 13px;
+      gap: 0;
+      width: 42px;
+      min-height: 42px;
+      border-radius: 8px;
+      color: #344054;
+      font-size: 0;
       font-weight: 720;
       text-decoration: none;
-      padding: 8px 10px;
+      padding: 0;
+      margin: 0 auto;
     }
 
     .nav-link:hover,
     .nav-link.active {
-      background: var(--blue-soft);
-      color: var(--blue);
+      background: var(--dark);
+      color: #fff;
+      box-shadow: 0 12px 22px rgba(15, 23, 42, .18);
     }
 
     .nav-icon {
+      position: relative;
       display: grid;
       place-items: center;
       width: 18px;
       height: 18px;
-      border-radius: 4px;
+      border-radius: 6px;
+      background: transparent;
       color: inherit;
-      font-size: 0;
+      font-size: 11px;
+      font-weight: 850;
       line-height: 1;
     }
 
     .nav-icon::before {
       content: "";
-      width: 13px;
-      height: 13px;
-      border: 1.6px solid currentColor;
+      display: block;
+      width: 14px;
+      height: 14px;
+      border: 1.7px solid currentColor;
       border-radius: 4px;
+    }
+
+    .nav-dashboard::before {
+      background: currentColor;
+      box-shadow: inset 0 0 0 4px var(--sidebar);
+    }
+
+    .nav-ledger::before,
+    .nav-instructions::before,
+    .nav-walkthrough::before,
+    .nav-changelog::before {
+      width: 12px;
+      height: 15px;
+      border-radius: 3px;
+      box-shadow: inset 0 4px 0 rgba(100, 116, 139, .18);
+    }
+
+    .nav-review::before,
+    .nav-workbench::before {
+      border-radius: 50%;
+    }
+
+    .nav-sources::before {
+      width: 15px;
+      height: 11px;
+      border-radius: 3px;
+      box-shadow: 0 -4px 0 -2px currentColor;
+    }
+
+    .nav-package::before {
+      width: 15px;
+      height: 12px;
+      transform: rotate(-4deg);
+    }
+
+    .nav-settings::before {
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 4px var(--sidebar);
+    }
+
+    .nav-classification::before {
+      width: 15px;
+      height: 11px;
+      border-radius: 999px;
     }
 
     .nav-badge {
       margin-left: auto;
+      position: absolute;
+      transform: translate(16px, -14px);
       min-width: 24px;
       border-radius: 999px;
       background: #fff2e8;
@@ -174,14 +246,26 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #fff;
-      padding: 12px;
-      box-shadow: 0 1px 0 rgba(21, 32, 48, 0.03);
+      min-height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      box-shadow: 0 8px 22px rgba(25, 38, 61, 0.05);
     }
 
     .sidebar-footer strong {
       display: block;
       margin-bottom: 4px;
       font-size: 13px;
+    }
+
+    .sidebar-footer strong {
+      margin: 0;
+      font-size: 0;
+    }
+
+    .sidebar-footer span:not(.local-dot) {
+      display: none;
     }
 
     .local-dot {
@@ -196,9 +280,10 @@
 
     .workspace {
       min-width: 0;
-      margin-left: 248px;
+      margin-left: 0;
       display: grid;
       grid-template-rows: auto 1fr;
+      background: #f5f8fb;
     }
 
     .topbar {
@@ -206,30 +291,29 @@
       top: 0;
       z-index: 4;
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) auto;
+      grid-template-columns: minmax(220px, .8fr) minmax(360px, 1fr) auto;
       gap: 16px;
       align-items: center;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid #e8edf3;
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(14px);
-      padding: 14px 20px;
+      padding: 17px 22px;
     }
 
     .workspace-title {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
+      flex-direction: column;
+      gap: 3px;
+      align-items: flex-start;
       min-width: 0;
     }
 
     .workspace-card {
       min-width: 250px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fff;
-      padding: 9px 12px;
-      box-shadow: 0 1px 0 rgba(21, 32, 48, 0.03);
+      border: 0;
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
     }
 
     .workspace-card strong {
@@ -239,6 +323,45 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .top-tabs {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 5px;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .top-tabs::-webkit-scrollbar { display: none; }
+
+    .top-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      border-radius: 999px;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 760;
+      text-decoration: none;
+      padding: 8px 11px;
+    }
+
+    .top-tab.active {
+      background: var(--dark);
+      color: #fff;
+      box-shadow: 0 12px 22px rgba(15, 23, 42, .18);
+    }
+
+    .top-tab:not(.active):hover {
+      background: #f2f5f9;
+      color: var(--dark);
     }
 
     .topbar-actions {
@@ -261,6 +384,7 @@
       color: #344054;
       font-size: 12px;
       font-weight: 760;
+      box-shadow: 0 8px 20px rgba(25, 38, 61, 0.05);
     }
 
     .topbar-status span {
@@ -285,8 +409,8 @@
     }
 
     .button-link.primary {
-      border-color: var(--blue);
-      background: var(--blue);
+      border-color: var(--dark);
+      background: var(--dark);
       color: #fff;
     }
 
@@ -298,9 +422,9 @@
 
     main {
       width: 100%;
-      max-width: 1500px;
+      max-width: none;
       margin: 0;
-      padding: 20px;
+      padding: 20px 20px 28px;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: 14px;
@@ -309,7 +433,7 @@
     .panel {
       min-width: 0;
       background: var(--panel);
-      border: 1px solid var(--line);
+      border: 1px solid #e0e7f0;
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow-sm);
@@ -331,13 +455,15 @@
 
     .dashboard-panel {
       display: grid;
-      gap: 14px;
+      gap: 18px;
+      padding: 18px;
+      background: #fff;
     }
 
     .dashboard-copy {
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) auto;
-      gap: 14px;
+      grid-template-columns: minmax(340px, 1fr) minmax(320px, .58fr);
+      gap: 18px;
       align-items: center;
     }
 
@@ -411,18 +537,22 @@
 
     .kpis {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: minmax(300px, 1.05fr) minmax(180px, .65fr) minmax(210px, .75fr) minmax(270px, .9fr);
+      grid-template-areas:
+        "balance activity streams assistant"
+        "goals credit overview recent";
+      grid-auto-rows: minmax(190px, auto);
+      gap: 12px;
     }
 
     .kpi {
       min-width: 0;
-      min-height: 104px;
-      padding: 13px;
-      border: 1px solid var(--line);
+      min-height: 190px;
+      padding: 16px;
+      border: 1px solid #e4ebf3;
       border-radius: var(--radius);
       background: #fff;
-      box-shadow: 0 1px 0 rgba(21, 32, 48, 0.04);
+      box-shadow: 0 16px 36px rgba(25, 38, 61, 0.07);
       position: relative;
       overflow: hidden;
     }
@@ -430,21 +560,361 @@
     .kpi::before {
       content: "";
       position: absolute;
-      inset: 0 0 auto 0;
-      height: 3px;
-      background: var(--blue);
+      top: 15px;
+      right: 15px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--blue-soft);
     }
 
-    .kpi:nth-child(1)::before { background: var(--green); }
-    .kpi:nth-child(2)::before { background: var(--blue); }
-    .kpi:nth-child(3)::before { background: var(--teal); }
-    .kpi:nth-child(4)::before { background: var(--violet); }
-    .kpi:nth-child(5)::before { background: var(--amber); }
-    .kpi:nth-child(6)::before { background: #344054; }
+    .kpi::after {
+      content: "";
+      position: absolute;
+      top: 26px;
+      right: 26px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .3;
+    }
+
+    .balance-card {
+      grid-area: balance;
+      padding: 21px;
+      background:
+        radial-gradient(circle at 84% 10%, rgba(155, 230, 107, .3), transparent 25%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0) 54%, rgba(116, 96, 238, 0.06) 100%),
+        #fff;
+    }
+
+    .balance-card::before {
+      background:
+        linear-gradient(180deg, rgba(22, 138, 74, 0.18), rgba(15, 124, 114, 0.12)),
+        #f3fbf5;
+    }
+
+    .balance-card::after,
+    .assistant-card::before,
+    .assistant-card::after,
+    .recent-card::before,
+    .recent-card::after {
+      display: none;
+    }
+
+    .activity-card { grid-area: activity; color: var(--violet); }
+    .streams-card { grid-area: streams; color: var(--amber); }
+    .assistant-card { grid-area: assistant; }
+    .goals-card { grid-area: goals; color: var(--teal); }
+    .credit-card { grid-area: credit; color: var(--blue); }
+    .overview-card { grid-area: overview; color: #344054; }
+    .recent-card { grid-area: recent; }
+
+    .activity-card::before { background: #f3efff; }
+    .streams-card::before { background: #fff7e8; }
+    .goals-card::before { background: #e8faf6; }
+    .credit-card::before { background: #ecf4ff; }
+    .overview-card::before { background: #eef2f7; }
+
+    .assistant-card {
+      min-height: 392px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background:
+        radial-gradient(circle at 82% 14%, rgba(255,255,255,.7), transparent 28%),
+        linear-gradient(145deg, #e9f5ff, #f3efff 62%, #edfdf5);
+      border-color: #d8e7fb;
+      padding: 18px;
+    }
+
+    .assistant-card p,
+    .recent-card p {
+      position: relative;
+      z-index: 1;
+      margin: 7px 0 0;
+      color: #56647a;
+      font-size: 13px;
+    }
+
+    .assistant-visual {
+      display: grid;
+      place-items: center;
+      min-height: 174px;
+      margin: 8px 0 10px;
+    }
+
+    .assistant-visual img {
+      width: min(190px, 80%);
+      height: auto;
+      filter: drop-shadow(0 22px 28px rgba(55, 75, 125, .2));
+    }
+
+    .assistant-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .recent-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .recent-row {
+      display: grid;
+      grid-template-columns: 26px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 42px;
+      border-radius: var(--radius);
+      background: #f7fafc;
+      padding: 8px 9px;
+    }
+
+    .recent-icon {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #eef2ff;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .recent-main {
+      min-width: 0;
+    }
+
+    .recent-main strong {
+      display: block;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .recent-main span,
+    .recent-amount {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .kpi .label,
+    .kpi .value,
+    .kpi .status,
+    .kpi-sparkline {
+      position: relative;
+      z-index: 1;
+    }
+
+    .kpi-sparkline {
+      display: block;
+      width: 100%;
+      height: 112px;
+      margin-top: 22px;
+      border: 1px solid #e5edf5;
+      border-radius: var(--radius);
+      background: #f8fbfe;
+    }
+
+    .kpi-sparkline .grid {
+      stroke: #dbe6f0;
+      stroke-width: 1;
+    }
+
+    .kpi-sparkline .area {
+      fill: rgba(23, 92, 229, .08);
+    }
+
+    .kpi-sparkline .line-primary {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .kpi-sparkline .line-secondary {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: .78;
+    }
+
+    .kpi-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .mini-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      border: 1px solid #d5deea;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--dark);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      padding: 6px 11px;
+    }
+
+    .mini-button.dark {
+      border-color: var(--dark);
+      background: var(--dark);
+      color: #fff;
+    }
+
+    .kpi-mini {
+      position: relative;
+      z-index: 1;
+      margin-top: 16px;
+    }
+
+    .mini-bars {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      align-items: end;
+      height: 66px;
+      margin-top: 18px;
+    }
+
+    .mini-bars span {
+      display: block;
+      border-radius: 999px 999px 4px 4px;
+      background: var(--accent);
+      opacity: .88;
+    }
+
+    .mini-bars span:nth-child(2n) { background: #b49cff; }
+    .mini-bars span:nth-child(3n) { background: var(--green); }
+
+    .stream-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .stream-row {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .stream-bar {
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eef2f7;
+    }
+
+    .stream-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+    }
+
+    .ring-stat {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 74px;
+      height: 74px;
+      margin-top: 22px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, #fff 0 54%, transparent 55%),
+        conic-gradient(var(--accent) 0 62%, #e9eef5 62% 100%);
+      color: var(--dark);
+      font-size: 13px;
+      font-weight: 850;
+      box-shadow: inset 0 0 0 1px #e6edf5;
+    }
+
+    .mini-progress {
+      position: relative;
+      z-index: 1;
+      height: 9px;
+      margin-top: 18px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e9eef5;
+    }
+
+    .mini-progress span {
+      display: block;
+      width: 54%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green), var(--lime));
+    }
+
+    .net-strip {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .net-strip span {
+      display: block;
+      min-height: 34px;
+      border-radius: var(--radius);
+      background: #f3f6fa;
+    }
+
+    .net-strip span:nth-child(1) { background: #f0fdf4; }
+    .net-strip span:nth-child(2) { background: #f1edff; }
+    .net-strip span:nth-child(3) { background: #eff6ff; }
+
+    .goal-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .goal-row strong {
+      color: var(--ink);
+      font-size: 16px;
+    }
 
     .kpi:hover {
       border-color: #c5d0dd;
-      box-shadow: 0 10px 26px rgba(21, 32, 48, 0.07);
+      box-shadow: 0 16px 32px rgba(25, 38, 61, 0.1);
     }
 
     .label {
@@ -457,10 +927,17 @@
 
     .value {
       margin-top: 8px;
-      font-size: 23px;
+      color: var(--ink);
+      font-size: 24px;
       font-weight: 760;
       font-variant-numeric: tabular-nums;
       overflow-wrap: anywhere;
+    }
+
+    .balance-card .value {
+      margin-top: 12px;
+      font-size: 36px;
+      letter-spacing: 0;
     }
 
     .status {
@@ -483,9 +960,9 @@
     .teal { color: var(--teal); background: #ecfdf9; border-color: #9dd9cf; }
 
     button {
-      border: 1px solid var(--blue);
+      border: 1px solid var(--dark);
       border-radius: 6px;
-      background: var(--blue);
+      background: var(--dark);
       color: #fff;
       cursor: pointer;
       font-size: 13px;
@@ -496,8 +973,8 @@
     }
 
     button:hover {
-      background: #0f49bb;
-      box-shadow: 0 8px 20px rgba(20, 86, 217, 0.18);
+      background: #020617;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.2);
       transform: translateY(-1px);
     }
 
@@ -510,12 +987,13 @@
     button.secondary {
       background: #fff;
       font-weight: 700;
-      color: var(--blue);
+      color: var(--accent);
+      border-color: #c7bfff;
     }
 
     button.secondary:hover {
-      background: #f5f8ff;
-      box-shadow: 0 7px 18px rgba(20, 86, 217, 0.12);
+      background: var(--accent-soft);
+      box-shadow: 0 7px 18px rgba(116, 96, 238, 0.12);
     }
 
     button.danger {
@@ -568,8 +1046,8 @@
 
     .settings-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(360px, .72fr);
-      gap: 14px;
+      grid-template-columns: minmax(0, .92fr) minmax(360px, .58fr);
+      gap: 12px;
       align-items: stretch;
     }
 
@@ -577,13 +1055,21 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+      border: 1px solid #e0e7f0;
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 12px;
+      box-shadow: 0 10px 24px rgba(25, 38, 61, 0.05);
     }
 
     .buffer-meter {
-      border: 1px solid var(--line);
+      border: 1px solid #e0e7f0;
       border-radius: var(--radius);
-      background: var(--soft);
-      padding: 12px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0) 0 24%, rgba(23,92,229,.06) 24% 25%, rgba(255,255,255,0) 25% 49%, rgba(23,92,229,.06) 49% 50%, rgba(255,255,255,0) 50% 74%, rgba(23,92,229,.06) 74% 75%, rgba(255,255,255,0) 75%),
+        #fff;
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(25, 38, 61, 0.05);
     }
 
     .meter-label {
@@ -963,13 +1449,31 @@
     }
 
     @media (max-width: 1500px) {
-      .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .kpis {
+        grid-template-columns: minmax(280px, 1fr) minmax(160px, .68fr) minmax(190px, .75fr) minmax(250px, .9fr);
+      }
     }
 
     @media (max-width: 1220px) {
-      .sidebar { width: 220px; }
-      .workspace { margin-left: 220px; }
-      .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .app-shell { grid-template-columns: 78px minmax(0, 1fr); }
+      .sidebar { width: auto; }
+      .workspace { margin-left: 0; }
+      .topbar {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+      .top-tabs { justify-content: flex-start; }
+      .dashboard-copy,
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpis {
+        grid-template-areas:
+          "balance assistant"
+          "activity streams"
+          "goals credit"
+          "overview recent";
+      }
+      .assistant-card,
+      .balance-card { min-height: 260px; }
       .settings-grid,
       .summary-grid,
       .formula-grid,
@@ -977,18 +1481,26 @@
     }
 
     @media (max-width: 900px) {
-      .app-shell { display: block; }
+      body { padding: 0; }
+      .app-shell {
+        display: block;
+        min-height: 100vh;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
       .sidebar {
         position: static;
         width: auto;
         height: auto;
+        min-height: 0;
         display: block;
         border-right: 0;
         border-bottom: 1px solid var(--line);
       }
       .workspace { margin-left: 0; }
       .sidebar-scroll {
-        display: flex;
+        display: none;
         gap: 10px;
         overflow-x: auto;
         padding: 8px 0 0;
@@ -996,6 +1508,35 @@
       .nav-group { display: flex; min-width: max-content; margin-bottom: 0; }
       .nav-heading,
       .sidebar-footer { display: none; }
+      .brand {
+        justify-content: flex-start;
+        gap: 12px;
+        padding-bottom: 16px;
+      }
+      .brand strong,
+      .brand span { display: block; }
+      .nav-link {
+        width: auto;
+        min-height: 36px;
+        gap: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        background: #f3f6fa;
+        color: var(--dark);
+        box-shadow: none;
+      }
+      .nav-icon {
+        background: #f1f5f9;
+        color: inherit;
+      }
+      .nav-badge {
+        position: static;
+        transform: none;
+      }
       .topbar { position: static; grid-template-columns: 1fr; }
       .topbar-actions { justify-content: flex-start; }
       .dashboard-copy { grid-template-columns: 1fr; }
@@ -1008,6 +1549,24 @@
     @media (max-width: 680px) {
       main { padding: 14px; }
       .kpis, .threshold, .ledger-tools { grid-template-columns: 1fr; }
+      .kpis {
+        grid-template-areas:
+          "balance"
+          "assistant"
+          "activity"
+          "streams"
+          "goals"
+          "credit"
+          "overview"
+          "recent";
+      }
+      .assistant-card,
+      .balance-card { min-height: 236px; }
+      .balance-card .value { font-size: 30px; }
+      .kpi-sparkline {
+        height: 104px;
+        margin-top: 22px;
+      }
       .value { font-size: 22px; }
       .workspace-card { min-width: 0; width: 100%; }
       .topbar-actions .topbar-status,
@@ -1041,23 +1600,23 @@
       </div>
       <div class="sidebar-scroll">
         <nav class="nav-group" aria-label="Primary">
-          <a class="nav-link active" href="#dashboard"><span class="nav-icon">D</span>Dashboard</a>
-          <a class="nav-link" href="#ledger"><span class="nav-icon">L</span>Ledger</a>
-          <a class="nav-link" href="#action-center"><span class="nav-icon">R</span>Review Queue <span class="nav-badge" id="navReviewCount">0</span></a>
-          <a class="nav-link" href="#source-documents"><span class="nav-icon">S</span>Sources</a>
-          <a class="nav-link" href="#accountant-package"><span class="nav-icon">P</span>Accountant Package</a>
-          <a class="nav-link" href="#settings"><span class="nav-icon">G</span>Settings</a>
+          <a class="nav-link active" href="#dashboard"><span class="nav-icon nav-dashboard" aria-hidden="true"></span>Dashboard</a>
+          <a class="nav-link" href="#ledger"><span class="nav-icon nav-ledger" aria-hidden="true"></span>Ledger</a>
+          <a class="nav-link" href="#action-center"><span class="nav-icon nav-review" aria-hidden="true"></span>Review Queue <span class="nav-badge" id="navReviewCount">0</span></a>
+          <a class="nav-link" href="#source-documents"><span class="nav-icon nav-sources" aria-hidden="true"></span>Sources</a>
+          <a class="nav-link" href="#accountant-package"><span class="nav-icon nav-package" aria-hidden="true"></span>Accountant Package</a>
+          <a class="nav-link" href="#settings"><span class="nav-icon nav-settings" aria-hidden="true"></span>Settings</a>
         </nav>
         <div class="nav-heading">Agent Tools</div>
         <nav class="nav-group" aria-label="Agent tools">
-          <a class="nav-link" href="#action-center"><span class="nav-icon">A</span>AI Workbench</a>
-          <a class="nav-link" href="docs/classification.md"><span class="nav-icon">C</span>Classification Guide</a>
-          <a class="nav-link" href="AGENT_GUIDE.md"><span class="nav-icon">I</span>Agent Instructions</a>
+          <a class="nav-link" href="#action-center"><span class="nav-icon nav-workbench" aria-hidden="true"></span>AI Workbench</a>
+          <a class="nav-link" href="docs/classification.md"><span class="nav-icon nav-classification" aria-hidden="true"></span>Classification Guide</a>
+          <a class="nav-link" href="AGENT_GUIDE.md"><span class="nav-icon nav-instructions" aria-hidden="true"></span>Agent Instructions</a>
         </nav>
         <div class="nav-heading">Help</div>
         <nav class="nav-group" aria-label="Help">
-          <a class="nav-link" href="docs/walkthrough.md"><span class="nav-icon">W</span>Walkthrough</a>
-          <a class="nav-link" href="CHANGELOG.md"><span class="nav-icon">N</span>Changelog</a>
+          <a class="nav-link" href="docs/walkthrough.md"><span class="nav-icon nav-walkthrough" aria-hidden="true"></span>Walkthrough</a>
+          <a class="nav-link" href="CHANGELOG.md"><span class="nav-icon nav-changelog" aria-hidden="true"></span>Changelog</a>
         </nav>
       </div>
       <div class="sidebar-footer">
@@ -1075,9 +1634,14 @@
             <strong id="workspaceName">Sample freelance business 2026</strong>
           </div>
         </div>
+        <nav class="top-tabs" aria-label="Workspace sections">
+          <a class="top-tab active" href="#dashboard">Dashboard</a>
+          <a class="top-tab" href="#action-center">Review</a>
+          <a class="top-tab" href="#ledger">Ledger</a>
+          <a class="top-tab" href="#source-documents">Sources</a>
+        </nav>
         <div class="topbar-actions">
           <div class="topbar-status"><span class="local-dot"></span>Local Mode <span>Private files stay on this device</span></div>
-          <a class="button-link" href="#ledger">Open Ledger</a>
           <a class="button-link primary" href="#accountant-package">Export Package</a>
         </div>
       </header>
@@ -1087,7 +1651,7 @@
       <div class="dashboard-copy">
         <div>
           <h2>Dashboard</h2>
-          <p>AI-assisted local workspace for organizing income, expenses, source evidence, review flags, and accountant handoff. Final tax treatment stays with the accountant.</p>
+          <p>Local workspace for source-backed income, expenses, review flags, and accountant handoff. Use an AI agent to maintain rows; final tax treatment stays with the accountant.</p>
           <div class="status-strip">
             <span class="status-pill">Mode <strong>Local-first</strong></span>
             <span class="status-pill">Audit trail <strong>Ledger rows</strong></span>
@@ -1104,30 +1668,93 @@
         </div>
       </div>
       <div class="kpis">
-        <div class="kpi">
-          <div class="label">Planning MAGI</div>
+        <div class="kpi balance-card">
+          <div class="label">Total Planning Balance</div>
           <div class="value" id="kpiMagi">$0</div>
           <div class="status" id="kpiStatus">Status</div>
+          <div class="kpi-actions">
+            <a class="mini-button dark" href="#action-center">Review Queue</a>
+            <a class="mini-button" href="#ledger">Open Ledger</a>
+          </div>
+          <svg class="kpi-sparkline" viewBox="0 0 420 150" role="img" aria-label="Synthetic planning trend">
+            <line class="grid" x1="24" y1="34" x2="396" y2="34"></line>
+            <line class="grid" x1="24" y1="74" x2="396" y2="74"></line>
+            <line class="grid" x1="24" y1="114" x2="396" y2="114"></line>
+            <path class="area" d="M24,112 C70,96 92,98 126,84 C166,68 184,72 220,58 C262,42 294,58 326,44 C352,33 374,36 396,28 L396,126 L24,126 Z"></path>
+            <path class="line-secondary" d="M24,104 C68,96 98,100 130,86 C164,70 196,84 228,68 C268,48 294,62 326,50 C354,40 376,42 396,36"></path>
+            <path class="line-primary" d="M24,116 C68,108 98,112 132,96 C166,76 192,90 226,72 C262,50 292,65 326,48 C354,34 374,38 396,26"></path>
+          </svg>
         </div>
-        <div class="kpi">
-          <div class="label">Medi-Cal Threshold</div>
-          <div class="value" id="kpiThreshold">$0</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Remaining Buffer</div>
-          <div class="value" id="kpiBuffer">$0</div>
-        </div>
-        <div class="kpi">
+        <div class="kpi activity-card">
           <div class="label">Gross Receipts</div>
           <div class="value" id="kpiGross">$0</div>
+          <div class="mini-bars" aria-hidden="true">
+            <span style="height: 34%"></span>
+            <span style="height: 52%"></span>
+            <span style="height: 44%"></span>
+            <span style="height: 76%"></span>
+            <span style="height: 58%"></span>
+            <span style="height: 82%"></span>
+            <span style="height: 64%"></span>
+          </div>
         </div>
-        <div class="kpi">
+        <div class="kpi streams-card">
           <div class="label">Schedule C Expenses</div>
           <div class="value" id="kpiExpenses">$0</div>
+          <div class="stream-list" aria-hidden="true">
+            <div class="stream-row"><span>Software</span><span class="stream-bar"><span style="width: 72%"></span></span></div>
+            <div class="stream-row"><span>Office</span><span class="stream-bar"><span style="width: 48%"></span></span></div>
+            <div class="stream-row"><span>Utilities</span><span class="stream-bar"><span style="width: 32%"></span></span></div>
+          </div>
         </div>
-        <div class="kpi">
+        <div class="kpi assistant-card">
+          <div>
+            <div class="label">Financial Assistant</div>
+            <p>Use the agent brief to turn attached PDFs, CSVs, and notes into reviewed rows and source gaps.</p>
+          </div>
+          <div class="assistant-visual" aria-hidden="true">
+            <img src="docs/assets/illustrations/assistant-orb.svg" alt="">
+          </div>
+          <div class="assistant-actions">
+            <a class="mini-button dark" href="#action-center">Open Review</a>
+            <a class="mini-button" href="docs/ai-prompts.md">Prompts</a>
+          </div>
+        </div>
+        <div class="kpi goals-card">
+          <div class="label">Financial Goals</div>
+          <div class="value" id="kpiBuffer">$0</div>
+          <div class="mini-progress"><span></span></div>
+          <div class="goal-row"><span>Threshold buffer</span><strong>On track</strong></div>
+        </div>
+        <div class="kpi credit-card">
+          <div class="label">Medi-Cal Threshold</div>
+          <div class="value" id="kpiThreshold">$0</div>
+          <div class="ring-stat">138%</div>
+        </div>
+        <div class="kpi overview-card">
           <div class="label">Net Schedule C</div>
           <div class="value" id="kpiNet">$0</div>
+          <div class="net-strip" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
+        <div class="kpi recent-card">
+          <div class="label">Recent Transactions</div>
+          <div class="recent-list">
+            <div class="recent-row">
+              <span class="recent-icon">S</span>
+              <span class="recent-main"><strong>Software subscriptions</strong><span>Needs support</span></span>
+              <span class="recent-amount">$3,600</span>
+            </div>
+            <div class="recent-row">
+              <span class="recent-icon">H</span>
+              <span class="recent-main"><strong>Home-office allocation</strong><span>CPA review</span></span>
+              <span class="recent-amount">$2,400</span>
+            </div>
+            <div class="recent-row">
+              <span class="recent-icon">I</span>
+              <span class="recent-main"><strong>IRA deduction scenario</strong><span>Needs support</span></span>
+              <span class="recent-amount">$7,500</span>
+            </div>
+          </div>
         </div>
       </div>
 

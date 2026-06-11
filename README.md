@@ -16,6 +16,7 @@ This is not tax, legal, benefits, insurance, accounting, or financial advice. It
 ![Dashboard overview](docs/assets/screenshots/dashboard-overview.png)
 
 See the [walkthrough](docs/walkthrough.md) and synthetic [video workflow](docs/assets/video/README.md).
+The current dashboard styling is guided by the [design reference](docs/design-reference.md).
 
 ## Quick Start
 
@@ -71,6 +72,7 @@ The repo should not spend early effort on live integrations or heavy parsing log
 - [Agent guide](AGENT_GUIDE.md)
 - [Accountant package](docs/accountant-package.md)
 - [AI prompts](docs/ai-prompts.md)
+- [Design reference](docs/design-reference.md)
 - [Roadmap](docs/roadmap.md)
 - [Project status](docs/project-status.md)
 

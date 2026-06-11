@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Abstract finance assistant orb</title>
+  <desc id="desc">A translucent blue, violet, and mint glass orb for the local finance assistant panel.</desc>
+  <defs>
+    <radialGradient id="glow" cx="58%" cy="34%" r="62%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".95"/>
+      <stop offset="34%" stop-color="#bde7ff" stop-opacity=".88"/>
+      <stop offset="70%" stop-color="#8e7dff" stop-opacity=".88"/>
+      <stop offset="100%" stop-color="#61d9a5" stop-opacity=".78"/>
+    </radialGradient>
+    <linearGradient id="ribbon" x1="22%" y1="18%" x2="86%" y2="82%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".82"/>
+      <stop offset="42%" stop-color="#d9efff" stop-opacity=".58"/>
+      <stop offset="100%" stop-color="#7562f2" stop-opacity=".68"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#3d4f73" flood-opacity=".2"/>
+    </filter>
+  </defs>
+  <rect width="320" height="320" rx="40" fill="#edf6ff"/>
+  <ellipse cx="160" cy="242" rx="92" ry="24" fill="#5d6f99" opacity=".14"/>
+  <g filter="url(#soft-shadow)">
+    <path d="M88,154 C88,91 133,58 180,68 C230,79 258,128 242,177 C226,225 172,253 126,229 C101,216 88,190 88,154 Z" fill="url(#glow)"/>
+    <path d="M74,163 C112,105 181,94 240,128 C229,184 171,219 105,212 C84,201 72,184 74,163 Z" fill="url(#ribbon)" opacity=".72"/>
+    <path d="M119,95 C162,62 224,94 230,149 C198,137 155,137 113,157 C100,134 101,110 119,95 Z" fill="#ffffff" opacity=".42"/>
+    <path d="M113,208 C157,221 203,205 230,174 C215,226 155,254 111,221 Z" fill="#0ea979" opacity=".18"/>
+  </g>
+  <circle cx="225" cy="92" r="13" fill="#ffffff" opacity=".78"/>
+  <circle cx="91" cy="222" r="9" fill="#ffffff" opacity=".64"/>
+</svg>

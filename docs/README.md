@@ -11,6 +11,7 @@ Start with the README, then use this index to find the right surface.
 - [Accountant package](accountant-package.md): how to collect exports, support, and open questions for handoff.
 - [AI prompts](ai-prompts.md): copyable prompts for using this repo with an assistant.
 - [Walkthrough](walkthrough.md): visual walkthrough using synthetic data.
+- [Design reference](design-reference.md): visual direction and intentional product differences.
 - [Roadmap](roadmap.md): simple V1, V2, and V3 direction.
 - [Project status](project-status.md): what is useful now and what is intentionally not built yet.
 

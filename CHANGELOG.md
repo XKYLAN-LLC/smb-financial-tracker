@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Refined the dashboard toward a documented Dribbble-style finance-board reference with a narrow icon rail, top pill nav, assistant visual asset, activity cards, goals, recent rows, and mobile-safe layout rules.
 - Redesigned the dashboard into a denser app-shell workbench with sidebar navigation, compact KPI cards, source evidence, and accountant readiness panels.
 - Added a dashboard smoke test for core buttons, generated exports, synthetic imports, reset behavior, editable ledger controls, and mobile layout.
 - Expanded dashboard smoke coverage for filters, settings, docs links, defensive import paths, and filtered-row edit behavior.
