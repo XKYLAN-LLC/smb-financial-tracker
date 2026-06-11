@@ -478,6 +478,7 @@ async function verifyImportsAndReset(client, baselineRows) {
   assert(rowCount === 1, "Canceled reset changed state.");
 
   await click(client, "#resetState");
+  await wait(500);
   rowCount = await evaluate(client, `state.rows.length`);
   assert(rowCount === baselineRows, "Reset did not restore the seeded baseline row count.");
   const confirms = await evaluate(client, `window.__smoke.confirms.length`);
