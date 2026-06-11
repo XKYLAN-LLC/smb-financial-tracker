@@ -36,6 +36,7 @@ The UI reads saved browser state first, then falls back to `sample-tracker.seed.
 ## What This Provides
 
 - Static local dashboard for income, expenses, deductions, review items, P&L, and planning scenarios.
+- Action Center that turns ledger rows into a review queue, evidence gap list, agent brief, and source-manifest starter.
 - Plain JSON seed data that is easy for humans and agents to inspect.
 - Source-document and accountant-package manifest examples.
 - Agent instructions for preserving provenance, flagging uncertainty, and keeping private data out of Git.
@@ -50,6 +51,7 @@ The project intentionally focuses on the surface an AI assistant can work with:
 |---|---|
 | Ledger rows | Reviewable income, expense, transfer, owner contribution, and owner draw records. |
 | Review statuses | Keep missing support, CPA questions, info-only items, and exclusions visible. |
+| Action Center | Prioritize review work and copy an agent brief or source-manifest starter. |
 | Source manifests | Track local-only PDFs, CSVs, receipts, statements, invoices, and notes by safe IDs. |
 | Accountant packages | Collect exports, source checklists, and open questions into one local handoff. |
 | Program configs | Store cited planning thresholds with effective dates. |

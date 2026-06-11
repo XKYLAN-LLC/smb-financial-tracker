@@ -18,7 +18,19 @@ Open `http://127.0.0.1:8765/index.html`.
 
 The top of the dashboard shows planning income, threshold buffer, gross receipts, expenses, and net Schedule C estimate.
 
-## 2. Review The Ledger
+## 2. Use The Action Center
+
+![Action Center](assets/screenshots/action-center.png)
+
+The Action Center turns ledger rows into a prioritized review queue, evidence gap list, and handoff snapshot. Use it before editing rows so the next task is obvious.
+
+Useful buttons:
+
+- Copy Agent Brief: gives another AI session a concise worklist with totals, flagged rows, source-document tasks, and safety instructions.
+- Copy Source Manifest Starter: creates a JSON starter for `private/source-documents/source-document-manifest.json`.
+- Status filter buttons: jump the ledger to rows marked `Needs support`, `CPA review`, or `Estimate`.
+
+## 3. Review The Ledger
 
 ![Ledger review](assets/screenshots/ledger-review.png)
 
@@ -28,10 +40,10 @@ Keep uncertain items visible:
 
 - `Needs support` for missing receipts, statements, or business-purpose notes.
 - `CPA review` for home office, vehicle, capitalization, mixed-use, meals, travel, or tax judgment.
-- `Info only` for source records that should not affect totals yet.
+- row type `Info only` for source records that should not affect totals yet.
 - `Exclude` for transfers, duplicates, reimbursements, or personal records.
 
-## 3. Track The Accountant Package
+## 4. Track The Accountant Package
 
 Use `examples/agent-workspace.example.json` and `examples/accountant-package.example.json` as the public synthetic shapes for local manifests.
 
@@ -45,13 +57,13 @@ In a real workflow, an AI assistant can help maintain:
 
 See `docs/accountant-package.md` for the local folder pattern.
 
-## 4. Export Review Materials
+## 5. Export Review Materials
 
 ![Accountant export](assets/screenshots/accountant-export.png)
 
 The dashboard can export a CPA CSV and accountant Markdown summary. Those generated files should go under `private/exports/`, not Git.
 
-## 5. Validate Before Publishing
+## 6. Validate Before Publishing
 
 Run:
 

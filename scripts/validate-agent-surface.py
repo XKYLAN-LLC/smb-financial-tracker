@@ -28,6 +28,7 @@ REQUIRED_FILES = [
     "docs/walkthrough.md",
     "docs/assets/video/README.md",
     "docs/assets/screenshots/dashboard-overview.png",
+    "docs/assets/screenshots/action-center.png",
     "docs/assets/screenshots/ledger-review.png",
     "docs/assets/screenshots/accountant-export.png",
     "docs/assets/video/smb-financial-tracker-walkthrough.mp4",
