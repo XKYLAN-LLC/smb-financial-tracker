@@ -2,9 +2,9 @@
 
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
-import { createReadStream } from "node:fs";
+import { createReadStream, existsSync } from "node:fs";
 import { mkdir, rm, writeFile } from "node:fs/promises";
-import { extname, join, resolve } from "node:path";
+import { delimiter, extname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
@@ -21,15 +21,28 @@ const mimeTypes = new Map([
 ]);
 
 function chromePath() {
+  if (process.env.CHROME_PATH) {
+    if (existsSync(process.env.CHROME_PATH)) return process.env.CHROME_PATH;
+    throw new Error(`CHROME_PATH does not exist: ${process.env.CHROME_PATH}`);
+  }
   const candidates = [
-    process.env.CHROME_PATH,
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "/Applications/Chromium.app/Contents/MacOS/Chromium",
     "/usr/bin/google-chrome",
+    "/usr/bin/google-chrome-stable",
     "/usr/bin/chromium",
     "/usr/bin/chromium-browser",
-  ].filter(Boolean);
-  return candidates[0];
+  ];
+  const match = candidates.find((candidate) => existsSync(candidate));
+  if (match) return match;
+  const names = ["google-chrome", "google-chrome-stable", "chromium", "chromium-browser"];
+  for (const dir of (process.env.PATH || "").split(delimiter)) {
+    for (const name of names) {
+      const candidate = join(dir, name);
+      if (existsSync(candidate)) return candidate;
+    }
+  }
+  throw new Error("Chrome or Chromium was not found. Set CHROME_PATH to a browser executable.");
 }
 
 function wait(ms) {
@@ -66,8 +79,12 @@ function startServer() {
       })
       .pipe(response);
   });
-  return new Promise((resolveServer) => {
-    server.listen(port, "127.0.0.1", () => resolveServer(server));
+  return new Promise((resolveServer, rejectServer) => {
+    server.once("error", rejectServer);
+    server.listen(port, "127.0.0.1", () => {
+      server.off("error", rejectServer);
+      resolveServer(server);
+    });
   });
 }
 
