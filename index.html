@@ -2117,12 +2117,13 @@ Notes:
     function accountantMarkdown() {
       const t = totals();
       const flaggedRows = state.rows.filter(row => row.use && row.status !== "Supported" && row.status !== "Exclude");
+      const markdownCell = value => String(value ?? "").replaceAll("|", "/").replace(/\s*\n+\s*/g, "<br>");
       const ledgerLines = state.rows.map(row => {
         const included = includedValue(row);
-        return `| ${row.date || ""} | ${row.type} | ${row.bucket} | ${row.subcategory || ""} | ${row.description || ""} | ${money(row.amount)} | ${row.businessPct || 0}% | ${money(included)} | ${row.status} | ${String(row.notes || "").replaceAll("|", "/")} |`;
+        return `| ${markdownCell(row.date)} | ${markdownCell(row.type)} | ${markdownCell(row.bucket)} | ${markdownCell(row.subcategory)} | ${markdownCell(row.description)} | ${money(row.amount)} | ${row.businessPct || 0}% | ${money(included)} | ${markdownCell(row.status)} | ${markdownCell(row.notes)} |`;
       }).join("\n");
-      const bucketLines = expenseBuckets().map(row => `| ${row.bucket} | ${row.subcategory || ""} | ${money(row.amount)} |`).join("\n");
-      const flagLines = flaggedRows.map(row => `- ${row.status}: ${row.description} (${money(row.amount)}) - ${row.notes || "Needs support."}`).join("\n");
+      const bucketLines = expenseBuckets().map(row => `| ${markdownCell(row.bucket)} | ${markdownCell(row.subcategory)} | ${money(row.amount)} |`).join("\n");
+      const flagLines = flaggedRows.map(row => `- ${markdownCell(row.status)}: ${markdownCell(row.description)} (${money(row.amount)}) - ${markdownCell(row.notes || "Needs support.")}`).join("\n");
       return `# Sample Business 2026 Accountant Tracking Export
 
 Prepared from local tracker on ${state.settings.reviewDate || new Date().toISOString().slice(0, 10)}.
@@ -2204,14 +2205,20 @@ ${ledgerLines}
       renderChecks();
       renderSummaryText();
       saveState();
-      const includedCell = tr.querySelector("td:nth-last-child(2)");
-      if (includedCell) includedCell.textContent = money(includedValue(row));
+      if (filters.search || filters.type || filters.status || filters.includedOnly) {
+        renderLedger();
+      } else {
+        const includedCell = tr.querySelector("td:nth-last-child(2)");
+        if (includedCell) includedCell.textContent = money(includedValue(row));
+      }
     }
 
     async function copyText(text, button) {
+      let copied = false;
       try {
         if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
         await navigator.clipboard.writeText(text);
+        copied = true;
       } catch (error) {
         const textarea = document.createElement("textarea");
         textarea.value = text;
@@ -2220,8 +2227,18 @@ ${ledgerLines}
         textarea.style.left = "-9999px";
         document.body.appendChild(textarea);
         textarea.select();
-        document.execCommand("copy");
+        copied = document.execCommand("copy");
         textarea.remove();
+      }
+      if (!copied) {
+        if (button) {
+          const original = button.textContent;
+          button.textContent = "Copy failed";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1000);
+        }
+        return;
       }
       if (!button) return;
       const original = button.textContent;
@@ -2523,12 +2540,17 @@ ${ledgerLines}
     document.getElementById("importBackup").addEventListener("change", async event => {
       const file = event.target.files[0];
       if (!file) return;
-      const text = await file.text();
-      const imported = JSON.parse(text);
-      if (!imported.rows || !imported.settings) throw new Error("Invalid tracker backup");
-      state = normalizeState(imported);
-      renderAll();
-      event.target.value = "";
+      try {
+        const text = await file.text();
+        const imported = JSON.parse(text);
+        if (!imported.rows || !imported.settings) throw new Error("Invalid tracker backup");
+        state = normalizeState(imported);
+        renderAll();
+      } catch (error) {
+        alert(`Could not import backup: ${error.message}`);
+      } finally {
+        event.target.value = "";
+      }
     });
     document.getElementById("importMonarch").addEventListener("change", async event => {
       const file = event.target.files[0];

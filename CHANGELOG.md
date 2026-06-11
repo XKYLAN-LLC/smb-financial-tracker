@@ -4,6 +4,8 @@
 
 - Redesigned the dashboard into a denser app-shell workbench with sidebar navigation, compact KPI cards, source evidence, and accountant readiness panels.
 - Added a dashboard smoke test for core buttons, generated exports, synthetic imports, reset behavior, editable ledger controls, and mobile layout.
+- Expanded dashboard smoke coverage for filters, settings, docs links, defensive import paths, and filtered-row edit behavior.
+- Added a tracked-file privacy scan and wired it into validation docs and CI.
 - Added a mobile dashboard screenshot to the public walkthrough.
 - Added a dashboard Action Center with prioritized review rows, evidence gaps, handoff readiness metrics, an agent brief copier, and a source-manifest starter copier.
 - Added agent context templates for business profiles, classification policies, source manifests, and future-session notes.

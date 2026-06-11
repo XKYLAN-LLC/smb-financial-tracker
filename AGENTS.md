@@ -37,7 +37,8 @@ Before publishing changes, run the relevant checks:
 ```bash
 python3 scripts/validate-sample-json.py
 python3 scripts/validate-agent-surface.py
-python3 -m py_compile scripts/validate-sample-json.py scripts/validate-agent-surface.py
+python3 scripts/privacy-scan.py
+python3 -m py_compile scripts/validate-sample-json.py scripts/validate-agent-surface.py scripts/privacy-scan.py
 node --check scripts/capture-screenshots.mjs
 node --check scripts/smoke-dashboard-buttons.mjs
 node scripts/smoke-dashboard-buttons.mjs

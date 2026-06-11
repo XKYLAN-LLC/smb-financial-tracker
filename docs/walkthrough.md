@@ -74,6 +74,7 @@ Run:
 ```bash
 python3 scripts/validate-sample-json.py
 python3 scripts/validate-agent-surface.py
+python3 scripts/privacy-scan.py
 node scripts/smoke-dashboard-buttons.mjs
 ```
 
